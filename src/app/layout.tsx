@@ -9,9 +9,6 @@ import { ProgressBar } from '@/components/ui/ProgressBar';
 import { siteConfig, CURRENT_ACADEMIC_YEAR } from '@/lib/constants';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
-const adsenseClient =
-  process.env.NEXT_PUBLIC_ADSENSE_CLIENT ??
-  'ca-pub-7178910718902546';
 
 export const metadata: Metadata = {
   title: {
@@ -81,6 +78,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-7178910718902546" />
+      </head>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider>
           <ProgressBar />
@@ -88,16 +88,6 @@ export default function RootLayout({
           <main className="min-h-screen">{children}</main>
           <Footer />
         </ThemeProvider>
-
-        {adsenseClient && (
-          <Script
-            id="google-adsense"
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
-            crossOrigin="anonymous"
-            strategy="afterInteractive"
-          />
-        )}
 
         {/* Google Analytics */}
         <Script
