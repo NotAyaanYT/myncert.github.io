@@ -145,6 +145,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => setIsMobileMenuOpen(false)}
               className={cn(
                 'px-4 py-3 text-base font-medium rounded-lg transition-colors',
                 pathname === item.href
