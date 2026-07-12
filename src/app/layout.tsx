@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Header } from '@/components/layout/Header';
@@ -8,6 +9,7 @@ import { ProgressBar } from '@/components/ui/ProgressBar';
 import { siteConfig, CURRENT_ACADEMIC_YEAR } from '@/lib/constants';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
+const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
 
 export const metadata: Metadata = {
   title: {
@@ -85,21 +87,25 @@ export default function RootLayout({
           <Footer />
         </ThemeProvider>
 
-        {/* Google AdSense - loaded client-side to avoid hydration mismatch */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-          crossOrigin="anonymous"
-          suppressHydrationWarning
-        />
+        {adsenseClient && (
+          <Script
+            id="google-adsense"
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
 
         {/* Google Analytics */}
-        <script
+        <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-          suppressHydrationWarning
+          strategy="afterInteractive"
         />
-        <script
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -108,7 +114,6 @@ export default function RootLayout({
               gtag('config', 'G-XXXXXXXXXX');
             `,
           }}
-          suppressHydrationWarning
         />
       </body>
     </html>
