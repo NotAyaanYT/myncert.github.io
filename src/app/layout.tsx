@@ -9,7 +9,9 @@ import { ProgressBar } from '@/components/ui/ProgressBar';
 import { siteConfig, CURRENT_ACADEMIC_YEAR } from '@/lib/constants';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
-const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+const adsenseClient =
+  process.env.NEXT_PUBLIC_ADSENSE_CLIENT ??
+  'ca-pub-7178910718902546';
 
 export const metadata: Metadata = {
   title: {
