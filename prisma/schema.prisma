@@ -1,0 +1,321 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  UNPUBLISHED
+  ARCHIVED
+}
+
+enum SourceStatus {
+  UNVERIFIED
+  VERIFIED
+  REJECTED
+}
+
+enum QuestionDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum MediaProvider {
+  LOCAL
+  S3
+  EXTERNAL
+}
+
+enum ImportStatus {
+  PENDING
+  VALIDATING
+  READY
+  IMPORTED
+  FAILED
+}
+
+model User {
+  id             String       @id @default(cuid())
+  name           String
+  email          String       @unique
+  passwordHash   String
+  avatarUrl      String?
+  isActive       Boolean      @default(true)
+  lastLoginAt    DateTime?
+  roles          UserRole[]
+  bookmarks      Bookmark[]
+  createdClasses Class[]      @relation("ClassCreatedBy")
+  updatedClasses Class[]      @relation("ClassUpdatedBy")
+  mediaAssets    MediaAsset[] @relation("MediaUploadedBy")
+  auditLogs      AuditLog[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@map("users")
+}
+
+model Role {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String?
+  users       UserRole[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("roles")
+}
+
+model UserRole {
+  userId    String
+  roleId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+model Class {
+  id           String        @id @default(cuid())
+  name         String
+  slug         String        @unique
+  grade        Int           @unique
+  description  String?
+  status       ContentStatus @default(DRAFT)
+  sourceStatus SourceStatus  @default(UNVERIFIED)
+  subjects     Subject[]
+  seoMetadata  SeoMetadata[]
+  createdById  String?
+  updatedById  String?
+  createdBy    User?         @relation("ClassCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy    User?         @relation("ClassUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  publishedAt  DateTime?
+  archivedAt   DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([status, grade])
+  @@map("classes")
+}
+
+model Subject {
+  id           String        @id @default(cuid())
+  classId      String
+  class        Class         @relation(fields: [classId], references: [id], onDelete: Cascade)
+  name         String
+  slug         String
+  description  String?
+  icon         String?
+  color        String?
+  status       ContentStatus @default(DRAFT)
+  sourceStatus SourceStatus  @default(UNVERIFIED)
+  chapters     Chapter[]
+  seoMetadata  SeoMetadata[]
+  publishedAt  DateTime?
+  archivedAt   DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([classId, slug])
+  @@index([status, classId])
+  @@map("subjects")
+}
+
+model Chapter {
+  id            String        @id @default(cuid())
+  subjectId     String
+  subject       Subject       @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  title         String
+  slug          String
+  chapterNumber Int
+  description   String?
+  status        ContentStatus @default(DRAFT)
+  sourceStatus  SourceStatus  @default(UNVERIFIED)
+  exercises     Exercise[]
+  seoMetadata   SeoMetadata[]
+  publishedAt   DateTime?
+  archivedAt    DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@unique([subjectId, slug])
+  @@unique([subjectId, chapterNumber])
+  @@index([status, subjectId])
+  @@map("chapters")
+}
+
+model Exercise {
+  id             String        @id @default(cuid())
+  chapterId      String
+  chapter        Chapter       @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  title          String
+  slug           String
+  exerciseNumber String
+  description    String?
+  status         ContentStatus @default(DRAFT)
+  sourceStatus   SourceStatus  @default(UNVERIFIED)
+  questions      Question[]
+  seoMetadata    SeoMetadata[]
+  publishedAt    DateTime?
+  archivedAt     DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@unique([chapterId, slug])
+  @@unique([chapterId, exerciseNumber])
+  @@index([status, chapterId])
+  @@map("exercises")
+}
+
+model Question {
+  id             String             @id @default(cuid())
+  exerciseId     String
+  exercise       Exercise           @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  questionNumber Int
+  title          String?
+  body           String
+  difficulty     QuestionDifficulty @default(MEDIUM)
+  tags           String[]           @default([])
+  status         ContentStatus      @default(DRAFT)
+  sourceStatus   SourceStatus       @default(UNVERIFIED)
+  solutions      Solution[]
+  seoMetadata    SeoMetadata[]
+  bookmarks      Bookmark[]
+  publishedAt    DateTime?
+  archivedAt     DateTime?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@unique([exerciseId, questionNumber])
+  @@index([status, exerciseId])
+  @@map("questions")
+}
+
+model Solution {
+  id           String        @id @default(cuid())
+  questionId   String
+  question     Question      @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  title        String?
+  body         String
+  methodLabel  String?
+  status       ContentStatus @default(DRAFT)
+  sourceStatus SourceStatus  @default(UNVERIFIED)
+  publishedAt  DateTime?
+  archivedAt   DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([status, questionId])
+  @@map("solutions")
+}
+
+model MediaAsset {
+  id           String        @id @default(cuid())
+  provider     MediaProvider @default(LOCAL)
+  bucket       String?
+  key          String?
+  url          String
+  altText      String?
+  caption      String?
+  mimeType     String
+  sizeBytes    Int?
+  width        Int?
+  height       Int?
+  uploadedById String?
+  uploadedBy   User?         @relation("MediaUploadedBy", fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([provider])
+  @@map("media_assets")
+}
+
+model SeoMetadata {
+  id             String    @id @default(cuid())
+  entityType     String
+  entityId       String
+  title          String
+  description    String
+  canonicalUrl   String?
+  openGraphImage String?
+  noIndex        Boolean   @default(false)
+  structuredData Json?
+  classId        String?
+  subjectId      String?
+  chapterId      String?
+  exerciseId     String?
+  questionId     String?
+  class          Class?    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  subject        Subject?  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  chapter        Chapter?  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  exercise       Exercise? @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  question       Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@unique([entityType, entityId])
+  @@map("seo_metadata")
+}
+
+model Bookmark {
+  id         String   @id @default(cuid())
+  userId     String
+  questionId String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, questionId])
+  @@map("bookmarks")
+}
+
+model Announcement {
+  id          String        @id @default(cuid())
+  title       String
+  body        String
+  status      ContentStatus @default(DRAFT)
+  startsAt    DateTime?
+  endsAt      DateTime?
+  publishedAt DateTime?
+  archivedAt  DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status, startsAt, endsAt])
+  @@map("announcements")
+}
+
+model ImportJob {
+  id        String       @id @default(cuid())
+  filename  String
+  status    ImportStatus @default(PENDING)
+  summary   Json?
+  errors    Json?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([status])
+  @@map("import_jobs")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action     String
+  entityType String
+  entityId   String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@index([userId, createdAt])
+  @@map("audit_logs")
+}
