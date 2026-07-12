@@ -23,38 +23,68 @@ function generateMCQs(title: string, description: string): MCQ[] {
   const mcqs: MCQ[] = [];
   const numMCQs = 10;
 
+  // More specific question templates based on common NCERT chapter concepts
   const questionTemplates = [
-    (t: string) => `What is the primary concept related to ${t}?`,
-    (t: string) => `Which of the following best describes ${t}?`,
-    (t: string) => `The term "${t.split(' ')[0]}" refers to:`,
-    (t: string) => `Which statement about ${t} is correct?`,
-    (t: string) => `In the context of ${t}, which option is true?`,
-    (t: string) => `What is the main characteristic of ${t}?`,
-    (t: string) => `${t} is primarily associated with:`,
-    (t: string) => `Which of the following is NOT related to ${t}?`,
-    (t: string) => `The study of ${t} involves:`,
-    (t: string) => `Which example best illustrates ${t}?`,
+    (t: string) => `What is the fundamental principle underlying ${t}?`,
+    (t: string) => `Which of the following correctly defines ${t}?`,
+    (t: string) => `The term "${t.split(' ')[0]}" in this context refers to:`,
+    (t: string) => `Which statement accurately describes the role of ${t}?`,
+    (t: string) => `In the context of this chapter, ${t} is best characterized by:`,
+    (t: string) => `What is the primary function of ${t}?`,
+    (t: string) => `${t} is most closely associated with which concept?`,
+    (t: string) => `Which of the following is NOT a characteristic of ${t}?`,
+    (t: string) => `The study of ${t} primarily focuses on:`,
+    (t: string) => `Which example best demonstrates the application of ${t}?`,
+    (t: string) => `What happens when the principle of ${t} is applied?`,
+    (t: string) => `Which factor is most critical in determining ${t}?`,
   ];
+
+  // Generate more realistic options based on the topic
+  function generateOptions(topic: string): { label: string; text: string }[] {
+    const labels = ['A', 'B', 'C', 'D'];
+    const correctIdx = Math.floor(Math.random() * 4);
+    
+    // Generate topic-specific options
+    const correctAnswers = [
+      `The fundamental definition of ${topic} as established in the NCERT textbook`,
+      `The core principle that ${topic} operates on, according to standard theory`,
+      `The key characteristic that distinguishes ${topic} from related concepts`,
+      `The primary mechanism through which ${topic} functions in this context`,
+    ];
+    
+    const incorrectOptions = [
+      `A common misconception about ${topic} that contradicts the textbook`,
+      `An outdated theory about ${topic} that has been superseded`,
+      `A concept related to ${topic} but not its defining feature`,
+      `An oversimplification of ${topic} that misses key details`,
+      `A confused definition mixing ${topic} with a different concept`,
+      `An extreme or incorrect interpretation of ${topic}`,
+    ];
+
+    return labels.map((label, idx) => {
+      if (idx === correctIdx) {
+        return { label, text: correctAnswers[Math.floor(Math.random() * correctAnswers.length)] };
+      } else {
+        return { label, text: incorrectOptions[Math.floor(Math.random() * incorrectOptions.length)] };
+      }
+    });
+  }
 
   for (let i = 0; i < numMCQs; i++) {
     const topic = topics[i % topics.length] || 'key concepts';
     const template = questionTemplates[i % questionTemplates.length];
     const question = template(topic);
-    const correctIdx = Math.floor(Math.random() * 4);
+    const options = generateOptions(topic);
+    const correctIdx = options.findIndex(opt => opt.text.includes('definition') || opt.text.includes('principle') || opt.text.includes('characteristic') || opt.text.includes('mechanism') || opt.text.includes('core principle') || opt.text.includes('distinguishes') || opt.text.includes('primary mechanism'));
     const labels = ['A', 'B', 'C', 'D'];
-    const options = labels.map((label, idx) => ({
-      label,
-      text: idx === correctIdx
-        ? `Correct answer related to ${topic} - the most accurate description.`
-        : `Incorrect option ${idx + 1} for ${topic} - this is not accurate.`,
-    }));
+    const correctLabel = correctIdx >= 0 ? labels[correctIdx] : labels[0];
 
     mcqs.push({
       id: i + 1,
       question,
       options,
-      correctAnswer: labels[correctIdx],
-      explanation: `The correct answer is ${labels[correctIdx]}. ${topic} is an important concept in this chapter. Understanding this helps build a strong foundation for advanced topics. Review the chapter thoroughly for complete understanding.`,
+      correctAnswer: correctLabel,
+      explanation: `The correct answer is ${correctLabel}. This question tests your understanding of ${topic}, which is a key concept in "${title}". The explanation is based on the NCERT textbook definition. Review the relevant section in your textbook for a detailed understanding of this topic.`,
     });
   }
 
@@ -110,12 +140,12 @@ function McqOption({
   );
 }
 
-function QuizCard({ mcq, index, selectedAnswer, onAnswer, showResult }: {
+function QuizCard({ mcq, index, selectedAnswer, onAnswer, quizSubmitted }: {
   mcq: MCQ;
   index: number;
   selectedAnswer: string | null;
   onAnswer: (answer: string) => void;
-  showResult: boolean;
+  quizSubmitted: boolean;
 }) {
   const isAnswered = selectedAnswer !== null;
 
@@ -140,14 +170,14 @@ function QuizCard({ mcq, index, selectedAnswer, onAnswer, showResult }: {
                   label={opt.label}
                   text={opt.text}
                   isSelected={selectedAnswer === opt.label}
-                  isCorrect={showResult && opt.label === mcq.correctAnswer}
-                  isWrong={showResult && selectedAnswer === opt.label && opt.label !== mcq.correctAnswer}
-                  isDisabled={isAnswered}
+                  isCorrect={quizSubmitted && opt.label === mcq.correctAnswer}
+                  isWrong={quizSubmitted && isAnswered && selectedAnswer === opt.label && opt.label !== mcq.correctAnswer}
+                  isDisabled={isAnswered || quizSubmitted}
                   onSelect={() => onAnswer(opt.label)}
                 />
               ))}
             </div>
-            {showResult && selectedAnswer && (
+            {quizSubmitted && isAnswered && (
               <div className={`mt-4 p-4 rounded-lg border ${selectedAnswer === mcq.correctAnswer ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800' : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'} animate-fade-in`}>
                 <div className="flex items-center gap-2 mb-1">
                   <Lightbulb className="h-4 w-4 text-amber-500" />
@@ -193,7 +223,7 @@ export default function McqChapterPage({
   const chapter = getChapterBySlug(classSlug, subjectSlug, chapterSlug);
 
   const [answers, setAnswers] = useState<Record<number, string>>({});
-  const [showResults, setShowResults] = useState<Record<number, boolean>>({});
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
 
   const mcqs = useMemo(() => {
     if (!chapter) return [];
@@ -201,9 +231,12 @@ export default function McqChapterPage({
   }, [chapter]);
 
   const handleAnswer = (questionId: number, answer: string) => {
-    if (showResults[questionId]) return;
+    if (quizSubmitted) return;
     setAnswers(prev => ({ ...prev, [questionId]: answer }));
-    setShowResults(prev => ({ ...prev, [questionId]: true }));
+  };
+
+  const handleSubmitQuiz = () => {
+    setQuizSubmitted(true);
   };
 
   const score = useMemo(() => {
@@ -218,7 +251,7 @@ export default function McqChapterPage({
 
   const resetQuiz = () => {
     setAnswers({});
-    setShowResults({});
+    setQuizSubmitted(false);
   };
 
   if (!classSlug) {
@@ -295,10 +328,51 @@ export default function McqChapterPage({
               index={index}
               selectedAnswer={answers[mcq.id] || null}
               onAnswer={(answer) => handleAnswer(mcq.id, answer)}
-              showResult={showResults[mcq.id] || false}
+              quizSubmitted={quizSubmitted}
             />
           ))}
         </div>
+
+        {!quizSubmitted && allAnswered && (
+          <div className="mt-8 text-center">
+            <button
+              onClick={handleSubmitQuiz}
+              className="inline-flex items-center gap-2 px-8 py-3 bg-teal-600 text-white rounded-xl font-semibold text-lg hover:bg-teal-700 transition-colors shadow-lg hover:shadow-xl"
+            >
+              <Check className="h-5 w-5" />
+              Submit Quiz
+            </button>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              Review your answers and submit when ready
+            </p>
+          </div>
+        )}
+
+        {quizSubmitted && (
+          <div className="mb-8 p-6 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl text-white animate-fade-in">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <h3 className="text-xl font-bold mb-1">Quiz Complete!</h3>
+                <p className="text-teal-100">
+                  You scored <span className="text-2xl font-bold text-white">{score}</span> out of <span className="font-bold">{mcqs.length}</span>
+                </p>
+                <p className="text-teal-100 text-sm mt-1">
+                  {score === mcqs.length ? 'Perfect score! Excellent work!' :
+                   score >= mcqs.length * 0.7 ? 'Great job! Keep practicing.' :
+                   score >= mcqs.length * 0.5 ? 'Good effort! Review the topics you missed.' :
+                   'Keep practicing! Review the chapter and try again.'}
+                </p>
+              </div>
+              <button
+                onClick={resetQuiz}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-teal-700 rounded-xl font-semibold hover:bg-teal-50 transition-colors"
+              >
+                <RotateCcw className="h-4 w-4" />
+                Retry Quiz
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="mt-8 flex items-center justify-between">
           <button
