@@ -1,11 +1,11 @@
-'use client';
-
+import { Metadata } from 'next';
 import { useState, useMemo } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Check, X, RotateCcw, ArrowRight, HelpCircle, BookOpen, Lightbulb } from 'lucide-react';
-import { getClassBySlug, getSubjectBySlug } from '@/data/classes';
-import { getChapterBySlug } from '@/data/chapters';
+import { useSearchParams } from 'next/navigation';
+import { Check, X, RotateCcw, ArrowRight, HelpCircle, BookOpen, Lightbulb, ChevronDown } from 'lucide-react';
+import { getClassBySlug, getSubjectBySlug, getSubjectVersion, getChaptersKey, SyllabusVersion } from '@/data/classes';
+import { getChaptersForSubject, getChapterBySlug } from '@/data/chapters';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { UpdateBadge } from '@/components/ui/Badge';
 import { CURRENT_ACADEMIC_YEAR, siteConfig } from '@/lib/constants';
@@ -198,14 +198,11 @@ export default function McqChapterPage({
 }: {
   params: Promise<{ classSlug: string; subjectSlug: string; chapterSlug: string }>;
 }) {
-  const resolved = useMemo(() => {
-    const p = params instanceof Promise ? { classSlug: '', subjectSlug: '', chapterSlug: '' } : params;
-    return p;
-  }, [params]);
-
+  const searchParams = useSearchParams();
   const [classSlug, setClassSlug] = useState('');
   const [subjectSlug, setSubjectSlug] = useState('');
   const [chapterSlug, setChapterSlug] = useState('');
+  const [version, setVersion] = useState<SyllabusVersion>('2026-27');
 
   useMemo(() => {
     (async () => {
@@ -218,9 +215,19 @@ export default function McqChapterPage({
     })();
   }, [params]);
 
+  // Read version from search params
+  useMemo(() => {
+    const versionParam = searchParams.get('version') as SyllabusVersion | null;
+    if (versionParam && ['2026-27', 'previous'].includes(versionParam)) {
+      setVersion(versionParam);
+    }
+  }, [searchParams]);
+
   const cls = getClassBySlug(classSlug);
   const subject = getSubjectBySlug(classSlug, subjectSlug);
-  const chapter = getChapterBySlug(classSlug, subjectSlug, chapterSlug);
+  const subjectVersion = getSubjectVersion(classSlug, subjectSlug, version);
+  const chapter = getChapterBySlug(classSlug, subjectSlug, chapterSlug, version);
+  const chapters = getChaptersForSubject(classSlug, subjectSlug, version);
 
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
@@ -254,6 +261,14 @@ export default function McqChapterPage({
     setQuizSubmitted(false);
   };
 
+  const handleVersionChange = (newVersion: SyllabusVersion) => {
+    setVersion(newVersion);
+    // Update URL with new version
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set('version', newVersion);
+    window.history.replaceState({}, '', `${window.location.pathname}?${newSearchParams.toString()}`);
+  };
+
   if (!classSlug) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
@@ -266,6 +281,9 @@ export default function McqChapterPage({
     notFound();
   }
 
+  const versionLabel = version === '2026-27' ? '2026-27 (Latest)' : 'Previous (2023-24)';
+  const subjectBookName = subjectVersion?.bookName || subject.name;
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-24 pb-12">
@@ -274,13 +292,28 @@ export default function McqChapterPage({
             { label: 'MCQs', href: '/mcqs' },
             { label: cls.name, href: `/mcqs/${cls.slug}` },
             { label: subject.name, href: `/mcqs/${cls.slug}/${subject.slug}` },
-            { label: `Ch ${chapter.chapterNumber}: ${chapter.title}`, href: `/mcqs/${cls.slug}/${subject.slug}/${chapter.slug}` },
+            { label: `Ch ${chapter.chapterNumber}: ${chapter.title}`, href: `/mcqs/${cls.slug}/${subject.slug}/${chapter.slug}?version=${version}` },
           ]}
         />
 
         <div className="mb-8 animate-fade-in">
           <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
             <UpdateBadge />
+            {/* Version Selector */}
+            <div className="flex items-center gap-2">
+              <label htmlFor="version-select" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Syllabus:
+              </label>
+              <select
+                id="version-select"
+                value={version}
+                onChange={(e) => handleVersionChange(e.target.value as SyllabusVersion)}
+                className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+              >
+                <option value="2026-27">2026-27 (Latest) - {subjectBookName}</option>
+                <option value="previous">Previous (2023-24)</option>
+              </select>
+            </div>
           </div>
 
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
