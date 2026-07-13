@@ -5,7 +5,7 @@ import { prisma } from '@/db/prisma';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
 const JWT_EXPIRES_IN = '7d';
-const COOKIE_NAME = 'admin_session';
+const COOKIE_NAME = 'auth-token';
 
 export interface AdminUser {
   id: string;
@@ -95,12 +95,15 @@ export async function getCurrentUser(): Promise<AdminUser | null> {
   // Optionally verify user still exists in DB
   const user = await prisma.user.findUnique({
     where: { id: payload.userId },
-    select: { id: true, name: true, email: true, role: true },
+    select: { id: true, name: true, email: true, roles: { select: { role: { select: { name: true } } } }, isActive: true },
   });
 
   if (!user || !user.isActive) return null;
 
-  return user;
+  // Get the first role name (assuming admin role)
+  const role = user.roles[0]?.role?.name || 'user';
+
+  return { id: user.id, name: user.name, email: user.email, role };
 }
 
 /**
@@ -112,12 +115,14 @@ export async function getUserFromToken(token: string): Promise<AdminUser | null>
 
   const user = await prisma.user.findUnique({
     where: { id: payload.userId },
-    select: { id: true, name: true, email: true, role: true, isActive: true },
+    select: { id: true, name: true, email: true, roles: { select: { role: { select: { name: true } } } }, isActive: true },
   });
 
   if (!user || !user.isActive) return null;
 
-  return user;
+  const role = user.roles[0]?.role?.name || 'user';
+
+  return { id: user.id, name: user.name, email: user.email, role };
 }
 
 /**

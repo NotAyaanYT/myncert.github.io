@@ -16,14 +16,26 @@ async function main() {
   // Hash password
   const passwordHash = await hashPassword(password);
 
+  // Create admin role if not exists
+  let adminRole = await prisma.role.findUnique({ where: { name: 'admin' } });
+  if (!adminRole) {
+    adminRole = await prisma.role.create({
+      data: { name: 'admin', description: 'Administrator with full access' },
+    });
+  }
+
   // Create admin user
   const user = await prisma.user.create({
     data: {
       email,
       name,
       passwordHash,
-      role: 'admin',
       isActive: true,
+      roles: {
+        create: {
+          role: { connect: { id: adminRole.id } },
+        },
+      },
     },
   });
 

@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
     // Find user in database
     const user = await prisma.user.findUnique({
       where: { email },
+      include: { roles: { include: { role: true } } },
     });
 
     if (!user || !user.isActive) {
@@ -34,12 +35,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check if user has admin role
+    const isAdmin = user.roles.some(ur => ur.role.name === 'admin');
+    if (!isAdmin) {
+      return NextResponse.json(
+        { error: 'Access denied. Admin role required.' },
+        { status: 403 }
+      );
+    }
+
     // Generate token
-    const token = generateToken({
+    const token = await generateToken({
       id: user.id,
       name: user.name,
       email: user.email,
-      role: user.role,
+      role: 'admin',
     });
 
     // Set auth cookie
@@ -53,7 +63,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      user: { id: user.id, name: user.name, email: user.email, role: 'admin' },
     });
   } catch (error) {
     console.error('Login error:', error);

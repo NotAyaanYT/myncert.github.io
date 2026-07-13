@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest) {
 
   if (isAdminPath) {
     // Get token from cookie
-    const token = request.cookies.get('admin_session')?.value;
+    const token = request.cookies.get('auth-token')?.value;
 
     if (!token) {
       // Redirect to login
@@ -28,13 +28,13 @@ export async function middleware(request: NextRequest) {
     }
 
     // Verify token
-    const payload = verifyToken(token);
+    const payload = await verifyToken(token);
     if (!payload) {
       // Invalid token, redirect to login
       const loginUrl = new URL('/admin/login', request.url);
       loginUrl.searchParams.set('redirect', pathname);
       const response = NextResponse.redirect(loginUrl);
-      response.cookies.delete('admin_session');
+      response.cookies.delete('auth-token');
       return response;
     }
 

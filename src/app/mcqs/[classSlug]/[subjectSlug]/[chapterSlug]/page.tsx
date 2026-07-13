@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { useState, useMemo } from 'react';
 import { notFound } from 'next/navigation';

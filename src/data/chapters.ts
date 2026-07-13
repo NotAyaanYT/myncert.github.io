@@ -1415,6 +1415,7 @@
     { id: 'ch10ss-p22', title: 'Globalisation and the Indian Economy', slug: 'globalisation-indian-economy', chapterNumber: 22, description: 'MNCs, WTO, fair globalisation, impact on India' },
     { id: 'ch10ss-p23', title: 'Consumer Rights', slug: 'consumer-rights', chapterNumber: 23, description: 'Rights, COPRA, consumer movement, redressal' },
   ],
+};
 
 export const exerciseData: Record<string, Array<{id:string;title:string;slug:string;exerciseNumber:number}>> = {
   'class-9-mathematics-orienting-yourself-the-use-of-coordinates': [
