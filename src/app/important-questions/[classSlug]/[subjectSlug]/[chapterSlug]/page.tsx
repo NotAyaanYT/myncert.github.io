@@ -3,10 +3,11 @@ import { notFound } from 'next/navigation';
 import { getClassBySlug, getSubjectBySlug } from '@/data/classes';
 import { getChapterBySlug } from '@/data/chapters';
 import { CURRENT_ACADEMIC_YEAR } from '@/lib/constants';
-import { ImportantQuestionsContent } from './content';
+import ImportantQuestionsContent from './content';
 
 interface Props {
   params: Promise<{ classSlug: string; subjectSlug: string; chapterSlug: string }>;
+  searchParams: Promise<{ version?: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -25,12 +26,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ImportantQuestionsChapterPage({ params }: Props) {
+export default async function ImportantQuestionsChapterPage({ params, searchParams }: Props) {
   const { classSlug, subjectSlug, chapterSlug } = await params;
   const cls = getClassBySlug(classSlug);
   const subject = getSubjectBySlug(classSlug, subjectSlug);
   const chapter = getChapterBySlug(classSlug, subjectSlug, chapterSlug);
   if (!cls || !subject || !chapter) notFound();
 
-  return <ImportantQuestionsContent cls={cls} subject={subject} chapter={chapter} />;
+  return <ImportantQuestionsContent params={params} searchParams={searchParams} />;
 }

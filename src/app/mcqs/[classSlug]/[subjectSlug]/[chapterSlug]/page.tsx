@@ -5,7 +5,7 @@ import { useState, useMemo } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Check, X, RotateCcw, ArrowRight, HelpCircle, BookOpen, Lightbulb, ChevronDown } from 'lucide-react';
+import { Check, X, RotateCcw, ArrowRight, HelpCircle, BookOpen, Lightbulb, ChevronDown, Calculator, Hash } from 'lucide-react';
 import { getClassBySlug, getSubjectBySlug, getSubjectVersion, getChaptersKey, SyllabusVersion } from '@/data/classes';
 import { getChaptersForSubject, getChapterBySlug } from '@/data/chapters';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
@@ -14,83 +14,114 @@ import { CURRENT_ACADEMIC_YEAR, siteConfig } from '@/lib/constants';
 
 interface MCQ {
   id: number;
+  type: 'mcq' | 'numerical';
   question: string;
-  options: { label: string; text: string }[];
-  correctAnswer: string;
+  options?: { label: string; text: string }[];
+  correctAnswer?: string;
+  correctValue?: number;
+  tolerance?: number;
   explanation: string;
 }
 
-function generateMCQs(title: string, description: string): MCQ[] {
-  const topics = description.split(', ');
-  const mcqs: MCQ[] = [];
-  const numMCQs = 10;
+interface NumericalInputProps {
+  questionId: number;
+  value: string;
+  onChange: (questionId: number, value: string) => void;
+  isDisabled: boolean;
+  showAnswer?: boolean;
+  correctValue?: number;
+  tolerance?: number;
+  userAnswer?: string;
+  isCorrect?: boolean;
+}
 
-  // More specific question templates based on common NCERT chapter concepts
-  const questionTemplates = [
-    (t: string) => `What is the fundamental principle underlying ${t}?`,
-    (t: string) => `Which of the following correctly defines ${t}?`,
-    (t: string) => `The term "${t.split(' ')[0]}" in this context refers to:`,
-    (t: string) => `Which statement accurately describes the role of ${t}?`,
-    (t: string) => `In the context of this chapter, ${t} is best characterized by:`,
-    (t: string) => `What is the primary function of ${t}?`,
-    (t: string) => `${t} is most closely associated with which concept?`,
-    (t: string) => `Which of the following is NOT a characteristic of ${t}?`,
-    (t: string) => `The study of ${t} primarily focuses on:`,
-    (t: string) => `Which example best demonstrates the application of ${t}?`,
-    (t: string) => `What happens when the principle of ${t} is applied?`,
-    (t: string) => `Which factor is most critical in determining ${t}?`,
-  ];
+function NumericalInput(props: NumericalInputProps) {
+  const { questionId, value, onChange, isDisabled, showAnswer, correctValue, tolerance, userAnswer, isCorrect } = props;
+  const [focused, setFocused] = useState(false);
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Only allow numbers, decimal point, and minus sign
+    if (/^[-]?\d*\.?\d*$/.test(value)) {
+      onChange(questionId, value);
+    }
+  };
 
-  // Generate more realistic options based on the topic
-  function generateOptions(topic: string): { label: string; text: string }[] {
-    const labels = ['A', 'B', 'C', 'D'];
-    const correctIdx = Math.floor(Math.random() * 4);
-    
-    // Generate topic-specific options
-    const correctAnswers = [
-      `The fundamental definition of ${topic} as established in the NCERT textbook`,
-      `The core principle that ${topic} operates on, according to standard theory`,
-      `The key characteristic that distinguishes ${topic} from related concepts`,
-      `The primary mechanism through which ${topic} functions in this context`,
-    ];
-    
-    const incorrectOptions = [
-      `A common misconception about ${topic} that contradicts the textbook`,
-      `An outdated theory about ${topic} that has been superseded`,
-      `A concept related to ${topic} but not its defining feature`,
-      `An oversimplification of ${topic} that misses key details`,
-      `A confused definition mixing ${topic} with a different concept`,
-      `An extreme or incorrect interpretation of ${topic}`,
-    ];
+  // Render answer view when showAnswer is true, otherwise render input view
+  const content = showAnswer ? (
+    (() => {
+      const toleranceRange = ` ±${tolerance || 0}`;
+      const isCorrectAnswer = isCorrect !== undefined ? isCorrect : (userAnswer !== undefined && correctValue !== undefined && tolerance !== undefined 
+        ? Math.abs(parseFloat(userAnswer) - correctValue) <= tolerance 
+        : undefined);
+      
+      return (
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Your answer:</label>
+            <input
+              type="text"
+              value={userAnswer || ''}
+              readOnly
+              className={`flex-1 px-4 py-3 bg-white dark:bg-gray-800 border rounded-xl text-lg font-mono text-center ${
+                isCorrect === true 
+                  ? 'border-green-500 dark:border-green-400 bg-green-50 dark:bg-green-900/20' 
+                  : isCorrect === false 
+                    ? 'border-red-500 dark:border-red-400 bg-red-50 dark:bg-red-900/20' 
+                    : 'border-gray-200 dark:border-gray-700'
+              }`} />
+            {isCorrect !== undefined ? (
+              <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-sm font-medium ${
+                isCorrect ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'
+              }`}>
+                  {isCorrect ? <Check className="h-3.5 w-3.5" /> : <X className="h-3.5 w-3.5" />}
+                  {isCorrect ? 'Correct' : 'Incorrect'}
+              </span>
+            ) : null}
+          </div>
+          <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
+            <Calculator className="h-4 w-4 text-teal-500" />
+            <span>Correct answer: <span className="font-mono font-medium">{correctValue}</span>{tolerance && ` ±${tolerance}`}</span>
+          </div>
+        </div>
+      );
+    })()
+  ) : (
+    // Render input view
+    <div className="relative">
+      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        Your answer
+        <Hash className="h-3.5 w-3.5 inline-block ml-1 text-teal-500" />
+      </label>
+      <div className="relative">
+        <input
+          type="text"
+          value={value}
+          onChange={handleChange}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          disabled={isDisabled}
+          placeholder="Enter numerical answer..."
+          className={`w-full px-4 py-3 bg-white dark:bg-gray-800 border rounded-xl text-lg font-mono text-center transition-all ${
+            isDisabled 
+              ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed' 
+              : focused 
+                ? 'border-teal-500 dark:border-teal-400 ring-2 ring-teal-500/20' 
+                : 'border-gray-200 dark:border-gray-700 focus:border-teal-500 dark:focus:border-teal-400'
+          } focus:outline-none focus:ring-2 focus:ring-teal-500/20`}
+          inputMode="decimal"
+        />
+        <div className="absolute bottom-2 right-3 text-xs text-gray-400 pointer-events-none">
+          Numerical value
+        </div>
+      </div>
+      <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+        Enter a numerical value (e.g., 3.14, -5, 2.5e3)
+      </p>
+    </div>
+  );
 
-    return labels.map((label, idx) => {
-      if (idx === correctIdx) {
-        return { label, text: correctAnswers[Math.floor(Math.random() * correctAnswers.length)] };
-      } else {
-        return { label, text: incorrectOptions[Math.floor(Math.random() * incorrectOptions.length)] };
-      }
-    });
-  }
-
-  for (let i = 0; i < numMCQs; i++) {
-    const topic = topics[i % topics.length] || 'key concepts';
-    const template = questionTemplates[i % questionTemplates.length];
-    const question = template(topic);
-    const options = generateOptions(topic);
-    const correctIdx = options.findIndex(opt => opt.text.includes('definition') || opt.text.includes('principle') || opt.text.includes('characteristic') || opt.text.includes('mechanism') || opt.text.includes('core principle') || opt.text.includes('distinguishes') || opt.text.includes('primary mechanism'));
-    const labels = ['A', 'B', 'C', 'D'];
-    const correctLabel = correctIdx >= 0 ? labels[correctIdx] : labels[0];
-
-    mcqs.push({
-      id: i + 1,
-      question,
-      options,
-      correctAnswer: correctLabel,
-      explanation: `The correct answer is ${correctLabel}. This question tests your understanding of ${topic}, which is a key concept in "${title}". The explanation is based on the NCERT textbook definition. Review the relevant section in your textbook for a detailed understanding of this topic.`,
-    });
-  }
-
-  return mcqs;
+  return content;
 }
 
 function McqOption({
@@ -151,6 +182,55 @@ function QuizCard({ mcq, index, selectedAnswer, onAnswer, quizSubmitted }: {
 }) {
   const isAnswered = selectedAnswer !== null;
 
+  if (mcq.type === 'numerical') {
+    const userAnswer = selectedAnswer;
+    const isCorrect = quizSubmitted && mcq.correctValue !== undefined && mcq.tolerance !== undefined && userAnswer !== null && userAnswer !== ''
+      ? Math.abs(parseFloat(userAnswer) - mcq.correctValue) <= mcq.tolerance
+      : undefined;
+
+    return (
+      <div
+        className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden animate-slide-up"
+        style={{ animationDelay: `${index * 0.08}s` }}
+      >
+        <div className="p-6">
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-purple-700 dark:text-purple-300 font-bold text-sm">
+              <Calculator className="h-5 w-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-base font-medium text-gray-900 dark:text-white mb-4">
+                {mcq.question}
+              </p>
+              <div className="space-y-3">
+                <NumericalInput
+                  questionId={mcq.id}
+                  value={selectedAnswer || ''}
+                  onChange={(qId, val) => onAnswer(val)}
+                  isDisabled={isAnswered || quizSubmitted}
+                  showAnswer={quizSubmitted}
+                  correctValue={mcq.correctValue}
+                  tolerance={mcq.tolerance}
+                  userAnswer={selectedAnswer || undefined}
+                  isCorrect={isCorrect}
+                />
+              </div>
+              {quizSubmitted && (
+                <div className={`mt-4 p-4 rounded-lg border ${mcq.correctValue !== undefined && isCorrect === true ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800' : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'} animate-fade-in`}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Lightbulb className="h-4 w-4 text-amber-500" />
+                    <span className="text-sm font-semibold text-gray-900 dark:text-white">Explanation</span>
+                  </div>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{mcq.explanation}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden animate-slide-up"
@@ -166,7 +246,7 @@ function QuizCard({ mcq, index, selectedAnswer, onAnswer, quizSubmitted }: {
               {mcq.question}
             </p>
             <div className="space-y-3">
-              {mcq.options.map((opt) => (
+              {mcq.options?.map((opt) => (
                 <McqOption
                   key={opt.label}
                   label={opt.label}
@@ -251,7 +331,13 @@ export default function McqChapterPage({
   const score = useMemo(() => {
     let correct = 0;
     mcqs.forEach(mcq => {
-      if (answers[mcq.id] === mcq.correctAnswer) correct++;
+      if (mcq.type === 'mcq' && answers[mcq.id] === mcq.correctAnswer) correct++;
+      else if (mcq.type === 'numerical' && mcq.correctValue !== undefined && mcq.tolerance !== undefined) {
+        const userVal = parseFloat(answers[mcq.id] || '');
+        if (!isNaN(userVal) && Math.abs(userVal - mcq.correctValue) <= mcq.tolerance) {
+          correct++;
+        }
+      }
     });
     return correct;
   }, [answers, mcqs]);
@@ -290,12 +376,15 @@ export default function McqChapterPage({
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         <Breadcrumb
-          items={[
-            { label: 'MCQs', href: '/mcqs' },
-            { label: cls.name, href: `/mcqs/${cls.slug}` },
-            { label: subject.name, href: `/mcqs/${cls.slug}/${subject.slug}` },
-            { label: `Ch ${chapter.chapterNumber}: ${chapter.title}`, href: `/mcqs/${cls.slug}/${subject.slug}/${chapter.slug}?version=${version}` },
-          ]}
+          items={[{
+            label: 'MCQs', href: '/mcqs'
+          }, {
+            label: cls.name, href: `/mcqs/${cls.slug}`
+          }, {
+            label: subject.name, href: `/mcqs/${cls.slug}/${subject.slug}`
+          }, {
+            label: `Ch ${chapter.chapterNumber}: ${chapter.title}`, href: `/mcqs/${cls.slug}/${subject.slug}/${chapter.slug}?version=${version}`
+          }]}
         />
 
         <div className="mb-8 animate-fade-in">
@@ -408,25 +497,130 @@ export default function McqChapterPage({
             </div>
           </div>
         )}
-
-        <div className="mt-8 flex items-center justify-between">
-          <button
-            onClick={resetQuiz}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm font-medium"
-          >
-            <RotateCcw className="h-4 w-4" />
-            Reset All
-          </button>
-          <Link
-            href={`/notes/${cls.slug}/${subject.slug}/${chapter.slug}`}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-sm font-medium"
-          >
-            <BookOpen className="h-4 w-4" />
-            View Revision Notes
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
       </div>
     </div>
   );
+}
+
+function generateMCQs(title: string, description: string): MCQ[] {
+  const topics = description.split(', ');
+  const mcqs: MCQ[] = [];
+  const numMCQs = 8;
+  const numNumerical = 2;
+
+  // More specific question templates based on common NCERT chapter concepts
+  const mcqTemplates = [
+    (t: string) => `What is the fundamental principle underlying ${t}?`,
+    (t: string) => `Which of the following correctly defines ${t}?`,
+    (t: string) => `The term "${t.split(' ')[0]}" in this context refers to:`,
+    (t: string) => `Which statement accurately describes the role of ${t}?`,
+    (t: string) => `In the context of this chapter, ${t} is best characterized by:`,
+    (t: string) => `What is the primary function of ${t}?`,
+    (t: string) => `${t} is most closely associated with which concept?`,
+    (t: string) => `Which of the following is NOT a characteristic of ${t}?`,
+    (t: string) => `The study of ${t} primarily focuses on:`,
+    (t: string) => `Which example best demonstrates the application of ${t}?`,
+    (t: string) => `What happens when the principle of ${t} is applied?`,
+    (t: string) => `Which factor is most critical in determining ${t}?`,
+  ];
+
+  // Numerical question templates
+  const numericalTemplates = [
+    (t: string) => `Calculate the value of ${t} under standard conditions.`,
+    (t: string) => `Determine the numerical value of ${t} using the appropriate formula.`,
+    (t: string) => `Find the magnitude of ${t} in SI units.`,
+    (t: string) => `Compute the value of ${t} based on the given data.`,
+  ];
+
+  // Generate more realistic options based on the topic
+  function generateOptions(topic: string): { label: string; text: string }[] {
+    const labels = ['A', 'B', 'C', 'D'];
+    const correctIdx = Math.floor(Math.random() * 4);
+    
+    // Generate topic-specific options
+    const correctAnswers = [
+      `The fundamental definition of ${topic} as established in the NCERT textbook`,
+      `The core principle that ${topic} operates on, according to standard theory`,
+      `The key characteristic that distinguishes ${topic} from related concepts`,
+      `The primary mechanism through which ${topic} functions in this context`,
+    ];
+    
+    const incorrectOptions = [
+      `A common misconception about ${topic} that contradicts the textbook`,
+      `An outdated theory about ${topic} that has been superseded`,
+      `A concept related to ${topic} but not its defining feature`,
+      `An oversimplification of ${topic} that misses key details`,
+      `A confused definition mixing ${topic} with a different concept`,
+      `An extreme or incorrect interpretation of ${topic}`,
+    ];
+
+    return labels.map((label, idx) => {
+      if (idx === correctIdx) {
+        return { label, text: correctAnswers[Math.floor(Math.random() * correctAnswers.length)] };
+      } else {
+        return { label, text: incorrectOptions[Math.floor(Math.random() * incorrectOptions.length)] };
+      }
+    });
+  }
+
+  // Generate numerical questions based on the topic
+  function generateNumericalQuestions(topics: string[]): MCQ[] {
+    const numericalMCQs: MCQ[] = [];
+    
+    for (let i = 0; i < 2; i++) {
+      const topic = topics[i % topics.length] || 'key concepts';
+      const template = numericalTemplates[i % numericalTemplates.length];
+      const question = template(topic);
+      
+      // Generate a realistic numerical answer based on the topic
+      const baseValue = Math.floor(Math.random() * 1000) + 1;
+      const decimalPlaces = Math.random() > 0.5 ? 1 : (Math.random() > 0.5 ? 2 : 0);
+      const correctValue = decimalPlaces > 0 
+        ? parseFloat((baseValue + Math.random()).toFixed(decimalPlaces))
+        : baseValue;
+      
+      // Tolerance based on decimal places
+      const tolerance = decimalPlaces === 0 ? 0.5 : (decimalPlaces === 1 ? 0.05 : 0.005);
+      
+      numericalMCQs.push({
+        id: 0, // Will be set later
+        type: 'numerical',
+        question,
+        correctValue,
+        tolerance,
+        explanation: `The correct answer is ${correctValue}${tolerance > 0 ? ` ±${tolerance}` : ''}. This question tests your ability to apply the concepts related to ${topic}. Use the appropriate formula from the NCERT textbook and ensure proper unit conversion. Show all steps clearly in your working.`,
+      });
+    }
+    
+    return numericalMCQs;
+  }
+
+  // Generate standard MCQs
+  for (let i = 0; i < 8; i++) {
+    const topic = topics[i % topics.length] || 'key concepts';
+    const template = mcqTemplates[i % mcqTemplates.length];
+    const question = template(topic);
+    const options = generateOptions(topic);
+    const correctIdx = options.findIndex(opt => opt.text.includes('definition') || opt.text.includes('principle') || opt.text.includes('characteristic') || opt.text.includes('mechanism') || opt.text.includes('core principle') || opt.text.includes('distinguishes') || opt.text.includes('primary mechanism'));
+    const labels = ['A', 'B', 'C', 'D'];
+    const correctLabel = correctIdx >= 0 ? labels[correctIdx] : labels[0];
+
+    mcqs.push({
+      id: i + 1,
+      type: 'mcq',
+      question,
+      options,
+      correctAnswer: correctLabel,
+      explanation: `The correct answer is ${correctLabel}. This question tests your understanding of ${topic}, which is a key concept in "${title}". The explanation is based on the NCERT textbook definition. Review the relevant section in your textbook for a detailed understanding of this topic.`,
+    });
+  }
+
+  // Add numerical questions
+  const numericalQuestions = generateNumericalQuestions(topics);
+  numericalQuestions.forEach((nq, idx) => {
+    nq.id = mcqs.length + idx + 1;
+    mcqs.push(nq);
+  });
+
+  return mcqs;
 }

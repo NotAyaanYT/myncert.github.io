@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight, BookOpen, HelpCircle } from 'lucide-react';
 import { getClassBySlug, getSubjectBySlug, getSubjectVersion, getChaptersKey, SyllabusVersion } from '@/data/classes';
@@ -41,6 +40,15 @@ export default async function McqSubjectPage({ params, searchParams }: Props) {
   const chaptersKey = getChaptersKey(classSlug, subjectSlug, selectedVersion);
   const chapters = chaptersKey ? getChaptersForSubject(classSlug, subjectSlug, selectedVersion) : [];
 
+  // Pass only serializable data to the Client Component
+  const subjectData = {
+    id: subject.id,
+    name: subject.name,
+    slug: subject.slug,
+    versions: subject.versions,
+    defaultVersion: subject.defaultVersion,
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-12">
@@ -53,7 +61,7 @@ export default async function McqSubjectPage({ params, searchParams }: Props) {
         />
         <McqSubjectClient
           cls={cls}
-          subject={subject}
+          subject={subjectData}
           versionData={versionData}
           chapters={chapters}
           selectedVersion={(version as SyllabusVersion) || '2026-27'}
