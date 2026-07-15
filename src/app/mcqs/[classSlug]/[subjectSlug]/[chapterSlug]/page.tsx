@@ -582,13 +582,38 @@ function generateMCQs(title: string, description: string): MCQ[] {
       // Tolerance based on decimal places
       const tolerance = decimalPlaces === 0 ? 0.5 : (decimalPlaces === 1 ? 0.05 : 0.005);
       
+      // Generate options for numerical MCQ
+      const labels = ['A', 'B', 'C', 'D'];
+      const correctIdx = Math.floor(Math.random() * 4);
+      
+      // Generate plausible incorrect options
+      const generateIncorrectValue = () => {
+        const variation = correctValue * (0.1 + Math.random() * 0.4); // 10-50% variation
+        const sign = Math.random() > 0.5 ? 1 : -1;
+        const val = correctValue + sign * variation;
+        const dp = decimalPlaces > 0 ? decimalPlaces : 0;
+        return parseFloat(val.toFixed(dp));
+      };
+      
+      const options = labels.map((label, idx) => {
+        if (idx === correctIdx) {
+          return { label, text: correctValue.toString() };
+        } else {
+          return { label, text: generateIncorrectValue().toString() };
+        }
+      });
+      
+      const correctLabel = labels[correctIdx];
+      
       numericalMCQs.push({
         id: 0, // Will be set later
         type: 'numerical',
         question,
+        options,
         correctValue,
         tolerance,
-        explanation: `The correct answer is ${correctValue}${tolerance > 0 ? ` ±${tolerance}` : ''}. This question tests your ability to apply the concepts related to ${topic}. Use the appropriate formula from the NCERT textbook and ensure proper unit conversion. Show all steps clearly in your working.`,
+        correctAnswer: correctLabel,
+        explanation: `The correct answer is ${correctValue}. This question tests your ability to apply the concepts related to ${topic}. Use the appropriate formula from the NCERT textbook and ensure proper unit conversion. Show all steps clearly in your working.`,
       });
     }
     
