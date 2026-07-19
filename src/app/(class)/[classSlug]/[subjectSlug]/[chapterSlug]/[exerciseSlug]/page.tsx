@@ -22,9 +22,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!cls || !subject || !chapter || !exercise) return {};
   const key = `${classSlug}-${subjectSlug}-${chapterSlug}-${exerciseSlug}`;
   const questions = questionData[key] || [];
+  const questionCount = questions.length;
   return {
-    title: `NCERT Solutions for ${cls.name} ${subject.name} ${exercise.title} - Chapter ${chapter.chapterNumber}`,
-    description: `Get free NCERT Solutions for ${cls.name} ${subject.name} ${exercise.title} of Chapter ${chapter.chapterNumber}: ${chapter.title}. Step-by-step solutions for all ${questions.length} questions.`,
+    title: questionCount > 0
+      ? `NCERT Solutions for ${cls.name} ${subject.name} ${exercise.title} - Chapter ${chapter.chapterNumber}`
+      : `${cls.name} ${subject.name} ${exercise.title} - NCERT Solutions (Coming Soon)`,
+    description: questionCount > 0
+      ? `Get free NCERT Solutions for ${cls.name} ${subject.name} ${exercise.title} of Chapter ${chapter.chapterNumber}: ${chapter.title}. Step-by-step solutions for all ${questionCount} questions.`
+      : `Free NCERT Solutions for ${cls.name} ${subject.name} ${exercise.title} of Chapter ${chapter.chapterNumber}: ${chapter.title}. Detailed solutions are being added — check back soon!`,
   };
 }
 
@@ -76,10 +81,32 @@ export default async function ExercisePage({ params }: Props) {
         <AdContainer slot="1234567890" format="horizontal" />
 
         {questions.length === 0 ? (
-          <div className="text-center py-20 animate-fade-in">
-            <BookOpen className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-            <h2 className="text-2xl font-semibold text-gray-500 dark:text-gray-400">Questions Coming Soon</h2>
-            <p className="text-gray-400 dark:text-gray-500 mt-2">Detailed solutions are being added for this exercise.</p>
+          <div className="text-center py-16 animate-fade-in">
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-50 dark:bg-amber-900/20 ring-1 ring-amber-200 dark:ring-amber-800">
+              <BookOpen className="h-10 w-10 text-amber-500 dark:text-amber-400" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              Solutions Coming Soon
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto mb-6">
+              We&apos;re currently adding accurate NCERT solutions for this exercise. Check back soon for step-by-step answers to all questions.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href={`/${cls.slug}/${subject.slug}/${chapter.slug}`}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Chapter
+              </Link>
+              <Link
+                href={`/${cls.slug}/${subject.slug}`}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+              >
+                <ArrowRight className="h-4 w-4" />
+                Browse All Exercises
+              </Link>
+            </div>
           </div>
         ) : (
           <div className="space-y-8 mt-8">
