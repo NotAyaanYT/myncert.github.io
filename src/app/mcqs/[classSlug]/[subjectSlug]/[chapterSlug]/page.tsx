@@ -416,6 +416,11 @@ export default function McqChapterPage({
           <p className="text-gray-600 dark:text-gray-400">
             Test your knowledge of {chapter.title} with these {mcqs.length} multiple choice questions.
           </p>
+          <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+            <p className="text-sm text-amber-800 dark:text-amber-200">
+              <span className="font-semibold">📝 Practice Questions:</span> These are practice questions generated based on the chapter topic for self-assessment. They may not reflect actual NCERT exam patterns. Use NCERT textbook exercises for board exam preparation.
+            </p>
+          </div>
         </div>
 
         <div className="space-y-4">
