@@ -45,13 +45,13 @@ export default function NotFound() {
             <Search className="h-4 w-4" />
             Search Solutions
           </Link>
-          <button
-            onClick={() => window.history.back()}
+          <Link
+            href="/"
             className="flex items-center gap-2 px-6 py-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all font-medium"
           >
             <ArrowLeft className="h-4 w-4" />
-            Go Back
-          </button>
+            Go Home
+          </Link>
         </div>
 
         <div className="border-t border-gray-200 dark:border-gray-800 pt-8">
