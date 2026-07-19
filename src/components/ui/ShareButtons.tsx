@@ -1,6 +1,6 @@
 'use client';
 
-import { Share2, Globe, MessageCircle, Link as LinkIcon, Check, Printer } from 'lucide-react';
+import { Share2, Globe, MessageCircle, Link as LinkIcon, Check, Printer, Send } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -26,6 +26,12 @@ export function ShareButtons({ url, title, className }: ShareButtonsProps) {
       icon: MessageCircle,
       color: 'hover:bg-sky-500 hover:text-white',
     },
+    {
+      name: 'WhatsApp',
+      href: `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`,
+      icon: Send,
+      color: 'hover:bg-green-500 hover:text-white',
+    },
   ];
 
   const copyToClipboard = async () => {
@@ -41,7 +47,7 @@ export function ShareButtons({ url, title, className }: ShareButtonsProps) {
   const printPage = () => window.print();
 
   return (
-    <div className={cn('flex items-center gap-2', className)}>
+    <div className={cn('flex flex-wrap items-center gap-2', className)}>
       <span className="text-sm text-gray-500 dark:text-gray-400 mr-1">
         <Share2 className="h-4 w-4 inline mr-1" />
         Share:
@@ -53,7 +59,7 @@ export function ShareButtons({ url, title, className }: ShareButtonsProps) {
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
-            'p-2 rounded-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 transition-all',
+            'p-2 rounded-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hover:scale-110',
             link.color
           )}
           aria-label={`Share on ${link.name}`}
@@ -63,15 +69,17 @@ export function ShareButtons({ url, title, className }: ShareButtonsProps) {
       ))}
       <button
         onClick={copyToClipboard}
-        className="p-2 rounded-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
+        className="p-2 rounded-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hover:scale-110"
         aria-label="Copy link"
+        title="Copy link"
       >
         {copied ? <Check className="h-4 w-4 text-green-500" /> : <LinkIcon className="h-4 w-4" />}
       </button>
       <button
         onClick={printPage}
-        className="p-2 rounded-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
-        aria-label="Print"
+        className="p-2 rounded-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hover:scale-110"
+        aria-label="Print this page"
+        title="Print"
       >
         <Printer className="h-4 w-4" />
       </button>

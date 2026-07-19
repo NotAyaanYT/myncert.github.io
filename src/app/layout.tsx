@@ -6,6 +6,10 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import { ScrollToTop } from '@/components/ui/ScrollToTop';
+import { SkipToContent } from '@/components/ui/SkipToContent';
+import { CookieConsent } from '@/components/ui/CookieConsent';
+import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { siteConfig, CURRENT_ACADEMIC_YEAR } from '@/lib/constants';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
@@ -36,24 +40,43 @@ export const metadata: Metadata = {
     'CBSE',
     'Free Education',
     'India',
+    'NCERT Solutions Free',
+    'CBSE Class 6 Solutions',
+    'CBSE Class 7 Solutions',
+    'CBSE Class 8 Solutions',
+    'CBSE Class 9 Solutions',
+    'CBSE Class 10 Solutions',
+    'CBSE Class 11 Solutions',
+    'CBSE Class 12 Solutions',
   ],
-  authors: [{ name: siteConfig.author }],
+  authors: [{ name: siteConfig.author, url: siteConfig.url }],
   creator: siteConfig.author,
   publisher: siteConfig.author,
   metadataBase: new URL(siteConfig.url),
+  alternates: {
+    canonical: siteConfig.url,
+  },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
     siteName: siteConfig.name,
     title: siteConfig.name,
-    description: `Free NCERT Solutions for Classes 6-12 based on the official NCERT ${CURRENT_ACADEMIC_YEAR} syllabus. Step-by-step solutions for all subjects.`,
-    images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
+    description: `Free NCERT Solutions for Classes 6-12 based on the official NCERT ${CURRENT_ACADEMIC_YEAR} syllabus. Step-by-step solutions for all subjects including Mathematics, Science, English, Hindi, and Social Science.`,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: 'NCERT Solutions Hub - Free NCERT Solutions',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: siteConfig.name,
-    description: `Free NCERT Solutions for Classes 6-12 based on the official NCERT ${CURRENT_ACADEMIC_YEAR} syllabus.`,
+    description: `Free NCERT Solutions for Classes 6-12 based on the official NCERT ${CURRENT_ACADEMIC_YEAR} syllabus. Step-by-step solutions for all subjects.`,
     images: [siteConfig.ogImage],
+    site: '@ncertsolutionshub',
   },
   robots: {
     index: true,
@@ -69,6 +92,12 @@ export const metadata: Metadata = {
   verification: {
     google: 'YOUR_VERIFICATION_CODE',
   },
+  category: 'education',
+  classification: 'Education',
+  other: {
+    'geo.region': 'IN',
+    'geo.placename': 'India',
+  },
 };
 
 export default function RootLayout({
@@ -80,13 +109,32 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="google-adsense-account" content="ca-pub-7178910718902546" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <meta name="theme-color" content="#2563eb" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="NCERT Hub" />
+        <link rel="hreflang" href={siteConfig.url} hrefLang="en-in" />
+        <link rel="hreflang" href={siteConfig.url} hrefLang="en" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="preload" as="image" href="/images/hero-pattern.svg" />
       </head>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider>
+          <SkipToContent />
           <ProgressBar />
           <Header />
-          <main className="min-h-screen">{children}</main>
+          <main id="main-content" className="min-h-screen">
+            <ErrorBoundary>{children}</ErrorBoundary>
+          </main>
           <Footer />
+          <ScrollToTop />
+          <CookieConsent />
         </ThemeProvider>
 
         {/* Google Analytics */}

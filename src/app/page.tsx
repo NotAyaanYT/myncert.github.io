@@ -1,5 +1,6 @@
 import { HeroSection } from '@/components/home/HeroSection';
 import { ClassCards } from '@/components/home/ClassCards';
+import { StatsCounter } from '@/components/home/StatsCounter';
 import { PopularSubjects } from '@/components/home/PopularSubjects';
 import { WhyChooseUs } from '@/components/home/WhyChooseUs';
 import { FAQSection } from '@/components/home/FAQSection';
@@ -12,6 +13,7 @@ export default function HomePage() {
       <JsonLd data={organizationSchema()} />
       <HeroSection />
       <ClassCards />
+      <StatsCounter />
       <PopularSubjects />
       <WhyChooseUs />
       <FAQSection />

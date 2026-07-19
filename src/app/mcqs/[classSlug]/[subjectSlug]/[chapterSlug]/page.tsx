@@ -418,32 +418,6 @@ export default function McqChapterPage({
           </p>
         </div>
 
-        {allAnswered && (
-          <div className="mb-8 p-6 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl text-white animate-fade-in">
-            <div className="flex items-center justify-between flex-wrap gap-4">
-              <div>
-                <h3 className="text-xl font-bold mb-1">Quiz Complete!</h3>
-                <p className="text-teal-100">
-                  You scored <span className="text-2xl font-bold text-white">{score}</span> out of <span className="font-bold">{mcqs.length}</span>
-                </p>
-                <p className="text-teal-100 text-sm mt-1">
-                  {score === mcqs.length ? 'Perfect score! Excellent work!' :
-                   score >= mcqs.length * 0.7 ? 'Great job! Keep practicing.' :
-                   score >= mcqs.length * 0.5 ? 'Good effort! Review the topics you missed.' :
-                   'Keep practicing! Review the chapter and try again.'}
-                </p>
-              </div>
-              <button
-                onClick={resetQuiz}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-teal-700 rounded-xl font-semibold hover:bg-teal-50 transition-colors"
-              >
-                <RotateCcw className="h-4 w-4" />
-                Retry Quiz
-              </button>
-            </div>
-          </div>
-        )}
-
         <div className="space-y-4">
           {mcqs.map((mcq, index) => (
             <QuizCard

@@ -16,10 +16,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/disclaimer`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/dmca`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/sitemap`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.5 },
+    // Study resources index pages
     { url: `${baseUrl}/notes`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
-    { url: `${baseUrl}/sample-papers`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/revision-notes`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/important-questions`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${baseUrl}/mcqs`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/worksheets`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/formula-sheets`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/sample-papers`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${baseUrl}/previous-year-questions`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/chapter-tests`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/doubt`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.5 },
+    { url: `${baseUrl}/search`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.4 },
   ];
 
   const classPages: MetadataRoute.Sitemap = classData.map((cls) => ({
@@ -55,5 +63,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  return [...staticPages, ...classPages, ...subjectPages, ...chapterPages];
+  // Resource pages for each class
+  const resourceTypes = ['notes', 'revision-notes', 'important-questions', 'mcqs', 'worksheets', 'formula-sheets', 'sample-papers', 'previous-year-questions', 'chapter-tests'];
+  const resourcePages: MetadataRoute.Sitemap = classData.flatMap((cls) =>
+    resourceTypes.map((resource) => ({
+      url: `${baseUrl}/${resource}/${cls.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+    }))
+  );
+
+  // Doubt pages for each class
+  const doubtPages: MetadataRoute.Sitemap = classData.map((cls) => ({
+    url: `${baseUrl}/doubt/${cls.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.5,
+  }));
+
+  return [...staticPages, ...classPages, ...subjectPages, ...chapterPages, ...resourcePages, ...doubtPages];
 }
