@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="500" height="400">
+  <title>Perpendicular from Centre to a Chord</title>
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 13px; fill: #333; }
+      .step { font-family: Arial, sans-serif; font-size: 11px; fill: #555; }
+      .line-circle { stroke: #3498db; stroke-width: 2.5; fill: none; }
+      .line-chord { stroke: #2c3e50; stroke-width: 2.5; }
+      .line-perp { stroke: #e74c3c; stroke-width: 2; }
+      .line-radius { stroke: #27ae60; stroke-width: 1.5; stroke-dasharray: 4,3; }
+      .point-label { fill: #e74c3c; font-weight: bold; font-family: 'Times New Roman', serif; font-size: 15px; }
+      .angle-label { fill: #e67e22; font-size: 11px; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="250" y="25" text-anchor="middle" class="title" font-weight="bold">Perpendicular from Centre to Chord Bisects the Chord</text>
+
+  <!-- Circle -->
+  <circle cx="250" cy="210" r="150" class="line-circle"/>
+
+  <!-- Centre O -->
+  <circle cx="250" cy="210" r="3.5" fill="#e74c3c"/>
+  <text x="235" y="200" class="point-label">O</text>
+
+  <!-- Chord AB -->
+  <line x1="130" y1="300" x2="350" y2="125" class="line-chord"/>
+  <text x="115" y="315" class="point-label">A</text>
+  <text x="355" y="118" class="point-label">B</text>
+
+  <!-- Perpendicular OM from centre to chord -->
+  <line x1="250" y1="210" x2="265" y2="255" class="line-perp"/>
+  <text x="270" y="260" class="point-label">M</text>
+
+  <!-- Right angle mark at M -->
+  <rect x="255" y="232" width="10" height="10" fill="none" stroke="#e74c3c" stroke-width="1.2"/>
+
+  <!-- Radii OA and OB -->
+  <line x1="250" y1="210" x2="130" y2="300" class="line-radius"/>
+  <line x1="250" y1="210" x2="350" y2="125" class="line-radius"/>
+
+  <!-- Label: R on OA -->
+  <text x="170" y="270" fill="#27ae60" font-size="12" font-style="italic">R</text>
+  <text x="310" y="160" fill="#27ae60" font-size="12" font-style="italic">R</text>
+
+  <!-- Label: half-chord AM = BM -->
+  <text x="178" y="290" fill="#8e44ad" font-size="12" font-style="italic">AM = BM</text>
+
+  <!-- Steps -->
+  <text x="20" y="370" class="step">Theorem: OM ⟂ AB → AM = BM</text>
+  <text x="20" y="385" class="step">Proof: In right triangles OMA and OMB, OA = OB (radii), OM common → RHS congruence → AM = BM</text>
+</svg>

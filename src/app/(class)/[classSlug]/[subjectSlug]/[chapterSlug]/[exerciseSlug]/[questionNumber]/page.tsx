@@ -8,6 +8,7 @@ import { questionData } from '@/data/questions';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { CURRENT_ACADEMIC_YEAR } from '@/lib/constants';
+import { renderMarkdown } from '@/lib/markdown';
 
 export async function generateStaticParams() {
   const params: Array<{ classSlug: string; subjectSlug: string; chapterSlug: string; exerciseSlug: string; questionNumber: string }> = [];
@@ -203,9 +204,10 @@ export default async function QuestionPage({ params }: Props) {
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                   {question.title}
                 </h2>
-                <div className="text-gray-700 dark:text-gray-300 mt-2 leading-relaxed whitespace-pre-line">
-                  {question.content}
-                </div>
+                <div
+                  className="text-gray-700 dark:text-gray-300 mt-2 leading-relaxed prose prose-sm dark:prose-invert max-w-none"
+                  dangerouslySetInnerHTML={{ __html: await renderMarkdown(question.content) }}
+                />
               </div>
             </div>
           </div>
@@ -219,13 +221,10 @@ export default async function QuestionPage({ params }: Props) {
                 <h3 className="text-base font-semibold text-green-700 dark:text-green-400 mb-3">
                   Solution
                 </h3>
-                <div className="prose prose-sm dark:prose-invert max-w-none">
-                  {question.solution.split('\n').map((line, i) => (
-                    <p key={i} className="text-gray-700 dark:text-gray-300 leading-relaxed mb-1">
-                      {line}
-                    </p>
-                  ))}
-                </div>
+                <div
+                  className="prose prose-sm dark:prose-invert max-w-none"
+                  dangerouslySetInnerHTML={{ __html: await renderMarkdown(question.solution) }}
+                />
               </div>
             </div>
           </div>

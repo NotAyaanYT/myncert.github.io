@@ -268,7 +268,7 @@
     { id: 'ch9m-5', title: 'Im Up and Down and Round and Round', slug: 'im-up-and-down-and-round-and-round', chapterNumber: 5, description: 'Circles, chords, arcs, cyclicity of points' },
     { id: 'ch9m-6', title: 'Measuring Space: Perimeter and Area', slug: 'measuring-space-perimeter-and-area', chapterNumber: 6, description: 'Mensuration - perimeter, area, formulae' },
     { id: 'ch9m-7', title: 'The Mathematics of Maybe: Introduction to Probability', slug: 'the-mathematics-of-maybe-introduction-to-probability', chapterNumber: 7, description: 'Probability, randomness, empirical probability' },
-    { id: 'ch9m-8', title: 'Predicting What Comes Next: Exploring Sequences', slug: 'predicting-what-comes-next-exploring-sequences', chapterNumber: 8, description: 'Sequences, AP, GP, fractals' },
+    { id: 'ch9m-8', title: 'Predicting What Comes Next: Exploring Sequences and Progressions', slug: 'predicting-what-comes-next-exploring-sequences-and-progressions', chapterNumber: 8, description: 'Sequences, AP, GP, fractals' },
   ],
   'class-9-science': [
     { id: 'ch9s-1', title: 'Matter in Our Surroundings', slug: 'matter-in-our-surroundings', chapterNumber: 1, description: 'States of matter, physical and chemical changes' },
@@ -1421,7 +1421,7 @@ export const exerciseData: Record<string, Array<{id:string;title:string;slug:str
   'class-9-mathematics-orienting-yourself-the-use-of-coordinates': [
     { id: 'ex9m-1-1', title: 'Exercise 1.1', slug: 'exercise-1-1', exerciseNumber: 1.1 },
     { id: 'ex9m-1-2', title: 'Exercise 1.2', slug: 'exercise-1-2', exerciseNumber: 1.2 },
-    { id: 'ex9m-1-3', title: 'Exercise 1.3', slug: 'exercise-1-3', exerciseNumber: 1.3 },
+    { id: 'ex9m-1-4', title: 'End-of-Chapter Exercises', slug: 'end-of-chapter-exercises', exerciseNumber: 1.4 },
   ],
   'class-9-mathematics-introduction-to-linear-polynomials': [
     { id: 'ex9m-2-1', title: 'Exercise 2.1', slug: 'exercise-2-1', exerciseNumber: 2.1 },
@@ -1430,7 +1430,7 @@ export const exerciseData: Record<string, Array<{id:string;title:string;slug:str
     { id: 'ex9m-2-4', title: 'Exercise 2.4', slug: 'exercise-2-4', exerciseNumber: 2.4 },
     { id: 'ex9m-2-5', title: 'Exercise 2.5', slug: 'exercise-2-5', exerciseNumber: 2.5 },
     { id: 'ex9m-2-6', title: 'Exercise 2.6', slug: 'exercise-2-6', exerciseNumber: 2.6 },
-    { id: 'ex9m-2-7', title: 'End-of-Chapter Exercises', slug: 'exercise-2-7', exerciseNumber: 2.7 },
+    { id: 'ex9m-2-7', title: 'End-of-Chapter Exercises', slug: 'end-of-chapter-exercises', exerciseNumber: 2.7 },
   ],
   'class-9-mathematics-the-world-of-numbers': [
     { id: 'ex9m-3-1', title: 'Exercise 3.1', slug: 'exercise-3-1', exerciseNumber: 3.1 },
@@ -1438,13 +1438,13 @@ export const exerciseData: Record<string, Array<{id:string;title:string;slug:str
     { id: 'ex9m-3-3', title: 'Exercise 3.3', slug: 'exercise-3-3', exerciseNumber: 3.3 },
     { id: 'ex9m-3-4', title: 'Exercise 3.4', slug: 'exercise-3-4', exerciseNumber: 3.4 },
     { id: 'ex9m-3-5', title: 'Exercise 3.5', slug: 'exercise-3-5', exerciseNumber: 3.5 },
-    { id: 'ex9m-3-6', title: 'End-of-Chapter Exercises', slug: 'exercise-3-6', exerciseNumber: 3.6 },
+    { id: 'ex9m-3-6', title: 'End-of-Chapter Exercises', slug: 'end-of-chapter-exercises', exerciseNumber: 3.6 },
   ],
   'class-9-mathematics-measuring-space-perimeter-and-area': [
     { id: 'ex9m-6-1', title: 'Exercise 6.1', slug: 'exercise-6-1', exerciseNumber: 6.1 },
     { id: 'ex9m-6-2', title: 'Exercise 6.2', slug: 'exercise-6-2', exerciseNumber: 6.2 },
     { id: 'ex9m-6-3', title: 'Exercise 6.3', slug: 'exercise-6-3', exerciseNumber: 6.3 },
-    { id: 'ex9m-6-4', title: 'End-of-Chapter Exercises', slug: 'exercise-6-4', exerciseNumber: 6.4 },
+    { id: 'ex9m-6-4', title: 'End-of-Chapter Exercises', slug: 'end-of-chapter-exercises', exerciseNumber: 6.4 },
   ],
   'class-10-mathematics-real-numbers': [
     { id: 'ex10m-1-1', title: 'Exercise 1.1', slug: 'exercise-1-1', exerciseNumber: 1.1 },
@@ -1462,7 +1462,7 @@ export const exerciseData: Record<string, Array<{id:string;title:string;slug:str
     { id: 'ex9m-4-3', title: 'Exercise 4.3', slug: 'exercise-4-3', exerciseNumber: 4.3 },
     { id: 'ex9m-4-4', title: 'Exercise 4.4', slug: 'exercise-4-4', exerciseNumber: 4.4 },
     { id: 'ex9m-4-5', title: 'Exercise 4.5', slug: 'exercise-4-5', exerciseNumber: 4.5 },
-    { id: 'ex9m-4-6', title: 'End-of-Chapter Exercises', slug: 'exercise-4-6', exerciseNumber: 4.6 },
+    { id: 'ex9m-4-6', title: 'End-of-Chapter Exercises', slug: 'end-of-chapter-exercises', exerciseNumber: 4.6 },
   ],
   'class-9-mathematics-im-up-and-down-and-round-and-round': [
     { id: 'ex9m-5-1', title: 'Exercise 5.1', slug: 'exercise-5-1', exerciseNumber: 5.1 },
@@ -1471,20 +1471,20 @@ export const exerciseData: Record<string, Array<{id:string;title:string;slug:str
     { id: 'ex9m-5-4', title: 'Exercise 5.4', slug: 'exercise-5-4', exerciseNumber: 5.4 },
     { id: 'ex9m-5-5', title: 'Exercise 5.5', slug: 'exercise-5-5', exerciseNumber: 5.5 },
     { id: 'ex9m-5-6', title: 'Exercise 5.6', slug: 'exercise-5-6', exerciseNumber: 5.6 },
-    { id: 'ex9m-5-7', title: 'End-of-Chapter Exercises', slug: 'exercise-5-7', exerciseNumber: 5.7 },
+    { id: 'ex9m-5-7', title: 'End-of-Chapter Exercises', slug: 'end-of-chapter-exercises', exerciseNumber: 5.7 },
   ],
   'class-9-mathematics-the-mathematics-of-maybe-introduction-to-probability': [
     { id: 'ex9m-7-1', title: 'Exercise 7.1', slug: 'exercise-7-1', exerciseNumber: 7.1 },
     { id: 'ex9m-7-2', title: 'Exercise 7.2', slug: 'exercise-7-2', exerciseNumber: 7.2 },
     { id: 'ex9m-7-3', title: 'Exercise 7.3', slug: 'exercise-7-3', exerciseNumber: 7.3 },
     { id: 'ex9m-7-4', title: 'Exercise 7.4', slug: 'exercise-7-4', exerciseNumber: 7.4 },
-    { id: 'ex9m-7-5', title: 'End-of-Chapter Exercises', slug: 'exercise-7-5', exerciseNumber: 7.5 },
+    { id: 'ex9m-7-5', title: 'End-of-Chapter Exercises', slug: 'end-of-chapter-exercises', exerciseNumber: 7.5 },
   ],
-  'class-9-mathematics-predicting-what-comes-next-exploring-sequences': [
+  'class-9-mathematics-predicting-what-comes-next-exploring-sequences-and-progressions': [
     { id: 'ex9m-8-1', title: 'Exercise 8.1', slug: 'exercise-8-1', exerciseNumber: 8.1 },
     { id: 'ex9m-8-2', title: 'Exercise 8.2', slug: 'exercise-8-2', exerciseNumber: 8.2 },
     { id: 'ex9m-8-3', title: 'Exercise 8.3', slug: 'exercise-8-3', exerciseNumber: 8.3 },
-    { id: 'ex9m-8-4', title: 'End-of-Chapter Exercises', slug: 'exercise-8-4', exerciseNumber: 8.4 },
+    { id: 'ex9m-8-4', title: 'End-of-Chapter Exercises', slug: 'end-of-chapter-exercises', exerciseNumber: 8.4 },
   ],
   'class-10-mathematics-pair-of-linear-equations-in-two-variables': [
     { id: 'ex10m-3-1', title: 'Exercise 3.1', slug: 'exercise-3-1', exerciseNumber: 3.1 },

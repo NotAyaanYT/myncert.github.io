@@ -376,11 +376,11 @@ ch4_ex5 = [
 ch5_ex1 = [
     q('q9m-5-1-1', 1, 'Question 1',
         'Draw a triangle ABC with AB = 5 cm, ∠A = 70°, and ∠B = 60°. Construct the circumcircle of the triangle. What do you observe about the position of the circumcentre?',
-        'Construct triangle ABC with given measurements.\nDraw perpendicular bisectors of any two sides.\nTheir intersection is the circumcentre O.\n\nSince the triangle is acute (all angles < 90°), the circumcentre lies INSIDE the triangle.\n\nRadius of circumcircle = distance from O to any vertex.',
+        'Construct triangle ABC with given measurements.\nDraw perpendicular bisectors of any two sides.\nTheir intersection is the circumcentre O.\n\nSince the triangle is acute (all angles < 90°), the circumcentre lies INSIDE the triangle.\n\nRadius of circumcircle = distance from O to any vertex.\n\n![Step-by-step: Construction of circumcircle of an acute triangle](/diagrams/circumcircle-acute.svg)',
         'medium', ['mathematics', 'circles', 'circumcircle', 'construction']),
     q('q9m-5-1-2', 2, 'Question 2',
         'Draw triangle ABC with AB = 5 cm, ∠A = 100°, and AC = 4 cm. Construct the circumcircle. Where is the circumcentre located? Why?',
-        'Construct triangle ABC with given measurements.\n∠A = 100° makes this an obtuse triangle.\n\nFor an obtuse triangle, the circumcentre lies OUTSIDE the triangle.\n\nReason: The perpendicular bisectors of the sides intersect outside the triangle because the obtuse angle > 90° pushes the centre of the circumcircle beyond the side opposite the obtuse angle.',
+        'Construct triangle ABC with given measurements.\n∠A = 100° makes this an obtuse triangle.\n\nFor an obtuse triangle, the circumcentre lies OUTSIDE the triangle.\n\nReason: The perpendicular bisectors of the sides intersect outside the triangle because the obtuse angle > 90° pushes the centre of the circumcircle beyond the side opposite the obtuse angle.\n\n![Circumcircle of an obtuse triangle (circumcentre outside)](/diagrams/circumcircle-obtuse.svg)',
         'medium', ['mathematics', 'circles', 'circumcircle', 'obtuse-triangle']),
     q('q9m-5-1-3', 3, 'Question 3',
         'Draw a triangle with sides 6 cm, 7 cm, and 7 cm. Draw its circumcircle and measure the distance from the circumcentre to each vertex. What do you observe?',
@@ -406,7 +406,7 @@ ch5_ex2 = [
 ch5_ex3 = [
     q('q9m-5-3-1', 1, 'Question 1',
         'Prove the converse of Theorem 4: The perpendicular from the centre of a circle to a chord bisects the chord.',
-        'The original theorem (Theorem 4) states: The perpendicular from the centre to a chord bisects the chord.\n\nConverse to prove: The line from the centre to the midpoint of a chord is perpendicular to the chord.\n\nProof:\nLet AB be a chord with midpoint M. Join OM.\nIn triangles OMA and OMB:\n- OA = OB (radii)\n- OM = OM (common)\n- AM = BM (M is midpoint)\n\nBy SSS congruence, ΔOMA ≅ ΔOMB.\nTherefore, ∠OMA = ∠OMB.\nSince they form a linear pair, each = 90°.\nHence, OM ⟂ AB.',
+        'The original theorem (Theorem 4) states: The perpendicular from the centre to a chord bisects the chord.\n\nConverse to prove: The line from the centre to the midpoint of a chord is perpendicular to the chord.\n\nProof:\nLet AB be a chord with midpoint M. Join OM.\nIn triangles OMA and OMB:\n- OA = OB (radii)\n- OM = OM (common)\n- AM = BM (M is midpoint)\n\nBy SSS congruence, ΔOMA ≅ ΔOMB.\nTherefore, ∠OMA = ∠OMB.\nSince they form a linear pair, each = 90°.\nHence, OM ⟂ AB.\n\n![Diagram: Perpendicular from centre to chord](/diagrams/chord-perpendicular.svg)',
         'medium', ['mathematics', 'circles', 'perpendicular-bisector', 'proof']),
     q('q9m-5-3-2', 2, 'Question 2',
         'An isosceles triangle ABC is inscribed in a circle with AB = AC. Prove that the altitude from A passes through the centre of the circle.',
@@ -414,14 +414,14 @@ ch5_ex3 = [
         'medium', ['mathematics', 'circles', 'isosceles-triangle', 'altitude', 'centre']),
     q('q9m-5-3-3', 3, 'Question 3',
         'Two parallel chords of a circle of radius 5 cm are on opposite sides of the centre. Their lengths are 6 cm and 8 cm. Find the distance between the chords.',
-        'For a chord of length 6 cm:\nHalf-chord = 3 cm. Using Pythagoras: d₁² = 5² − 3² = 25 − 9 = 16 → d₁ = 4 cm.\n\nFor a chord of length 8 cm:\nHalf-chord = 4 cm. Using Pythagoras: d₂² = 5² − 4² = 25 − 16 = 9 → d₂ = 3 cm.\n\nSince the chords are on opposite sides of the centre, distance between them = d₁ + d₂ = 4 + 3 = 7 cm.',
+        'For a chord of length 6 cm:\nHalf-chord = 3 cm. Using Pythagoras: d₁² = 5² − 3² = 25 − 9 = 16 → d₁ = 4 cm.\n\nFor a chord of length 8 cm:\nHalf-chord = 4 cm. Using Pythagoras: d₂² = 5² − 4² = 25 − 16 = 9 → d₂ = 3 cm.\n\nSince the chords are on opposite sides of the centre, distance between them = d₁ + d₂ = 4 + 3 = 7 cm.\n\n![Diagram: Two parallel chords on opposite sides of centre](/diagrams/parallel-chords.svg)',
         'hard', ['mathematics', 'circles', 'parallel-chords', 'distance', 'pythagoras']),
 ]
 
 ch5_ex4 = [
     q('q9m-5-4-1', 1, 'Question 1',
         'Using the Baudhāyana–Pythagoras theorem, prove that equal chords of a circle are equidistant from the centre.',
-        'Let AB and CD be equal chords in a circle with centre O.\nDraw perpendiculars OM ⟂ AB and ON ⟂ CD.\n\nIn right triangles OMA and ONC:\n- OA = OC (radii)\n- AM = AB/2 and CN = CD/2. Since AB = CD, AM = CN.\n\nBy Pythagoras theorem:\nOM² = OA² − AM²\nON² = OC² − CN² = OA² − AM²\n\nTherefore, OM² = ON², so OM = ON.\nHence, equal chords are equidistant from the centre.',
+        'Let AB and CD be equal chords in a circle with centre O.\nDraw perpendiculars OM ⟂ AB and ON ⟂ CD.\n\nIn right triangles OMA and ONC:\n- OA = OC (radii)\n- AM = AB/2 and CN = CD/2. Since AB = CD, AM = CN.\n\nBy Pythagoras theorem:\nOM² = OA² − AM²\nON² = OC² − CN² = OA² − AM²\n\nTherefore, OM² = ON², so OM = ON.\nHence, equal chords are equidistant from the centre.\n\n![Diagram: Perpendicular from centre to chord](/diagrams/chord-perpendicular.svg)',
         'medium', ['mathematics', 'circles', 'chord', 'distance-from-centre', 'proof']),
     q('q9m-5-4-2', 2, 'Question 2',
         'In a circle, CE ⟂ AB and CH ⟂ DG. If CE = CH, prove that AB = DG.',
@@ -436,7 +436,7 @@ ch5_ex5 = [
         'medium', ['mathematics', 'circles', 'chord-length', 'pythagoras']),
     q('q9m-5-5-2', 2, 'Question 2',
         'Derive a formula for the length of a chord given the radius r and the perpendicular distance d from the centre.',
-        'Let AB be a chord with midpoint M. Join OM ⟂ AB and OA (radius).\nIn right triangle OMA:\nOA² = OM² + AM² (Pythagoras theorem)\nr² = d² + AM²\nAM = √(r² − d²)\n\nChord length AB = 2 × AM = 2√(r² − d²).\n\nTherefore, chord length = 2√(r² − d²).',
+        'Let AB be a chord with midpoint M. Join OM ⟂ AB and OA (radius).\nIn right triangle OMA:\nOA² = OM² + AM² (Pythagoras theorem)\nr² = d² + AM²\nAM = √(r² − d²)\n\nChord length AB = 2 × AM = 2√(r² − d²).\n\nTherefore, chord length = 2√(r² − d²).\n\n![Diagram: Perpendicular from centre to chord](/diagrams/chord-perpendicular.svg)',
         'medium', ['mathematics', 'circles', 'chord-length-formula', 'derivation']),
     q('q9m-5-5-3', 3, 'Question 3',
         'In a circle of radius 5 cm, two chords AB and CD are at distances d₁ = 2 cm and d₂ = 4 cm from the centre respectively. Is CD = 2AB? Justify.',
