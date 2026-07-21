@@ -48,16 +48,16 @@
   <text x="330" y="82" class="label">C</text>
   <text x="235" y="238" class="label">O</text>
 
-  <!-- Right angle mark at C (small square) -->
+  <!-- Right angle mark at C (small square aligned with CA and CB) -->
   <!-- At point C(325,90), the lines are CA and CB.
-       CA direction: (100-325, 220-90) = (-225, 130)
-       CB direction: (400-325, 220-90) = (75, 130)
-       These are perpendicular if dot product = 0: -225*75 + 130*130 = -16875 + 16900 ≈ 0 ✓
-       Right angle square at C, 15px arms -->
-  <polygon points="325,90 310,105 325,120 340,105" fill="none" stroke="#e74c3c" stroke-width="1.5"/>
+       CA direction: (100-325, 220-90) = (-225, 130), unit ≈ (-0.866, 0.5)
+       CB direction: (400-325, 220-90) = (75, 130), unit ≈ (0.5, 0.866)
+       Dot product: -225·75 + 130·130 = 0 ✓ (perpendicular)
+       Right angle square at C, s = 15px, aligned with CA and CB -->
+  <polygon points="325,90 312,97.5 319.5,110.5 332.5,103" fill="none" stroke="#e74c3c" stroke-width="1.5"/>
 
-  <!-- Angle arc at C -->
-  <path d="M 312,100 A 20,20 0 0,1 338,100" fill="none" class="angle-arc"/>
+  <!-- Angle arc at C (from CB direction 60° to CA direction 150°, 90° span) -->
+  <path d="M 335,107.3 A 20,20 0 0,0 307.7,100" fill="none" class="angle-arc"/>
 
   <!-- 90° label -->
   <text x="322" y="118" class="angle-label">90°</text>
