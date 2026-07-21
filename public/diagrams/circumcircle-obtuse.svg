@@ -1,53 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 450" width="500" height="450">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
   <title>Circumcircle of an Obtuse Triangle</title>
   <defs>
     <style>
-      .label { font-family: 'Times New Roman', serif; font-size: 14px; }
       .title { font-family: Arial, sans-serif; font-size: 13px; fill: #333; }
       .step { font-family: Arial, sans-serif; font-size: 11px; fill: #555; }
-      .dot { fill: #e74c3c; }
-      .line-side { stroke: #2c3e50; stroke-width: 2; }
-      .line-circle { stroke: #3498db; stroke-width: 2; fill: none; }
-      .line-bisector { stroke: #e67e22; stroke-width: 1.5; stroke-dasharray: 4,4; }
-      .point-label { fill: #e74c3c; font-weight: bold; }
+      .line-triangle { stroke: #2c3e50; stroke-width: 2.5; }
+      .line-circle { stroke: #3498db; stroke-width: 2.5; fill: none; }
+      .line-bisector { stroke: #e67e22; stroke-width: 1.5; stroke-dasharray: 5,4; }
+      .point-label { fill: #e74c3c; font-weight: bold; font-family: 'Times New Roman', serif; font-size: 16px; }
+      .label { fill: #e74c3c; font-weight: bold; font-size: 15px; }
     </style>
   </defs>
 
   <!-- Title -->
-  <text x="250" y="25" text-anchor="middle" class="title" font-weight="bold">Circumcircle of an Obtuse Triangle (∠A = 100°)</text>
+  <text x="250" y="25" text-anchor="middle" class="title" font-weight="bold">Circumcircle of an Obtuse Triangle</text>
 
-  <!-- Obtuse triangle ABC (∠A ≈ 100°) -->
-  <polygon points="260,130 100,360 400,360" fill="rgba(231,76,60,0.06)" stroke="#2c3e50" stroke-width="2.5"/>
+  <!-- Obtuse triangle ABC: A(130,370), B(370,370), C(250,280) -->
+  <!-- ∠C ≈ 106.3° > 90° -->
+  <polygon points="130,370 370,370 250,280" fill="rgba(231,76,60,0.06)" stroke="none"/>
 
-  <!-- Sides -->
-  <line x1="100" y1="360" x2="400" y2="360" class="line-side"/>
-  <line x1="400" y1="360" x2="260" y2="130" class="line-side"/>
-  <line x1="260" y1="130" x2="100" y2="360" class="line-side"/>
+  <!-- Triangle sides -->
+  <line x1="130" y1="370" x2="370" y2="370" class="line-triangle"/>
+  <line x1="370" y1="370" x2="250" y2="280" class="line-triangle"/>
+  <line x1="250" y1="280" x2="130" y2="370" class="line-triangle"/>
 
-  <!-- Perpendicular bisector of AB -->
-  <line x1="180" y1="245" x2="280" y2="145" class="line-bisector"/>
-  <!-- Perpendicular bisector of BC -->
-  <line x1="250" y1="270" x2="250" y2="390" class="line-bisector"/>
+  <!-- Perpendicular bisector of AB (vertical at x=250, from y=280 to y=420) -->
+  <line x1="250" y1="280" x2="250" y2="420" class="line-bisector"/>
 
-  <!-- Circumcentre O (outside the triangle!) -->
-  <circle cx="270" cy="180" r="4" fill="#e74c3c"/>
-  <text x="278" y="175" class="point-label" font-size="15">O</text>
-  <line x1="270" y1="180" x2="270" y2="175" stroke="#e74c3c" stroke-width="1"/>
+  <!-- Perpendicular bisector of BC through M_BC(310,325), slope = -4/3 -->
+  <!-- From (344, 280) to (254, 400) -->
+  <line x1="344" y1="280" x2="254" y2="400" class="line-bisector"/>
 
-  <!-- Circumcircle (large, centre outside triangle) -->
-  <circle cx="270" cy="180" r="195" class="line-circle"/>
+  <!-- Perpendicular bisector of AC through M_AC(190,325), slope = 4/3 -->
+  <!-- From (156, 280) to (246, 400) -->
+  <line x1="156" y1="280" x2="246" y2="400" class="line-bisector"/>
+
+  <!-- Circumcentre O(250, 405) — OUTSIDE the triangle! -->
+  <circle cx="250" cy="405" r="4" fill="#e74c3c"/>
+  <text x="258" y="400" class="point-label">O</text>
+
+  <!-- Circumcircle: centre O(250, 405), radius 125 -->
+  <circle cx="250" cy="405" r="125" class="line-circle"/>
+
+  <!-- Midpoint marks on sides -->
+  <!-- AB midpoint (250, 370) -->
+  <line x1="245" y1="370" x2="245" y2="377" stroke="#e67e22" stroke-width="2"/>
+  <line x1="255" y1="370" x2="255" y2="377" stroke="#e67e22" stroke-width="2"/>
+  <!-- BC midpoint (310, 325) -->
+  <line x1="310" y1="320" x2="317" y2="323" stroke="#e67e22" stroke-width="2"/>
+  <line x1="307" y1="328" x2="314" y2="331" stroke="#e67e22" stroke-width="2"/>
+  <!-- AC midpoint (190, 325) -->
+  <line x1="190" y1="320" x2="183" y2="323" stroke="#e67e22" stroke-width="2"/>
+  <line x1="193" y1="328" x2="186" y2="331" stroke="#e67e22" stroke-width="2"/>
 
   <!-- Vertex labels -->
-  <text x="85" y="375" class="point-label" font-size="16">A</text>
-  <text x="408" y="375" class="point-label" font-size="16">B</text>
-  <text x="250" y="118" class="point-label" font-size="16">C</text>
+  <text x="115" y="385" class="label">A</text>
+  <text x="378" y="385" class="label">B</text>
+  <text x="240" y="273" class="label">C</text>
 
-  <!-- Obtuse angle arc -->
-  <path d="M 190,330 A 70,70 0 0,0 330,330" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="3,3"/>
-  <text x="245" y="345" fill="#e74c3c" font-size="12">100°</text>
+  <!-- Obtuse angle arc at C -->
+  <path d="M 228,300 A 22,22 0 0,0 278,300" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="248" y="310" fill="#e74c3c" font-size="11">106°</text>
 
-  <!-- Note about obtuse circumcentre -->
-  <text x="20" y="420" class="step">Step 1: Draw obtuse triangle ABC with ∠A &gt; 90°</text>
-  <text x="20" y="435" class="step">Step 2: Draw perpendicular bisectors of two sides</text>
-  <text x="20" y="450" class="step">Step 3: Perpendicular bisectors intersect OUTSIDE the triangle → O outside</text>
+  <!-- Note -->
+  <text x="20" y="470" class="step">Key Point: For an obtuse triangle, the circumcentre O lies outside the triangle.</text>
+  <text x="20" y="485" class="step">The circumcircle still passes through all three vertices A, B, C.</text>
 </svg>
