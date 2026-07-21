@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="500" height="400">
+  <title>Angle in a Semicircle — ∠ACB = 90°</title>
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 14px; fill: #333; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 11px; fill: #666; }
+      .circle { stroke: #2980b9; stroke-width: 2.5; fill: none; }
+      .diameter { stroke: #e74c3c; stroke-width: 2.5; }
+      .radius { stroke: #27ae60; stroke-width: 1.5; stroke-dasharray: 6,3; }
+      .chord { stroke: #8e44ad; stroke-width: 2; }
+      .point { fill: #2c3e50; }
+      .label { font-family: 'Times New Roman', serif; font-size: 16px; font-weight: bold; fill: #2c3e50; }
+      .angle-arc { fill: none; stroke: #e67e22; stroke-width: 1.5; }
+      .angle-label { font-family: 'Times New Roman', serif; font-size: 14px; font-style: italic; fill: #e67e22; }
+      .note { font-family: Arial, sans-serif; font-size: 10px; fill: #888; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="250" y="25" text-anchor="middle" class="title" font-weight="bold">Angle in a Semicircle is 90°</text>
+  <text x="250" y="42" text-anchor="middle" class="subtitle">Theorem 9 Corollary: Angle subtended by a diameter is always 90°</text>
+
+  <!-- Circle with centre O at (250, 220), radius 150 -->
+  <!-- Circle -->
+  <circle cx="250" cy="220" r="150" class="circle"/>
+
+  <!-- Diameter AB (horizontal through centre) -->
+  <!-- A = (100, 220), B = (400, 220) -->
+  <line x1="100" y1="220" x2="400" y2="220" class="diameter"/>
+
+  <!-- Point C on the upper semicircle at 60° from horizontal -->
+  <!-- C = (250 + 150*cos(60°), 220 - 150*sin(60°))
+        = (250 + 75, 220 - 129.9) = (325, 90.1) -->
+  <circle cx="325" cy="90" r="4" class="point"/>
+
+  <!-- Radii OA, OB, OC -->
+  <line x1="250" y1="220" x2="100" y2="220" class="radius"/>
+  <line x1="250" y1="220" x2="400" y2="220" class="radius"/>
+  <line x1="250" y1="220" x2="325" y2="90" class="radius"/>
+
+  <!-- Chords AC and BC (forming triangle ABC) -->
+  <line x1="100" y1="220" x2="325" y2="90" class="chord"/>
+  <line x1="400" y1="220" x2="325" y2="90" class="chord"/>
+
+  <!-- Vertex labels -->
+  <text x="85" y="228" class="label">A</text>
+  <text x="405" y="228" class="label">B</text>
+  <text x="330" y="82" class="label">C</text>
+  <text x="235" y="238" class="label">O</text>
+
+  <!-- Right angle mark at C (small square) -->
+  <!-- At point C(325,90), the lines are CA and CB.
+       CA direction: (100-325, 220-90) = (-225, 130)
+       CB direction: (400-325, 220-90) = (75, 130)
+       These are perpendicular if dot product = 0: -225*75 + 130*130 = -16875 + 16900 ≈ 0 ✓
+       Right angle square at C, 15px arms -->
+  <polygon points="325,90 310,105 325,120 340,105" fill="none" stroke="#e74c3c" stroke-width="1.5"/>
+
+  <!-- Angle arc at C -->
+  <path d="M 312,100 A 20,20 0 0,1 338,100" fill="none" class="angle-arc"/>
+
+  <!-- 90° label -->
+  <text x="322" y="118" class="angle-label">90°</text>
+
+  <!-- Explanation -->
+  <text x="250" y="410" text-anchor="middle" class="note">∠AOB = 180° (straight line) → ∠ACB = ½ × 180° = 90°</text>
+  <text x="250" y="425" text-anchor="middle" class="note">OA = OB = OC = radius, so △AOB and △BOC are isosceles</text>
+</svg>

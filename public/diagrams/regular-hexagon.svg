@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 480" width="520" height="480">
+  <title>Regular Hexagon Inscribed in a Circle</title>
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 14px; fill: #333; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 11px; fill: #666; }
+      .circle { stroke: #2980b9; stroke-width: 2.5; fill: none; }
+      .hexagon { stroke: #e74c3c; stroke-width: 2.5; fill: #fadbd8; opacity: 0.3; }
+      .radius { stroke: #27ae60; stroke-width: 1.5; stroke-dasharray: 6,3; }
+      .perpendicular { stroke: #8e44ad; stroke-width: 1.5; }
+      .point { fill: #2c3e50; }
+      .label { font-family: 'Times New Roman', serif; font-size: 15px; font-weight: bold; fill: #2c3e50; }
+      .label-sm { font-family: 'Times New Roman', serif; font-size: 12px; fill: #555; }
+      .note { font-family: Arial, sans-serif; font-size: 10px; fill: #888; }
+      .right-angle { fill: none; stroke: #8e44ad; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="260" y="25" text-anchor="middle" class="title" font-weight="bold">Regular Hexagon Inscribed in a Circle</text>
+  <text x="260" y="42" text-anchor="middle" class="subtitle">Each side = radius r | Central angle = 60° | Distance from centre = (√3/2)r</text>
+
+  <!-- Circle with centre O at (260, 240), radius 160 -->
+  <circle cx="260" cy="240" r="160" class="circle"/>
+
+  <!-- Hexagon vertices at 0°, 60°, 120°, 180°, 240°, 300° -->
+  <!-- V0: 0°   → (420, 240) -->
+  <!-- V1: 60°  → (260+160*cos60°, 240-160*sin60°) = (340, 101.4) -->
+  <!-- V2: 120° → (260-160*cos60°, 240-160*sin60°) = (180, 101.4) -->
+  <!-- V3: 180° → (100, 240) -->
+  <!-- V4: 240° → (180, 378.6) -->
+  <!-- V5: 300° → (340, 378.6) -->
+
+  <!-- Hexagon -->
+  <polygon points="420,240 340,101.4 180,101.4 100,240 180,378.6 340,378.6" class="hexagon"/>
+
+  <!-- Radii -->
+  <line x1="260" y1="240" x2="420" y2="240" class="radius"/>
+  <line x1="260" y1="240" x2="340" y2="101.4" class="radius"/>
+  <line x1="260" y1="240" x2="180" y2="101.4" class="radius"/>
+  <line x1="260" y1="240" x2="100" y2="240" class="radius"/>
+  <line x1="260" y1="240" x2="180" y2="378.6" class="radius"/>
+  <line x1="260" y1="240" x2="340" y2="378.6" class="radius"/>
+
+  <!-- Centre O -->
+  <circle cx="260" cy="240" r="3" class="point"/>
+
+  <!-- Vertex labels -->
+  <text x="425" y="245" class="label">A</text>
+  <text x="345" y="95" class="label">B</text>
+  <text x="170" y="95" class="label">C</text>
+  <text x="85" y="245" class="label">D</text>
+  <text x="170" y="395" class="label">E</text>
+  <text x="345" y="395" class="label">F</text>
+
+  <!-- Centre label -->
+  <text x="245" y="260" class="label">O</text>
+
+  <!-- Central angle AOB = 60° arc -->
+  <path d="M 370,200 A 55,55 0 0,0 385,220" fill="none" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="368" y="195" class="label-sm" fill="#e67e22">60°</text>
+
+  <!-- Side AB annotation (side = r) -->
+  <text x="390" y="160" class="label-sm" fill="#e74c3c">AB = r</text>
+
+  <!-- Perpendicular from O to side AB (OM) -->
+  <!-- Midpoint M of AB: ((420+340)/2, (240+101.4)/2) = (380, 170.7) -->
+  <line x1="260" y1="240" x2="380" y2="170.7" class="perpendicular"/>
+  <!-- Right angle mark at M -->
+  <polygon points="375,176 383,171 388,179" fill="none" stroke="#8e44ad" stroke-width="1"/>
+
+  <!-- M label -->
+  <text x="385" y="168" class="label-sm" fill="#8e44ad">M</text>
+
+  <!-- OM distance annotation -->
+  <text x="300" y="195" class="label-sm" fill="#8e44ad">OM = (√3/2)r</text>
+
+  <!-- Explanation note -->
+  <text x="260" y="445" text-anchor="middle" class="note">△OAB is equilateral because OA = OB = r and ∠AOB = 60°</text>
+  <text x="260" y="460" text-anchor="middle" class="note">Side AB = r, Distance OM = √(r² − (r/2)²) = (√3/2)r</text>
+</svg>

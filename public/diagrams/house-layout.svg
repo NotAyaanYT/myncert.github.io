@@ -1,0 +1,297 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 780" width="800" height="780">
+  <title>Fig 1.5 — Reiaan's House Layout with Coordinate Grid</title>
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 14px; fill: #333; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 11px; fill: #666; }
+      .grid { stroke: #ddd; stroke-width: 0.6; }
+      .axis { stroke: #2c3e50; stroke-width: 2.5; }
+      .tick { stroke: #2c3e50; stroke-width: 1; }
+      .room-fill { fill: none; stroke-width: 2.5; }
+      .bedroom { stroke: #2980b9; fill: #ebf5fb; }
+      .bathroom { stroke: #8e44ad; fill: #f4ecf7; }
+      .dining { stroke: #27ae60; fill: #eafaf1; }
+      .shower { stroke: #e67e22; fill: #fdf2e9; }
+      .wardrobe { stroke: #7f8c8d; fill: #f2f3f4; }
+      .table { stroke: #c0392b; fill: #fadbd8; }
+      .washbasin { stroke: #16a085; fill: #e8f8f5; }
+      .toilet { stroke: #d35400; fill: #fbeee6; }
+      .dining-table { stroke: #2c3e50; fill: #d5dbdb; }
+      .point { fill: #e74c3c; }
+      .label-room { font-family: Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #2c3e50; }
+      .label-coord { font-family: 'Times New Roman', serif; font-size: 10px; fill: #555; }
+      .label-vertex { font-family: 'Times New Roman', serif; font-size: 12px; font-weight: bold; fill: #2c3e50; }
+      .label-axis { font-family: 'Times New Roman', serif; font-size: 14px; font-style: italic; fill: #2c3e50; }
+      .label-tick { font-size: 9px; fill: #555; }
+      .door { stroke: #8B4513; stroke-width: 3; stroke-dasharray: 5,3; }
+      .legend-text { font-family: Arial, sans-serif; font-size: 8px; fill: #555; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="22" text-anchor="middle" class="title" font-weight="bold">Fig 1.5 — Reiaan's House Layout</text>
+  <text x="400" y="38" text-anchor="middle" class="subtitle">Coordinate grid showing rooms, furniture, and fixtures</text>
+
+  <!-- Coordinate system:
+       x range: -7 to 13, y range: -16 to 10
+       Origin O at pixel (220, 400)
+       Scale: 24px per unit
+       x_px = 220 + n*24
+       y_px = 400 - n*24  (positive y up, negative y down)
+  -->
+
+  <!-- Grid background -->
+  <!-- Vertical grid lines x = -7 to 13 -->
+  <g class="grid">
+    <line x1="52" y1="40" x2="52" y2="784"/><line x1="76" y1="40" x2="76" y2="784"/>
+    <line x1="100" y1="40" x2="100" y2="784"/><line x1="124" y1="40" x2="124" y2="784"/>
+    <line x1="148" y1="40" x2="148" y2="784"/><line x1="172" y1="40" x2="172" y2="784"/>
+    <line x1="196" y1="40" x2="196" y2="784"/><line x1="220" y1="40" x2="220" y2="784"/>
+    <line x1="244" y1="40" x2="244" y2="784"/><line x1="268" y1="40" x2="268" y2="784"/>
+    <line x1="292" y1="40" x2="292" y2="784"/><line x1="316" y1="40" x2="316" y2="784"/>
+    <line x1="340" y1="40" x2="340" y2="784"/><line x1="364" y1="40" x2="364" y2="784"/>
+    <line x1="388" y1="40" x2="388" y2="784"/><line x1="412" y1="40" x2="412" y2="784"/>
+    <line x1="436" y1="40" x2="436" y2="784"/><line x1="460" y1="40" x2="460" y2="784"/>
+    <line x1="484" y1="40" x2="484" y2="784"/><line x1="508" y1="40" x2="508" y2="784"/>
+    <line x1="532" y1="40" x2="532" y2="784"/>
+  </g>
+  <!-- Horizontal grid lines y = -15 to 9 -->
+  <g class="grid">
+    <line x1="52" y1="760" x2="532" y2="760"/><line x1="52" y1="736" x2="532" y2="736"/>
+    <line x1="52" y1="712" x2="532" y2="712"/><line x1="52" y1="688" x2="532" y2="688"/>
+    <line x1="52" y1="664" x2="532" y2="664"/><line x1="52" y1="640" x2="532" y2="640"/>
+    <line x1="52" y1="616" x2="532" y2="616"/><line x1="52" y1="592" x2="532" y2="592"/>
+    <line x1="52" y1="568" x2="532" y2="568"/><line x1="52" y1="544" x2="532" y2="544"/>
+    <line x1="52" y1="520" x2="532" y2="520"/><line x1="52" y1="496" x2="532" y2="496"/>
+    <line x1="52" y1="472" x2="532" y2="472"/><line x1="52" y1="448" x2="532" y2="448"/>
+    <line x1="52" y1="424" x2="532" y2="424"/><line x1="52" y1="400" x2="532" y2="400"/>
+    <line x1="52" y1="376" x2="532" y2="376"/><line x1="52" y1="352" x2="532" y2="352"/>
+    <line x1="52" y1="328" x2="532" y2="328"/><line x1="52" y1="304" x2="532" y2="304"/>
+    <line x1="52" y1="280" x2="532" y2="280"/><line x1="52" y1="256" x2="532" y2="256"/>
+    <line x1="52" y1="232" x2="532" y2="232"/><line x1="52" y1="208" x2="532" y2="208"/>
+    <line x1="52" y1="184" x2="532" y2="184"/><line x1="52" y1="160" x2="532" y2="160"/>
+  </g>
+
+  <!-- Axes -->
+  <line x1="52" y1="400" x2="545" y2="400" class="axis"/>
+  <line x1="220" y1="160" x2="220" y2="770" class="axis"/>
+  <polygon points="545,400 533,394 533,406" fill="#2c3e50"/>
+  <polygon points="220,160 214,172 226,172" fill="#2c3e50"/>
+  <text x="555" y="404" class="label-axis">x</text>
+  <text x="222" y="152" class="label-axis">y</text>
+
+  <!-- Origin label -->
+  <text x="212" y="416" class="label-vertex">O</text>
+
+  <!-- Tick marks on x-axis -->
+  <g class="tick">
+    <line x1="76" y1="395" x2="76" y2="405"/><text x="67" y="418" class="label-tick">−6</text>
+    <line x1="100" y1="395" x2="100" y2="405"/><text x="93" y="418" class="label-tick">−5</text>
+    <line x1="124" y1="395" x2="124" y2="405"/><text x="117" y="418" class="label-tick">−4</text>
+    <line x1="148" y1="395" x2="148" y2="405"/><text x="141" y="418" class="label-tick">−3</text>
+    <line x1="172" y1="395" x2="172" y2="405"/><text x="165" y="418" class="label-tick">−2</text>
+    <line x1="196" y1="395" x2="196" y2="405"/><text x="189" y="418" class="label-tick">−1</text>
+    <line x1="244" y1="395" x2="244" y2="405"/><text x="239" y="418" class="label-tick">1</text>
+    <line x1="268" y1="395" x2="268" y2="405"/><text x="263" y="418" class="label-tick">2</text>
+    <line x1="292" y1="395" x2="292" y2="405"/><text x="287" y="418" class="label-tick">3</text>
+    <line x1="316" y1="395" x2="316" y2="405"/><text x="311" y="418" class="label-tick">4</text>
+    <line x1="340" y1="395" x2="340" y2="405"/><text x="335" y="418" class="label-tick">5</text>
+    <line x1="364" y1="395" x2="364" y2="405"/><text x="359" y="418" class="label-tick">6</text>
+    <line x1="388" y1="395" x2="388" y2="405"/><text x="383" y="418" class="label-tick">7</text>
+    <line x1="412" y1="395" x2="412" y2="405"/><text x="407" y="418" class="label-tick">8</text>
+    <line x1="436" y1="395" x2="436" y2="405"/><text x="431" y="418" class="label-tick">9</text>
+    <line x1="460" y1="395" x2="460" y2="405"/><text x="455" y="418" class="label-tick">10</text>
+    <line x1="484" y1="395" x2="484" y2="405"/><text x="479" y="418" class="label-tick">11</text>
+    <line x1="508" y1="395" x2="508" y2="405"/><text x="503" y="418" class="label-tick">12</text>
+  </g>
+
+  <!-- Tick marks on y-axis -->
+  <g class="tick">
+    <line x1="215" y1="160" x2="225" y2="160"/><text x="202" y="164" class="label-tick">10</text>
+    <line x1="215" y1="184" x2="225" y2="184"/><text x="204" y="188" class="label-tick">9</text>
+    <line x1="215" y1="208" x2="225" y2="208"/><text x="204" y="212" class="label-tick">8</text>
+    <line x1="215" y1="232" x2="225" y2="232"/><text x="204" y="236" class="label-tick">7</text>
+    <line x1="215" y1="256" x2="225" y2="256"/><text x="204" y="260" class="label-tick">6</text>
+    <line x1="215" y1="280" x2="225" y2="280"/><text x="204" y="284" class="label-tick">5</text>
+    <line x1="215" y1="304" x2="225" y2="304"/><text x="204" y="308" class="label-tick">4</text>
+    <line x1="215" y1="328" x2="225" y2="328"/><text x="204" y="332" class="label-tick">3</text>
+    <line x1="215" y1="352" x2="225" y2="352"/><text x="204" y="356" class="label-tick">2</text>
+    <line x1="215" y1="376" x2="225" y2="376"/><text x="204" y="380" class="label-tick">1</text>
+    <line x1="215" y1="424" x2="225" y2="424"/><text x="204" y="428" class="label-tick">−1</text>
+    <line x1="215" y1="448" x2="225" y2="448"/><text x="204" y="452" class="label-tick">−2</text>
+    <line x1="215" y1="472" x2="225" y2="472"/><text x="204" y="476" class="label-tick">−3</text>
+    <line x1="215" y1="496" x2="225" y2="496"/><text x="204" y="500" class="label-tick">−4</text>
+    <line x1="215" y1="520" x2="225" y2="520"/><text x="204" y="524" class="label-tick">−5</text>
+    <line x1="215" y1="544" x2="225" y2="544"/><text x="204" y="548" class="label-tick">−6</text>
+    <line x1="215" y1="568" x2="225" y2="568"/><text x="204" y="572" class="label-tick">−7</text>
+    <line x1="215" y1="592" x2="225" y2="592"/><text x="204" y="596" class="label-tick">−8</text>
+    <line x1="215" y1="616" x2="225" y2="616"/><text x="204" y="620" class="label-tick">−9</text>
+    <line x1="215" y1="640" x2="225" y2="640"/><text x="200" y="644" class="label-tick">−10</text>
+    <line x1="215" y1="664" x2="225" y2="664"/><text x="200" y="668" class="label-tick">−11</text>
+    <line x1="215" y1="688" x2="225" y2="688"/><text x="200" y="692" class="label-tick">−12</text>
+    <line x1="215" y1="712" x2="225" y2="712"/><text x="200" y="716" class="label-tick">−13</text>
+    <line x1="215" y1="736" x2="225" y2="736"/><text x="200" y="740" class="label-tick">−14</text>
+    <line x1="215" y1="760" x2="225" y2="760"/><text x="200" y="764" class="label-tick">−15</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- DINING ROOM: P(-6,0), A(12,0), Q(12,-15), S(-6,-15) -->
+  <!-- ================================================================ -->
+  <polygon points="76,400 508,400 508,760 76,760" class="dining" opacity="0.4"/>
+  <polygon points="76,400 508,400 508,760 76,760" class="room-fill dining"/>
+
+  <!-- ================================================================ -->
+  <!-- BEDROOM (Room OABC): O(0,0), A(12,0), B(12,9), C(0,9) -->
+  <!-- ================================================================ -->
+  <polygon points="220,400 508,400 508,184 220,184" class="bedroom" opacity="0.4"/>
+  <polygon points="220,400 508,400 508,184 220,184" class="room-fill bedroom"/>
+
+  <!-- Door from bedroom to dining room (on OA / x-axis) -->
+  <!-- D₁=(8,0), R₁=(11.5,0) → px: 220+8*24=412, 220+11.5*24=496 -->
+  <line x1="412" y1="400" x2="496" y2="400" class="door"/>
+
+  <!-- ================================================================ -->
+  <!-- BATHROOM OFRP: O(0,0), F(0,9), R(-6,9), P(-6,0) -->
+  <!-- ================================================================ -->
+  <polygon points="220,400 220,184 76,184 76,400" class="bathroom" opacity="0.4"/>
+  <polygon points="220,400 220,184 76,184 76,400" class="room-fill bathroom"/>
+
+  <!-- Bathroom door B₁B₂ on OC (y-axis): B₁=(0,1.5), B₂=(0,4) -->
+  <!-- px: 220, py: 400-1.5*24=364, 400-4*24=304 -->
+  <line x1="220" y1="364" x2="220" y2="304" class="door"/>
+
+  <!-- ================================================================ -->
+  <!-- SHOWERING AREA SHWR: S(-6,6), H(-3,6), W(-2,9), R(-6,9) -->
+  <!-- ================================================================ -->
+  <polygon points="76,256 148,256 172,184 76,184" class="shower" opacity="0.4"/>
+  <polygon points="76,256 148,256 172,184 76,184" class="room-fill shower"/>
+
+  <!-- ================================================================ -->
+  <!-- WARDROBE: W₁(3,0), W₂(3,2) - extending rightwards -->
+  <!-- The wardrobe is a rectangle. From question text, wardrobe begins at
+       W₁=(3,0) and W₄=(3,2). If it extends rightwards, the rectangle could
+       be from x=3 to x=7, y=0 to y=2. -->
+  <!-- W₁(3,0)→px: 220+3*24=292, py:400; W₂(7,0)→px: 220+7*24=388, py:400;
+       W₃(7,2)→px: 388, py:400-2*24=352; W₄(3,2)→px: 292, py:352 -->
+  <!-- Note: The question only gives W₁=(3,0) and W₄=(3,2). The full width
+       is not specified in the extracted text. From the original Fig 1.5,
+       the wardrobe appears to extend to x=7 (width 4 units). -->
+  <polygon points="292,400 388,400 388,352 292,352" class="wardrobe" opacity="0.5"/>
+  <polygon points="292,400 388,400 388,352 292,352" class="room-fill wardrobe"/>
+
+  <!-- ================================================================ -->
+  <!-- STUDY TABLE: (8,9),(11,9),(11,7),(8,7) - 3×2 rectangle -->
+  <!-- px: 220+8*24=412, 220+11*24=484
+       py: 400-9*24=184, 400-7*24=232 -->
+  <!-- ================================================================ -->
+  <polygon points="412,184 484,184 484,232 412,232" class="table" opacity="0.6"/>
+  <polygon points="412,184 484,184 484,232 412,232" class="room-fill table"/>
+
+  <!-- ================================================================ -->
+  <!-- WASHBASIN: (-6,0.5), (-5,0.5), (-5,2), (-6,2) - 3×2 ft -->
+  <!-- px: 76, 76+24=100; py: 400-0.5*24=388, 400-2*24=352 -->
+  <!-- ================================================================ -->
+  <polygon points="76,388 100,388 100,352 76,352" class="washbasin" opacity="0.5"/>
+  <polygon points="76,388 100,388 100,352 76,352" class="room-fill washbasin"/>
+
+  <!-- ================================================================ -->
+  <!-- TOILET: (-6,3), (-4.5,3), (-4.5,4), (-6,4) - 2×3 ft -->
+  <!-- px: 76, 76+1.5*24=112; py: 400-3*24=328, 400-4*24=304 -->
+  <!-- ================================================================ -->
+  <polygon points="76,328 112,328 112,304 76,304" class="toilet" opacity="0.5"/>
+  <polygon points="76,328 112,328 112,304 76,304" class="room-fill toilet"/>
+
+  <!-- ================================================================ -->
+  <!-- DINING TABLE: (0.5,-9), (5.5,-9), (5.5,-6), (0.5,-6) - 5×3 ft -->
+  <!-- px: 220+0.5*24=232, 220+5.5*24=352
+       py: 400+9*24=616, 400+6*24=544 -->
+  <!-- ================================================================ -->
+  <polygon points="232,616 352,616 352,544 232,544" class="dining-table" opacity="0.5"/>
+  <polygon points="232,616 352,616 352,544 232,544" class="room-fill dining-table"/>
+
+  <!-- ================================================================ -->
+  <!-- VERTEX LABELS -->
+  <!-- ================================================================ -->
+
+  <!-- Room OABC -->
+  <text x="215" y="415" class="label-vertex">O</text>
+  <text x="510" y="415" class="label-vertex">A</text>
+  <text x="510" y="177" class="label-vertex">B</text>
+  <text x="215" y="177" class="label-vertex">C</text>
+
+  <!-- Bathroom OFRP -->
+  <text x="215" y="177" class="label-vertex" fill="#8e44ad">F</text>
+  <text x="65" y="177" class="label-vertex" fill="#8e44ad">R</text>
+  <text x="65" y="415" class="label-vertex" fill="#8e44ad">P</text>
+
+  <!-- Dining room -->
+  <text x="65" y="415" class="label-vertex" fill="#27ae60">P</text>
+  <text x="510" y="415" class="label-vertex" fill="#27ae60">A</text>
+  <text x="510" y="775" class="label-vertex" fill="#27ae60">Q</text>
+  <text x="65" y="775" class="label-vertex" fill="#27ae60">S</text>
+
+  <!-- SHWR -->
+  <text x="70" y="250" class="label-vertex" fill="#e67e22">S</text>
+  <text x="152" y="250" class="label-vertex" fill="#e67e22">H</text>
+  <text x="178" y="177" class="label-vertex" fill="#e67e22">W</text>
+  <text x="65" y="177" class="label-vertex" fill="#e67e22">R</text>
+
+  <!-- Door labels -->
+  <text x="418" y="420" class="label-vertex" fill="#8B4513" font-size="11">D₁</text>
+  <text x="500" y="420" class="label-vertex" fill="#8B4513" font-size="11">R₁</text>
+  <text x="198" y="362" class="label-vertex" fill="#8B4513" font-size="11">B₁</text>
+  <text x="198" y="300" class="label-vertex" fill="#8B4513" font-size="11">B₂</text>
+
+  <!-- ================================================================ -->
+  <!-- ROOM NAME LABELS -->
+  <!-- ================================================================ -->
+  <text x="360" y="300" text-anchor="middle" class="label-room">Reiaan's</text>
+  <text x="360" y="315" text-anchor="middle" class="label-room">Bedroom</text>
+
+  <text x="140" y="300" text-anchor="middle" class="label-room">Bathroom</text>
+
+  <text x="300" y="600" text-anchor="middle" class="label-room">Dining Room</text>
+
+  <text x="110" y="220" text-anchor="middle" class="label-room" font-size="9">Shower</text>
+  <text x="110" y="232" text-anchor="middle" class="label-room" font-size="9">Area</text>
+
+  <text x="340" y="372" text-anchor="middle" class="label-room" font-size="9">Wardrobe</text>
+
+  <text x="448" y="210" text-anchor="middle" class="label-room" font-size="9">Study</text>
+  <text x="448" y="222" text-anchor="middle" class="label-room" font-size="9">Table</text>
+
+  <text x="88" y="370" text-anchor="middle" class="label-room" font-size="8">Wash-</text>
+  <text x="88" y="380" text-anchor="middle" class="label-room" font-size="8">basin</text>
+
+  <text x="94" y="316" text-anchor="middle" class="label-room" font-size="8">Toilet</text>
+
+  <text x="292" y="580" text-anchor="middle" class="label-room" font-size="9">Dining</text>
+  <text x="292" y="592" text-anchor="middle" class="label-room" font-size="9">Table</text>
+
+  <!-- ================================================================ -->
+  <!-- LEGEND -->
+  <!-- ================================================================ -->
+  <g transform="translate(560, 60)">
+    <text x="0" y="0" font-weight="bold" font-size="12" fill="#333">Legend</text>
+    <rect x="0" y="10" width="14" height="10" class="bedroom" opacity="0.6"/>
+    <text x="18" y="19" class="legend-text">Bedroom (Room OABC)</text>
+    <rect x="0" y="25" width="14" height="10" class="bathroom" opacity="0.6"/>
+    <text x="18" y="34" class="legend-text">Bathroom (OFRP)</text>
+    <rect x="0" y="40" width="14" height="10" class="dining" opacity="0.6"/>
+    <text x="18" y="49" class="legend-text">Dining Room (PASQ)</text>
+    <rect x="0" y="55" width="14" height="10" class="shower" opacity="0.6"/>
+    <text x="18" y="64" class="legend-text">Showering Area (SHWR)</text>
+    <rect x="0" y="70" width="14" height="10" class="wardrobe" opacity="0.6"/>
+    <text x="18" y="79" class="legend-text">Wardrobe</text>
+    <rect x="0" y="85" width="14" height="10" class="table" opacity="0.6"/>
+    <text x="18" y="94" class="legend-text">Study Table</text>
+    <rect x="0" y="100" width="14" height="10" class="washbasin" opacity="0.6"/>
+    <text x="18" y="109" class="legend-text">Washbasin (3 ft × 2 ft)</text>
+    <rect x="0" y="115" width="14" height="10" class="toilet" opacity="0.6"/>
+    <text x="18" y="124" class="legend-text">Toilet (2 ft × 3 ft)</text>
+    <rect x="0" y="130" width="14" height="10" class="dining-table" opacity="0.6"/>
+    <text x="18" y="139" class="legend-text">Dining Table (5 ft × 3 ft)</text>
+    <line x1="0" y1="150" x2="14" y2="150" class="door"/>
+    <text x="18" y="154" class="legend-text">Door</text>
+  </g>
+</svg>

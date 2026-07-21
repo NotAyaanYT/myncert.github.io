@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 420" width="550" height="420">
+  <title>Cyclic Quadrilateral — Opposite Angles Sum to 180°</title>
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 14px; fill: #333; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 11px; fill: #666; }
+      .circle { stroke: #2980b9; stroke-width: 2.5; fill: none; }
+      .chord { stroke: #8e44ad; stroke-width: 2.5; }
+      .diagonal { stroke: #95a5a6; stroke-width: 1.2; stroke-dasharray: 6,4; }
+      .radius { stroke: #27ae60; stroke-width: 1; stroke-dasharray: 4,3; }
+      .point { fill: #2c3e50; }
+      .label { font-family: 'Times New Roman', serif; font-size: 16px; font-weight: bold; fill: #2c3e50; }
+      .angle-arc { fill: none; stroke: #e74c3c; stroke-width: 1.5; }
+      .angle-fill { fill: #e74c3c; opacity: 0.12; }
+      .angle-label { font-family: 'Times New Roman', serif; font-size: 13px; font-style: italic; fill: #e74c3c; }
+      .angle-label-blue { font-family: 'Times New Roman', serif; font-size: 13px; font-style: italic; fill: #2980b9; }
+      .note { font-family: Arial, sans-serif; font-size: 10px; fill: #888; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="275" y="25" text-anchor="middle" class="title" font-weight="bold">Cyclic Quadrilateral ABCD</text>
+  <text x="275" y="42" text-anchor="middle" class="subtitle">Theorem 11: ∠A + ∠C = 180° and ∠B + ∠D = 180°</text>
+
+  <!-- Circle with centre O at (280, 200), radius 160 -->
+  <circle cx="280" cy="200" r="160" class="circle"/>
+
+  <!-- Points on circle (positioned at various angles from centre):
+       A: angle 300° (lower right)  → (280+160*cos60°, 200+160*sin60°) = (360, 338.6)
+       B: angle 30° (upper right)   → (280+160*cos30°, 200-160*sin30°) = (418.6, 120)
+       C: angle 150° (upper left)   → (280-160*cos30°, 200-160*sin30°) = (141.4, 120)
+       D: angle 220° (lower left)   → (280-160*cos40°, 200+160*sin40°) = (157.4, 302.8)
+  -->
+  <!-- Let me use simpler coordinates:
+       A = (380, 340) at roughly 300°
+       B = (410, 130) at roughly 25°
+       C = (150, 110) at roughly 145°
+       D = (120, 310) at roughly 225°
+  -->
+
+  <!-- Quadrilateral sides -->
+  <polygon points="380,340 410,130 150,110 120,310" class="chord" fill="#8e44ad" opacity="0.06"/>
+
+  <!-- Vertex labels -->
+  <text x="385" y="358" class="label">A</text>
+  <text x="415" y="125" class="label">B</text>
+  <text x="135" y="105" class="label">C</text>
+  <text x="105" y="320" class="label">D</text>
+
+  <!-- Centre O -->
+  <circle cx="280" cy="200" r="2.5" class="point"/>
+  <text x="265" y="205" class="label">O</text>
+
+  <!-- Radii OA, OB, OC, OD -->
+  <line x1="280" y1="200" x2="380" y2="340" class="radius"/>
+  <line x1="280" y1="200" x2="410" y2="130" class="radius"/>
+  <line x1="280" y1="200" x2="150" y2="110" class="radius"/>
+  <line x1="280" y1="200" x2="120" y2="310" class="radius"/>
+
+  <!-- Diagonal AC (optional, for reference) -->
+  <line x1="380" y1="340" x2="150" y2="110" class="diagonal"/>
+  <!-- Diagonal BD -->
+  <line x1="410" y1="130" x2="120" y2="310" class="diagonal"/>
+
+  <!-- Angle arcs -->
+
+  <!-- ∠A at vertex A (380, 340): between AB and AD -->
+  <!-- AB direction: (410-380, 130-340) = (30, -210)
+       AD direction: (120-380, 310-340) = (-260, -30)
+       Interior angle at A -->
+
+  <!-- ∠B at vertex B (410, 130): between BA and BC -->
+  <!-- BA direction: (380-410, 340-130) = (-30, 210)
+       BC direction: (150-410, 110-130) = (-260, -20) -->
+
+  <!-- Let me use standard angle arcs approximately -->
+  <!-- Angle A arc -->
+  <path d="M 345,315 A 40,40 0 0,0 355,330" fill="none" class="angle-arc"/>
+  <text x="330" y="340" class="angle-label">∠A</text>
+
+  <!-- Angle C arc -->
+  <path d="M 175,135 A 40,40 0 0,0 165,125" fill="none" class="angle-arc"/>
+  <text x="190" y="130" class="angle-label-blue">∠C</text>
+
+  <!-- Angle B arc -->
+  <path d="M 380,150 A 40,40 0 0,0 395,160" fill="none" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="395" y="165" class="angle-label-blue">∠B</text>
+
+  <!-- Angle D arc -->
+  <path d="M 155,285 A 40,40 0 0,0 145,275" fill="none" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="140" y="275" class="angle-label">∠D</text>
+
+  <!-- Theorem statement -->
+  <text x="275" y="410" text-anchor="middle" class="note">In a cyclic quadrilateral, opposite angles sum to 180°: ∠A + ∠C = 180°, ∠B + ∠D = 180°</text>
+  <text x="275" y="425" text-anchor="middle" class="note">Proof uses Theorem 9: Central angle = 2 × Inscribed angle for arcs BCD and DAB</text>
+</svg>
