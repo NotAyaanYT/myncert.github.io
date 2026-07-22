@@ -146,9 +146,6 @@
   <!-- Door dimension annotation -->
   <text x="20" y="400" class="dim-label" transform="rotate(-90, 20, 400)">Bathroom door width = 2.5 units</text>
 
-  <!-- Corner coordinate labels -->
-  <text x="510" y="497" class="coord-label">A(12,0)</text>
-
   <!-- Wall dimension annotations -->
   <!-- Room width OA = 12 units -->
   <text x="260" y="545" class="dim-label" text-anchor="middle">Room width = 12 units</text>

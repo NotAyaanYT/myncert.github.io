@@ -8,6 +8,7 @@ import { questionData } from '@/data/questions';
 import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { ShareButtons } from '@/components/ui/ShareButtons';
 import { AdContainer } from '@/components/ui/AdContainer';
+import { renderMarkdown } from '@/lib/markdown';
 
 interface Props {
   params: Promise<{ classSlug: string; subjectSlug: string; chapterSlug: string; exerciseSlug: string }>;
@@ -45,6 +46,15 @@ export default async function ExercisePage({ params }: Props) {
   const title = `${cls.name} ${subject.name} ${exercise.title}`;
   const key = `${classSlug}-${subjectSlug}-${chapterSlug}-${exerciseSlug}`;
   const questions = questionData[key] || [];
+
+  // Pre-render content and solution as HTML using markdown
+  const renderedQuestions = await Promise.all(
+    questions.map(async (q) => ({
+      ...q,
+      renderedContent: await renderMarkdown(q.content),
+      renderedSolution: await renderMarkdown(q.solution),
+    }))
+  );
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
@@ -110,7 +120,7 @@ export default async function ExercisePage({ params }: Props) {
           </div>
         ) : (
           <div className="space-y-8 mt-8">
-            {questions.map((question, index) => (
+            {renderedQuestions.map((question, index) => (
               <div
                 key={question.id}
                 id={`q${question.questionNumber}`}
@@ -140,9 +150,10 @@ export default async function ExercisePage({ params }: Props) {
                           {question.difficulty}
                         </span>
                       </div>
-                      <p className="text-gray-700 dark:text-gray-300 mt-2 leading-relaxed">
-                        {question.content}
-                      </p>
+                      <div
+                        className="text-gray-700 dark:text-gray-300 mt-2 leading-relaxed prose prose-sm dark:prose-invert max-w-none"
+                        dangerouslySetInnerHTML={{ __html: question.renderedContent }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -156,13 +167,10 @@ export default async function ExercisePage({ params }: Props) {
                       <h3 className="text-base font-semibold text-green-700 dark:text-green-400 mb-3">
                         Solution
                       </h3>
-                      <div className="prose prose-sm dark:prose-invert max-w-none">
-                        {question.solution.split('\n').map((line, i) => (
-                          <p key={i} className="text-gray-700 dark:text-gray-300 leading-relaxed mb-1">
-                            {line}
-                          </p>
-                        ))}
-                      </div>
+                      <div
+                        className="prose prose-sm dark:prose-invert max-w-none"
+                        dangerouslySetInnerHTML={{ __html: question.renderedSolution }}
+                      />
                     </div>
                   </div>
                 </div>

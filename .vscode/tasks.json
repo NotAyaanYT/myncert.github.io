@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Fix questions.ts corruption",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"fix_questions_final.py"
+			]
+		}
+	]
+}

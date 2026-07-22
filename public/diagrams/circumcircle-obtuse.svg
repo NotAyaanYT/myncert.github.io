@@ -59,7 +59,7 @@
   <text x="240" y="273" class="label">C</text>
 
   <!-- Obtuse angle arc at C -->
-  <path d="M 228,300 A 22,22 0 0,0 278,300" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <path d="M 232.4,293.2 A 22,22 0 0,0 267.6,293.2" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="3,3"/>
   <text x="248" y="310" fill="#e74c3c" font-size="11">106°</text>
 
   <!-- Note -->

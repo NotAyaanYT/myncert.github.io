@@ -167,14 +167,12 @@
   <polygon points="76,256 148,256 172,184 76,184" class="room-fill shower"/>
 
   <!-- ================================================================ -->
-  <!-- WARDROBE: W₁(3,0), W₄(3,2) - extending rightwards -->
-  <!-- From question text: wardrobe begins at W₁=(3,0) and W₄=(3,2) (left edge).
-       Width estimated at ~4 units (x=3 to x=7) — this is an approximation;
-       the original NCERT figure should be consulted for exact dimensions.
-       W₁(3,0)→px: 220+3*24=292, py:400; W₂(7,0)→px: 220+7*24=388, py:400;
-       W₃(7,2)→px: 388, py:400-2*24=352; W₄(3,2)→px: 292, py:352 -->
-  <polygon points="292,400 388,400 388,352 292,352" class="wardrobe" opacity="0.5"/>
-  <polygon points="292,400 388,400 388,352 292,352" class="room-fill wardrobe"/>
+  <!-- WARDROBE: W₁(3,0), W₂(6,0), W₃(6,2), W₄(3,2) - 3 ft wide × 2 ft deep -->
+  <!-- Left edge at x=3, right edge at x=6 (3 ft width). Depth = 2 ft.
+       W₁(3,0)→px: 220+3*24=292, py:400; W₂(6,0)→px: 220+6*24=364, py:400;
+       W₃(6,2)→px: 364, py:400-2*24=352; W₄(3,2)→px: 292, py:352 -->
+  <polygon points="292,400 364,400 364,352 292,352" class="wardrobe" opacity="0.5"/>
+  <polygon points="292,400 364,400 364,352 292,352" class="room-fill wardrobe"/>
 
   <!-- ================================================================ -->
   <!-- STUDY TABLE: (8,9),(11,9),(11,7),(8,7) - 3×2 rectangle -->
@@ -252,7 +250,7 @@
   <text x="110" y="220" text-anchor="middle" class="label-room" font-size="9">Shower</text>
   <text x="110" y="232" text-anchor="middle" class="label-room" font-size="9">Area</text>
 
-  <text x="340" y="372" text-anchor="middle" class="label-room" font-size="9">Wardrobe</text>
+  <text x="328" y="372" text-anchor="middle" class="label-room" font-size="9">Wardrobe</text>
 
   <text x="448" y="210" text-anchor="middle" class="label-room" font-size="9">Study</text>
   <text x="448" y="222" text-anchor="middle" class="label-room" font-size="9">Table</text>
