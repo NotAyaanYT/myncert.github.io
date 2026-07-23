@@ -64,7 +64,7 @@ export default async function FormulaSheetsSubjectPage({ params }: Props) {
             {chapters.map((chapter, index) => (
               <Link
                 key={chapter.id}
-                href={`/formula-sheets/${cls.slug}/${subject.slug}/${chapter.slug}`}
+                href={`/${cls.slug}/${subject.slug}/${chapter.slug}?tab=formulas`}
                 className="group p-5 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all hover:shadow-md animate-slide-up"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >

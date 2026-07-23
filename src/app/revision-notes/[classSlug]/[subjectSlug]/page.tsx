@@ -64,7 +64,7 @@ export default async function RevisionNotesSubjectPage({ params }: Props) {
             {chapters.map((chapter, index) => (
               <Link
                 key={chapter.id}
-                href={`/revision-notes/${cls.slug}/${subject.slug}/${chapter.slug}`}
+                href={`/${cls.slug}/${subject.slug}/${chapter.slug}?tab=notes`}
                 className="group p-5 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all hover:shadow-md animate-slide-up"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >

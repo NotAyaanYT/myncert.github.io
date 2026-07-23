@@ -64,7 +64,7 @@ export default async function ImportantQuestionsSubjectPage({ params }: Props) {
             {chapters.map((chapter, index) => (
               <Link
                 key={chapter.id}
-                href={`/important-questions/${cls.slug}/${subject.slug}/${chapter.slug}`}
+                href={`/${cls.slug}/${subject.slug}/${chapter.slug}?tab=important-questions`}
                 className="group p-5 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-600 transition-all hover:shadow-md animate-slide-up"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >

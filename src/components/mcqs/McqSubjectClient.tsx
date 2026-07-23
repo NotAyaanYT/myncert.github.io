@@ -115,7 +115,7 @@ export default function McqSubjectClient({
           {chapters.map((chapter, index) => (
             <a
               key={chapter.id}
-              href={`/mcqs/${cls.slug}/${subject.slug}/${chapter.slug}?version=${version}`}
+              href={`/${cls.slug}/${subject.slug}/${chapter.slug}?tab=mcqs`}
               className="group p-5 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-teal-300 dark:hover:border-teal-600 transition-all hover:shadow-md animate-slide-up"
               style={{ animationDelay: index * 0.05 + 's' }}
             >
