@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verifyToken } from '@/lib/auth';
 
-const ADMIN_PATHS = ['/admin/dashboard', '/admin/classes', '/admin/subjects', '/admin/chapters', '/admin/exercises', '/admin/questions'];
+const ADMIN_PATHS = ['/admin/dashboard', '/admin/classes', '/admin/subjects', '/admin/chapters', '/admin/exercises', '/admin/questions', '/admin'];
 const PUBLIC_PATHS = ['/admin/login'];
 
 export async function middleware(request: NextRequest) {

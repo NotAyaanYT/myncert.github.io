@@ -13,6 +13,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Only allow the authorized admin email
+    const ADMIN_EMAIL = 'am7641991@gmail.com';
+
+    if (email !== ADMIN_EMAIL) {
+      return NextResponse.json(
+        { error: 'Access denied. Unauthorized email.' },
+        { status: 403 }
+      );
+    }
+
     // Find user in database
     const user = await prisma.user.findUnique({
       where: { email },

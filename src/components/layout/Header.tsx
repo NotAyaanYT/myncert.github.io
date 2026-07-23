@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   Menu, X, BookOpen, ChevronDown, GraduationCap,
   FileQuestion, ClipboardCheck, Bookmark,
-  Home, Search, Sparkles, Info, Mail
+  Home, Search, Sparkles, Info, Mail, LogIn
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
@@ -176,6 +176,13 @@ export function Header() {
           <div className="flex items-center gap-2">
             <SearchBar />
             <ThemeToggle />
+            <Link
+              href="/admin/login"
+              className="hidden lg:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-blue-900/20 rounded-full transition-all duration-200"
+            >
+              <LogIn className="h-4 w-4" />
+              Sign In
+            </Link>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden relative p-2.5 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
@@ -319,6 +326,14 @@ export function Header() {
             >
               <Mail className="h-5 w-5" />
               Contact
+            </Link>
+            <Link
+              href="/admin/login"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-xl transition-all duration-200"
+            >
+              <LogIn className="h-5 w-5" />
+              Sign In
             </Link>
           </div>
 

@@ -2,7 +2,7 @@ import { prisma } from '@/db/prisma';
 import { hashPassword } from '@/lib/auth';
 
 async function main() {
-  const email = 'admin@ncertsolutionshub.com';
+  const email = 'am7641991@gmail.com';
   const password = process.env.ADMIN_PASSWORD || 'admin123';
   const name = 'Admin';
 
