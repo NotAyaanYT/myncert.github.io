@@ -12,10 +12,15 @@ export default function HomePage() {
       <JsonLd data={webSiteSchema()} />
       <JsonLd data={organizationSchema()} />
       <HeroSection />
+      <div className="section-divider" />
       <ClassCards />
+      <div className="section-divider" />
       <StatsCounter />
+      <div className="section-divider" />
       <PopularSubjects />
+      <div className="section-divider" />
       <WhyChooseUs />
+      <div className="section-divider" />
       <FAQSection />
     </>
   );
