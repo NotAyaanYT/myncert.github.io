@@ -3,7 +3,7 @@ import { hashPassword } from '@/lib/auth';
 
 async function main() {
   const email = 'am7641991@gmail.com';
-  const password = process.env.ADMIN_PASSWORD || 'admin123';
+  const password = process.env.ADMIN_PASSWORD || 'Gitout@123';
   const name = 'Admin';
 
   // Check if admin already exists
