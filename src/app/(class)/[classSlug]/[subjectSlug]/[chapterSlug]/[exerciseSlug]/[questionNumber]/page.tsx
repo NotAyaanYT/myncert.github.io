@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight, Copy, Check, BookOpen, BadgeCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Copy, Check, BookOpen, BadgeCheck, Sparkles, Share2, Bookmark } from 'lucide-react';
 import { classData, getClassBySlug, getSubjectBySlug } from '@/data/classes';
 import { getChaptersForSubject, getChapterBySlug, getExercisesForChapter, getExerciseBySlug, exerciseData } from '@/data/chapters';
 import { questionData } from '@/data/questions';
-import { Breadcrumb } from '@/components/layout/Breadcrumb';
+import { PageHeader } from '@/components/ui/PageHeader';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { CURRENT_ACADEMIC_YEAR } from '@/lib/constants';
 import { renderMarkdown } from '@/lib/markdown';
@@ -90,11 +90,11 @@ export default async function QuestionPage({ params }: Props) {
   const question = questions.find(q => q.questionNumber === qNum);
   if (!question) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-24 pb-12">
-          <div className="text-center py-20">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-6">
-              <BookOpen className="h-8 w-8 text-gray-400" />
+      <div className="min-h-screen bg-background">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <div className="text-center py-20 page-enter">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 mb-6 shadow-lg">
+              <BookOpen className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
               Question Not Found
@@ -104,7 +104,7 @@ export default async function QuestionPage({ params }: Props) {
             </p>
             <Link
               href={`/${cls.slug}/${subject.slug}/${chapter.slug}/${exercise.slug}`}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all font-medium shadow-lg shadow-blue-200/50 dark:shadow-blue-900/30 hover:shadow-xl hover:-translate-y-0.5"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to {exercise.title}
@@ -142,7 +142,7 @@ export default async function QuestionPage({ params }: Props) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ncertsolutionshub.com';
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-background">
       <JsonLd data={{
         '@context': 'https://schema.org',
         '@graph': [
@@ -167,145 +167,158 @@ export default async function QuestionPage({ params }: Props) {
           },
         ],
       }} />
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-24 pb-12">
-        <Breadcrumb items={breadcrumbItems} />
 
-        <div className="mb-8 animate-fade-in">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium rounded-full border border-green-200 dark:border-green-800">
-              <BadgeCheck className="h-3.5 w-3.5" />
-              Updated for NCERT {CURRENT_ACADEMIC_YEAR}
-            </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 text-xs font-medium rounded-full border border-purple-200 dark:border-purple-800">
-              <BookOpen className="h-3.5 w-3.5" />
-              {exercise.title}
-            </div>
+      <PageHeader
+        breadcrumbs={breadcrumbItems}
+        title={`Question ${questionNumber}`}
+        subtitle={`${subject.name} - ${exercise.title} | Chapter ${chapter.chapterNumber}: ${chapter.title}`}
+        badge={`${cls.name}`}
+        badgeIcon={<BookOpen className="h-3.5 w-3.5" />}
+        gradient="blue"
+      >
+        <div className="flex flex-wrap items-center gap-3 mt-4">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-50/90 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium rounded-full border border-green-200/50 dark:border-green-800/50 backdrop-blur-sm">
+            <BadgeCheck className="h-3.5 w-3.5" />
+            NCERT {CURRENT_ACADEMIC_YEAR}
           </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-                Question {questionNumber}
-              </h1>
-              <p className="text-base text-gray-600 dark:text-gray-400 mt-1">
-                {subject.name} - {exercise.title} | Chapter {chapter.chapterNumber}: {chapter.title} | {cls.name}
-              </p>
-            </div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-50/90 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 text-xs font-medium rounded-full border border-purple-200/50 dark:border-purple-800/50 backdrop-blur-sm">
+            <BookOpen className="h-3.5 w-3.5" />
+            {exercise.title}
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50/90 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-medium rounded-full border border-amber-200/50 dark:border-amber-800/50 backdrop-blur-sm">
+            <Sparkles className="h-3.5 w-3.5" />
+            Free Solution
           </div>
         </div>
+      </PageHeader>
 
-        <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden animate-slide-up">
-          <div className="p-6">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex-shrink-0">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 page-enter">
+        {/* Question Card */}
+        <div className="bg-white dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-700/50 overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+          {/* Question Section */}
+          <div className="p-6 sm:p-8">
+            <div className="flex items-start gap-4">
+              <div className="p-2.5 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-xl flex-shrink-0 shadow-sm">
                 <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                   {question.title}
                 </h2>
                 <div
-                  className="text-gray-700 dark:text-gray-300 mt-2 leading-relaxed prose prose-sm dark:prose-invert max-w-none"
+                  className="text-gray-700 dark:text-gray-300 mt-3 leading-relaxed prose prose-sm dark:prose-invert max-w-none"
                   dangerouslySetInnerHTML={{ __html: await renderMarkdown(question.content) }}
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-200 dark:border-gray-700 p-6">
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-green-50 dark:bg-green-900/30 rounded-lg flex-shrink-0">
-                <Check className="h-5 w-5 text-green-600 dark:text-green-400" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-base font-semibold text-green-700 dark:text-green-400 mb-3">
-                  Solution
-                </h3>
-                <div
-                  className="prose prose-sm dark:prose-invert max-w-none"
-                  dangerouslySetInnerHTML={{ __html: await renderMarkdown(question.solution) }}
-                />
+          {/* Solution Section */}
+          <div className="border-t border-gray-100 dark:border-gray-700/50 bg-gradient-to-b from-green-50/30 to-white dark:from-green-900/10 dark:to-gray-800/30">
+            <div className="p-6 sm:p-8">
+              <div className="flex items-start gap-4">
+                <div className="p-2.5 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 rounded-xl flex-shrink-0 shadow-sm">
+                  <Check className="h-5 w-5 text-green-600 dark:text-green-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-3">
+                    <h3 className="text-base font-semibold text-green-700 dark:text-green-400">
+                      Solution
+                    </h3>
+                    <span className="h-px flex-1 bg-gradient-to-r from-green-200/50 to-transparent dark:from-green-800/30" />
+                  </div>
+                  <div
+                    className="prose prose-sm dark:prose-invert max-w-none"
+                    dangerouslySetInnerHTML={{ __html: await renderMarkdown(question.solution) }}
+                  />
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-200 dark:border-gray-700 px-6 py-3 flex items-center justify-between">
+          {/* Action Bar */}
+          <div className="border-t border-gray-100 dark:border-gray-700/50 px-6 sm:px-8 py-3 flex items-center justify-between bg-white dark:bg-gray-800/30">
             <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-              <span className="inline-flex items-center gap-1">
-                <Check className="h-3 w-3 text-green-500" />
-                Answered
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                Verified Answer
               </span>
             </div>
             <div className="flex gap-2">
-              <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+              <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-700/70 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all hover:shadow-sm">
                 <Copy className="h-3.5 w-3.5" />
                 Copy
               </button>
-              <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                Bookmark
+              <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-sm hover:shadow-md">
+                <Bookmark className="h-3.5 w-3.5" />
+                Save
               </button>
-              <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+              <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-700/70 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all hover:shadow-sm">
+                <Share2 className="h-3.5 w-3.5" />
                 Share
               </button>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+        {/* Navigation */}
+        <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-700/50">
           <div>
             {prevQuestion ? (
               <Link
                 href={`/${cls.slug}/${subject.slug}/${chapter.slug}/${exercise.slug}/${prevQuestion.questionNumber}`}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="group flex items-center gap-2 px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/30"
               >
-                <ArrowLeft className="h-4 w-4" />
-                Previous: Question {prevQuestion.questionNumber}
+                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
+                <span className="hidden sm:inline">Previous:</span> Q{prevQuestion.questionNumber}
               </Link>
             ) : (
               <span className="flex items-center gap-2 px-4 py-2 text-sm text-gray-400 dark:text-gray-600">
                 <ArrowLeft className="h-4 w-4" />
-                No previous question
+                <span className="hidden sm:inline">No previous</span>
               </span>
             )}
           </div>
           <Link
             href={`/${cls.slug}/${subject.slug}/${chapter.slug}/${exercise.slug}`}
-            className="flex items-center gap-2 px-4 py-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors font-medium"
+            className="group flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 rounded-xl hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all"
           >
             <BookOpen className="h-4 w-4" />
-            All Questions
+            <span className="hidden sm:inline">All Questions</span>
+            <span className="sm:hidden">All</span>
           </Link>
           <div>
             {nextQuestion ? (
               <Link
                 href={`/${cls.slug}/${subject.slug}/${chapter.slug}/${exercise.slug}/${nextQuestion.questionNumber}`}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="group flex items-center gap-2 px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/30"
               >
-                Next: Question {nextQuestion.questionNumber}
-                <ArrowRight className="h-4 w-4" />
+                <span className="hidden sm:inline">Next:</span> Q{nextQuestion.questionNumber}
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             ) : (
               <span className="flex items-center gap-2 px-4 py-2 text-sm text-gray-400 dark:text-gray-600">
-                No next question
+                <span className="hidden sm:inline">No next</span>
                 <ArrowRight className="h-4 w-4" />
               </span>
             )}
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 flex flex-wrap gap-4">
+        {/* Back Links */}
+        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700/50 flex flex-wrap gap-3">
           <Link
             href={`/${cls.slug}/${subject.slug}/${chapter.slug}`}
-            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/30 group"
           >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Chapter {chapter.chapterNumber}
+            <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
+            <span className="hidden sm:inline">Back to</span> Chapter {chapter.chapterNumber}
           </Link>
           <Link
             href={`/${cls.slug}/${subject.slug}`}
-            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/30 group"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
             All {subject.name} Chapters
           </Link>
         </div>

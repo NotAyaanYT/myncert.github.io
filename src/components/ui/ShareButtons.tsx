@@ -1,6 +1,6 @@
 'use client';
 
-import { Share2, Globe, MessageCircle, Link as LinkIcon, Check, Printer, Send } from 'lucide-react';
+import { Share2, Globe, MessageCircle, Link as LinkIcon, Check, Printer, Send, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -18,19 +18,19 @@ export function ShareButtons({ url, title, className }: ShareButtonsProps) {
       name: 'Facebook',
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
       icon: Globe,
-      color: 'hover:bg-blue-600 hover:text-white',
+      activeBg: 'hover:bg-[#1877F2] hover:text-white',
     },
     {
       name: 'Twitter',
       href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
       icon: MessageCircle,
-      color: 'hover:bg-sky-500 hover:text-white',
+      activeBg: 'hover:bg-[#1DA1F2] hover:text-white',
     },
     {
       name: 'WhatsApp',
       href: `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`,
       icon: Send,
-      color: 'hover:bg-green-500 hover:text-white',
+      activeBg: 'hover:bg-[#25D366] hover:text-white',
     },
   ];
 
@@ -47,11 +47,12 @@ export function ShareButtons({ url, title, className }: ShareButtonsProps) {
   const printPage = () => window.print();
 
   return (
-    <div className={cn('flex flex-wrap items-center gap-2', className)}>
-      <span className="text-sm text-gray-500 dark:text-gray-400 mr-1">
-        <Share2 className="h-4 w-4 inline mr-1" />
-        Share:
+    <div className={cn('flex flex-wrap items-center gap-1.5', className)}>
+      <span className="text-xs text-gray-400 dark:text-gray-500 mr-1 flex items-center gap-1">
+        <Share2 className="h-3.5 w-3.5" />
+        <span className="hidden sm:inline">Share</span>
       </span>
+      <span className="w-px h-4 bg-gray-200 dark:bg-gray-700 mx-1" />
       {shareLinks.map((link) => (
         <a
           key={link.name}
@@ -59,29 +60,35 @@ export function ShareButtons({ url, title, className }: ShareButtonsProps) {
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
-            'p-2 rounded-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hover:scale-110',
-            link.color
+            'p-2 rounded-lg text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/30',
+            'hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group',
+            link.activeBg
           )}
           aria-label={`Share on ${link.name}`}
+          title={link.name}
         >
-          <link.icon className="h-4 w-4" />
+          <link.icon className="h-4 w-4 group-hover:scale-110 transition-transform" />
         </a>
       ))}
       <button
         onClick={copyToClipboard}
-        className="p-2 rounded-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hover:scale-110"
+        className="p-2 rounded-lg text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
         aria-label="Copy link"
-        title="Copy link"
+        title={copied ? 'Copied!' : 'Copy link'}
       >
-        {copied ? <Check className="h-4 w-4 text-green-500" /> : <LinkIcon className="h-4 w-4" />}
+        {copied ? (
+          <Check className="h-4 w-4 text-green-500 group-hover:scale-110 transition-transform" />
+        ) : (
+          <LinkIcon className="h-4 w-4 group-hover:scale-110 transition-transform" />
+        )}
       </button>
       <button
         onClick={printPage}
-        className="p-2 rounded-lg text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hover:scale-110"
+        className="p-2 rounded-lg text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
         aria-label="Print this page"
         title="Print"
       >
-        <Printer className="h-4 w-4" />
+        <Printer className="h-4 w-4 group-hover:scale-110 transition-transform" />
       </button>
     </div>
   );

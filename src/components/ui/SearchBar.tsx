@@ -106,7 +106,7 @@ export function SearchBar() {
             setTimeout(() => inputRef.current?.focus(), 100);
           }}
           className={cn(
-            'p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 transition-colors',
+            'p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 transition-all hover:shadow-sm',
             isExpanded && 'hidden'
           )}
           aria-label="Open search"
@@ -117,7 +117,8 @@ export function SearchBar() {
           'relative w-full',
           !isExpanded && 'hidden'
         )}>
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+          <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/20 to-indigo-500/20 blur-sm -z-10" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-blue-500 dark:text-blue-400 pointer-events-none" />
           <input
             ref={inputRef}
             type="search"
@@ -129,7 +130,7 @@ export function SearchBar() {
             onFocus={() => query && setIsOpen(true)}
             onKeyDown={handleKeyDown}
             placeholder="Search classes, subjects, chapters..."
-            className="w-full pl-9 pr-8 py-2 text-sm bg-gray-100 dark:bg-gray-800 border border-transparent focus:border-blue-500 rounded-lg outline-none transition-colors text-gray-900 dark:text-white placeholder-gray-500"
+            className="w-full pl-9 pr-8 py-2 text-sm bg-white/80 dark:bg-gray-800/80 border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 rounded-lg outline-none transition-all text-gray-900 dark:text-white placeholder-gray-400 backdrop-blur-sm shadow-sm"
             aria-label="Search NCERT solutions"
             aria-expanded={isOpen}
             aria-autocomplete="list"
@@ -139,10 +140,10 @@ export function SearchBar() {
           {query && (
             <button
               onClick={() => { setQuery(''); setResults([]); setSelectedIndex(-1); }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 text-gray-400 hover:text-gray-600 transition-colors"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors rounded"
               aria-label="Clear search"
             >
-              {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <X className="h-4 w-4" />}
+              {isLoading ? <Loader2 className="h-4 w-4 animate-spin text-blue-500" /> : <X className="h-4 w-4" />}
             </button>
           )}
         </div>
@@ -151,7 +152,7 @@ export function SearchBar() {
       {isOpen && results.length > 0 && (
         <div
           id="search-results"
-          className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden animate-scale-in"
+          className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-gray-200/80 dark:border-gray-700/80 overflow-hidden animate-scale-in"
           role="listbox"
           aria-label="Search results"
         >
@@ -164,35 +165,51 @@ export function SearchBar() {
                 role="option"
                 aria-selected={selectedIndex === index}
                 className={cn(
-                  'w-full text-left px-3 py-2.5 rounded-lg transition-colors',
+                  'w-full text-left px-3 py-2.5 rounded-lg transition-all',
                   selectedIndex === index
-                    ? 'bg-blue-50 dark:bg-blue-900/30'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-700'
+                    ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 shadow-sm'
+                    : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
                 )}
               >
                 <div className="text-sm font-medium text-gray-900 dark:text-white">{result.title}</div>
                 <div className={cn(
-                  'text-xs mt-0.5',
+                  'text-xs mt-0.5 flex items-center gap-1',
                   selectedIndex === index
                     ? 'text-blue-600 dark:text-blue-400'
                     : 'text-gray-500 dark:text-gray-400'
                 )}>
-                  {result.breadcrumb.join(' > ')}
+                  {result.breadcrumb.length > 0 && (
+                    <>
+                      {result.breadcrumb.map((crumb, i) => (
+                        <span key={i} className="flex items-center gap-1">
+                          {i > 0 && <span className="text-gray-300 dark:text-gray-600">/</span>}
+                          {crumb}
+                        </span>
+                      ))}
+                    </>
+                  )}
                 </div>
               </button>
             ))}
           </div>
           {results.length >= 5 && (
-            <div className="px-3 py-2 border-t border-gray-100 dark:border-gray-700 text-xs text-gray-400 text-center">
-              Press ↑↓ to navigate, Enter to select
+            <div className="px-3 py-2 border-t border-gray-100 dark:border-gray-700/50 text-xs text-gray-400 text-center flex items-center justify-center gap-2">
+              <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-[10px] font-mono">↑↓</kbd>
+              <span>Navigate</span>
+              <kbd className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-[10px] font-mono">Enter</kbd>
+              <span>Select</span>
             </div>
           )}
         </div>
       )}
 
       {isOpen && query && !isLoading && results.length === 0 && (
-        <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-4 text-center text-sm text-gray-500 dark:text-gray-400 animate-scale-in">
-          No results found for &quot;{query}&quot;
+        <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-xl shadow-xl border border-gray-200/80 dark:border-gray-700/80 p-5 text-center animate-scale-in">
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-700 mb-3">
+            <Search className="h-5 w-5 text-gray-400" />
+          </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">No results found for &quot;{query}&quot;</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Try different keywords or browse by class</p>
         </div>
       )}
     </div>

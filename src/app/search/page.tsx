@@ -2,9 +2,10 @@
 
 import { Suspense, useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Search, Loader2, BookOpen } from 'lucide-react';
+import { Search as SearchIcon, Loader2, BookOpen, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import type { SearchResult } from '@/types';
+import { PageHeader } from '@/components/ui/PageHeader';
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -43,37 +44,88 @@ function SearchContent() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-24 pb-12">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6 animate-fade-in">
-          Search <span className="text-blue-600">NCERT Solutions</span>
-        </h1>
+    <div className="min-h-screen bg-background">
+      <PageHeader
+        breadcrumbs={[{ label: 'Search', href: '/search' }]}
+        title="Search"
+        titleAccent="NCERT Solutions"
+        subtitle="Find the NCERT solutions, notes, MCQs, and more across all classes and subjects."
+        badge="Quick Search"
+        badgeIcon={<Sparkles className="h-3.5 w-3.5" />}
+        gradient="blue"
+      />
+
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 page-enter">
         <form onSubmit={handleSubmit} className="mb-8">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-            <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search classes, subjects, chapters, exercises..." className="w-full pl-12 pr-4 py-4 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 focus:border-blue-500 rounded-xl outline-none transition-colors text-gray-900 dark:text-white text-base" />
-            <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">Search</button>
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl opacity-20 group-hover:opacity-40 blur transition-all duration-500" />
+            <div className="relative flex items-center bg-white dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-700">
+              <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search classes, subjects, chapters, exercises..."
+                className="w-full pl-12 pr-32 py-4 bg-transparent rounded-xl outline-none text-gray-900 dark:text-white text-base"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-lg shadow-blue-200 dark:shadow-blue-900/30"
+              >
+                <SearchIcon className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         </form>
-        {isLoading && <div className="flex items-center justify-center py-20"><Loader2 className="h-8 w-8 text-blue-600 animate-spin" /></div>}
+
+        {isLoading && (
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center">
+              <Loader2 className="h-10 w-10 text-blue-600 animate-spin mx-auto mb-4" />
+              <p className="text-gray-500 dark:text-gray-400">Searching...</p>
+            </div>
+          </div>
+        )}
+
         {!isLoading && results.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{results.length} results found</p>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="section-heading-decoration" />
+              <p className="text-sm text-gray-500 dark:text-gray-400">{results.length} results found</p>
+            </div>
             {results.map((result) => (
-              <Link key={result.id} href={result.url} className="block p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors border border-gray-200 dark:border-gray-700">
-                <div className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-1">{result.type}</div>
-                <h2 className="text-base font-semibold text-gray-900 dark:text-white">{result.title}</h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{result.description}</p>
-                <div className="text-xs text-gray-400 dark:text-gray-500 mt-2">{result.breadcrumb.join(' > ')}</div>
+              <Link
+                key={result.id}
+                href={result.url}
+                className="group block p-5 bg-white dark:bg-gray-800/50 rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 border border-gray-200 dark:border-gray-700/50"
+              >
+                <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-2">
+                  {result.type}
+                </div>
+                <h2 className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  {result.title}
+                </h2>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1.5 line-clamp-2">{result.description}</p>
+                <div className="flex items-center gap-2 mt-3 text-xs text-gray-400 dark:text-gray-500">
+                  {result.breadcrumb.map((crumb, i) => (
+                    <span key={i} className="flex items-center gap-1">
+                      {i > 0 && <span className="text-gray-300 dark:text-gray-600">/</span>}
+                      {crumb}
+                    </span>
+                  ))}
+                </div>
               </Link>
             ))}
           </div>
         )}
+
         {!isLoading && query && results.length === 0 && (
           <div className="text-center py-20">
-            <BookOpen className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-500 dark:text-gray-400">No results found</h2>
-            <p className="text-gray-400 dark:text-gray-500 mt-2">Try different keywords or browse by class.</p>
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-800 mb-6">
+              <BookOpen className="h-10 w-10 text-gray-400 dark:text-gray-500" />
+            </div>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No results found</h2>
+            <p className="text-gray-500 dark:text-gray-400">Try different keywords or browse by class.</p>
           </div>
         )}
       </div>
@@ -83,7 +135,7 @@ function SearchContent() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Loader2 className="h-8 w-8 text-blue-600 animate-spin" /></div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-background"><Loader2 className="h-8 w-8 text-blue-600 animate-spin" /></div>}>
       <SearchContent />
     </Suspense>
   );
