@@ -41,4 +41,15 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# build artifacts
+build_output.txt
+
+# generated data files
+class*-generated.txt
+class*-output.txt
+
+# utility scripts
+*.py
+!prisma/seed-admin.py
+
 

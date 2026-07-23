@@ -24,17 +24,10 @@ export const mainNavItems: NavItem[] = [
     href: '#',
     children: [
       { label: 'NCERT Notes', href: '/notes' },
-      { label: 'Revision Notes', href: '/revision-notes' },
-      { label: 'Important Questions', href: '/important-questions' },
       { label: 'MCQs', href: '/mcqs' },
       { label: 'Worksheets', href: '/worksheets' },
-      { label: 'Formula Sheets', href: '/formula-sheets' },
-      { label: 'Sample Papers', href: '/sample-papers' },
-      { label: 'Previous Year Questions', href: '/previous-year-questions' },
     ],
   },
-  { label: 'Chapter Tests', href: '/chapter-tests' },
-  { label: 'Doubt Section', href: '/doubt' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ];

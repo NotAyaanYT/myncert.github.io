@@ -4,23 +4,18 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Menu, X, BookOpen, ChevronDown, GraduationCap, ListChecks,
-  FileQuestion, FileText, ClipboardCheck, History, Bookmark, Beaker, Calculator,
-  Home, Search, Sparkles, Library, MessageSquare, Info, Mail
+  Menu, X, BookOpen, ChevronDown, GraduationCap,
+  FileQuestion, ClipboardCheck, Bookmark,
+  Home, Search, Sparkles, Info, Mail
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { SearchBar } from '@/components/ui/SearchBar';
 
-const resourceLinks = [
-  { label: 'NCERT Notes', href: '/notes', icon: Bookmark, desc: 'Chapter-wise notes' },
-  { label: 'Revision Notes', href: '/revision-notes', icon: FileText, desc: 'Quick revision' },
-  { label: 'Important Questions', href: '/important-questions', icon: ListChecks, desc: 'Exam-focused' },
-  { label: 'MCQs', href: '/mcqs', icon: FileQuestion, desc: 'Practice tests' },
-  { label: 'Worksheets', href: '/worksheets', icon: ClipboardCheck, desc: 'Extra practice' },
-  { label: 'Formula Sheets', href: '/formula-sheets', icon: Calculator, desc: 'Quick reference' },
-  { label: 'Sample Papers', href: '/sample-papers', icon: Beaker, desc: 'Mock exams' },
-  { label: 'Previous Year Questions', href: '/previous-year-questions', icon: History, desc: 'Past papers' },
+const studyHubLinks = [
+  { label: 'NCERT Notes', href: '/notes', icon: Bookmark, desc: 'Chapter-wise notes & revision' },
+  { label: 'MCQs', href: '/mcqs', icon: FileQuestion, desc: 'Practice tests with answers' },
+  { label: 'Worksheets', href: '/worksheets', icon: ClipboardCheck, desc: 'Extra practice questions' },
 ];
 
 const navItems = [
@@ -33,7 +28,6 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
-  const [isMobileResourcesOpen, setIsMobileResourcesOpen] = useState(false);
   const resourcesRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
@@ -47,7 +41,6 @@ export function Header() {
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    setIsMobileResourcesOpen(false);
   }, [pathname]);
 
   // Close resources dropdown on click outside
@@ -162,7 +155,7 @@ export function Header() {
                   {/* Decorative gradient line */}
                   <div className="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
                   <div className="grid gap-0.5">
-                    {resourceLinks.map((link) => (
+                    {studyHubLinks.map((link) => (
                       <Link
                         key={link.href}
                         href={link.href}
@@ -291,39 +284,31 @@ export function Header() {
 
           {/* Mobile Resources Section */}
           <div className="border-t border-gray-100 dark:border-gray-800 pt-3 mt-2">
-            <p className="px-3 py-2 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Study Resources</p>
-            <button
-              onClick={() => setIsMobileResourcesOpen(!isMobileResourcesOpen)}
-              className="flex items-center justify-between w-full px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition-all duration-200"
-              aria-expanded={isMobileResourcesOpen}
+            <p className="px-3 py-2 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Study Hub</p>
+            <Link
+              href="/notes"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-xl transition-all duration-200"
             >
-              <span className="flex items-center gap-3">
-                <Library className="h-5 w-5 text-gray-400" />
-                All Resources
-              </span>
-              <ChevronDown className={cn('h-4 w-4 text-gray-400 transition-transform duration-300', isMobileResourcesOpen && 'rotate-180')} />
-            </button>
-            <div className={cn(
-              'overflow-hidden transition-all duration-300',
-              isMobileResourcesOpen ? 'max-h-[32rem] opacity-100' : 'max-h-0 opacity-0'
-            )}>
-              <div className="ml-2 pl-3 border-l-2 border-gray-100 dark:border-gray-800 space-y-0.5 py-1">
-                {resourceLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-lg transition-all duration-200"
-                  >
-                    <link.icon className="h-4 w-4 text-gray-400" />
-                    <div>
-                      <div>{link.label}</div>
-                      <div className="text-xs text-gray-400">{link.desc}</div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
+              <Bookmark className="h-5 w-5" />
+              NCERT Notes
+            </Link>
+            <Link
+              href="/mcqs"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-xl transition-all duration-200"
+            >
+              <FileQuestion className="h-5 w-5" />
+              MCQs
+            </Link>
+            <Link
+              href="/worksheets"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-xl transition-all duration-200"
+            >
+              <ClipboardCheck className="h-5 w-5" />
+              Worksheets
+            </Link>
           </div>
 
           <div className="border-t border-gray-100 dark:border-gray-800 pt-3 mt-2">
@@ -343,22 +328,6 @@ export function Header() {
             >
               <Mail className="h-5 w-5" />
               Contact
-            </Link>
-            <Link
-              href="/chapter-tests"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-xl transition-all duration-200"
-            >
-              <ClipboardCheck className="h-5 w-5" />
-              Chapter Tests
-            </Link>
-            <Link
-              href="/doubt"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-xl transition-all duration-200"
-            >
-              <MessageSquare className="h-5 w-5" />
-              Doubt Section
             </Link>
           </div>
 
