@@ -16,7 +16,7 @@ export function FAQSection() {
   return (
     <>
       <JsonLd data={faqSchema(faqItems)} />
-      <section className="relative py-20 sm:py-28 bg-gray-50 dark:bg-gray-800/30 overflow-hidden">
+      <section className="relative py-20 sm:py-28 bg-gray-50 dark:bg-gray-900 overflow-hidden">
         {/* Background decorations */}
         <div className="absolute top-0 right-0 w-72 h-72 bg-blue-400/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-400/5 rounded-full blur-3xl" />
@@ -30,9 +30,9 @@ export function FAQSection() {
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
               Frequently Asked{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">Questions</span>
+              <span className="text-blue-600 dark:text-blue-400">Questions</span>
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
+            <p className="text-lg text-gray-500 dark:text-gray-400">
               Everything you need to know about NCERT Solutions Hub
             </p>
           </div>
@@ -44,7 +44,7 @@ export function FAQSection() {
                 key={index}
                 className={cn(
                   'group bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300',
-                  openIndex === index ? 'shadow-lg shadow-blue-500/5 border-blue-200 dark:border-blue-800' : 'hover:shadow-md hover:border-gray-300 dark:hover:border-gray-600',
+                  openIndex === index ? 'shadow-lg border-blue-200 dark:border-blue-800' : 'hover:shadow-md hover:border-gray-300 dark:hover:border-gray-600',
                   `animate-fade-in`
                 )}
                 style={{ animationDelay: `${index * 0.08}s` }}
@@ -75,7 +75,7 @@ export function FAQSection() {
                 >
                   <div className="px-5 md:px-6 pb-5 md:pb-6 pl-14 md:pl-16">
                     <div className="w-8 h-[1px] bg-gradient-to-r from-blue-500 to-indigo-500 mb-3" />
-                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>

@@ -113,8 +113,8 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <meta name="theme-color" content="#4f46e5" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f172a" />
+        <meta name="theme-color" content="#0d9488" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c0a09" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="NCERT Hub" />

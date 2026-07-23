@@ -24,41 +24,33 @@ interface PageHeaderProps {
 
 const gradientMap: Record<string, { bg: string; orbs: string[] }> = {
   blue: {
-    bg: 'from-blue-600 via-indigo-700 to-purple-900',
+    bg: 'from-indigo-950 via-blue-950 to-slate-950',
     orbs: [
-      'bg-blue-400/20',
-      'bg-indigo-400/20',
-      'bg-purple-400/20',
-      'bg-cyan-400/10',
+      'bg-blue-500/15',
+      'bg-indigo-500/15',
+      'bg-purple-500/15',
+      'bg-blue-300/10',
     ],
   },
   indigo: {
-    bg: 'from-indigo-600 via-purple-700 to-pink-900',
-    orbs: ['bg-indigo-400/20', 'bg-purple-400/20', 'bg-pink-400/20', 'bg-violet-400/10'],
+    bg: 'from-violet-950 via-indigo-950 to-blue-950',
+    orbs: ['bg-violet-500/15', 'bg-indigo-500/15', 'bg-blue-500/15', 'bg-purple-400/10'],
   },
   purple: {
-    bg: 'from-purple-600 via-pink-700 to-rose-900',
-    orbs: ['bg-purple-400/20', 'bg-pink-400/20', 'bg-rose-400/20', 'bg-fuchsia-400/10'],
-  },
-  teal: {
-    bg: 'from-teal-600 via-cyan-700 to-blue-900',
-    orbs: ['bg-teal-400/20', 'bg-cyan-400/20', 'bg-blue-400/20', 'bg-emerald-400/10'],
-  },
-  amber: {
-    bg: 'from-amber-600 via-orange-700 to-red-900',
-    orbs: ['bg-amber-400/20', 'bg-orange-400/20', 'bg-red-400/20', 'bg-yellow-400/10'],
+    bg: 'from-fuchsia-950 via-purple-950 to-pink-950',
+    orbs: ['bg-fuchsia-500/15', 'bg-purple-500/15', 'bg-pink-500/15', 'bg-violet-400/10'],
   },
   rose: {
-    bg: 'from-rose-600 via-pink-700 to-purple-900',
-    orbs: ['bg-rose-400/20', 'bg-pink-400/20', 'bg-purple-400/20', 'bg-red-400/10'],
+    bg: 'from-rose-950 via-pink-950 to-purple-950',
+    orbs: ['bg-rose-500/15', 'bg-pink-500/15', 'bg-purple-500/15', 'bg-fuchsia-400/10'],
   },
   green: {
-    bg: 'from-green-600 via-emerald-700 to-teal-900',
-    orbs: ['bg-green-400/20', 'bg-emerald-400/20', 'bg-teal-400/20', 'bg-lime-400/10'],
+    bg: 'from-emerald-950 via-green-950 to-teal-950',
+    orbs: ['bg-emerald-500/15', 'bg-green-500/15', 'bg-teal-500/15', 'bg-lime-400/10'],
   },
   orange: {
-    bg: 'from-orange-600 via-amber-700 to-yellow-900',
-    orbs: ['bg-orange-400/20', 'bg-amber-400/20', 'bg-yellow-400/20', 'bg-red-400/10'],
+    bg: 'from-orange-950 via-amber-950 to-yellow-950',
+    orbs: ['bg-orange-500/15', 'bg-amber-500/15', 'bg-yellow-500/15', 'bg-red-400/10'],
   },
 };
 

@@ -139,7 +139,7 @@ export function Footer() {
                 />
                 <button
                   type="submit"
-                  className="px-3.5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-medium rounded-xl transition-all duration-200 shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 active:scale-95"
+                  className="px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-xl transition-all duration-200 shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 active:scale-95"
                   aria-label="Subscribe to newsletter"
                 >
                   <Send className="h-3.5 w-3.5" />

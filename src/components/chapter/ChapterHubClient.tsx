@@ -22,11 +22,11 @@ interface TabDefinition {
 
 const TABS: TabDefinition[] = [
   { id: 'solutions', label: 'Solutions', icon: BookOpen, color: 'text-blue-600', gradient: 'from-blue-500 to-indigo-500' },
-  { id: 'notes', label: 'Notes', icon: FileText, color: 'text-emerald-600', gradient: 'from-emerald-500 to-teal-500' },
+  { id: 'notes', label: 'Notes', icon: FileText, color: 'text-indigo-600', gradient: 'from-indigo-500 to-purple-500' },
   { id: 'mcqs', label: 'MCQs', icon: HelpCircle, color: 'text-violet-600', gradient: 'from-violet-500 to-purple-500' },
-  { id: 'worksheets', label: 'Worksheets', icon: ClipboardCheck, color: 'text-orange-600', gradient: 'from-orange-500 to-amber-500' },
+  { id: 'worksheets', label: 'Worksheets', icon: ClipboardCheck, color: 'text-orange-600', gradient: 'from-orange-500 to-rose-500' },
   { id: 'formulas', label: 'Formulas', icon: Calculator, color: 'text-rose-600', gradient: 'from-rose-500 to-pink-500' },
-  { id: 'important-questions', label: 'Important Qs', icon: Star, color: 'text-amber-600', gradient: 'from-amber-500 to-yellow-500' },
+  { id: 'important-questions', label: 'Important Qs', icon: Star, color: 'text-amber-600', gradient: 'from-amber-500 to-orange-500' },
 ];
 
 // ─── Helper Functions ───────────────────────────────────────────
@@ -242,7 +242,7 @@ function NotesTab({ chapter }: { chapter: ChapterData }) {
   return (
     <div className="animate-fade-in">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium rounded-full border border-emerald-200/50 dark:border-emerald-800/50">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium rounded-full border border-blue-200/50 dark:border-blue-800/50">
           <FileText className="h-3.5 w-3.5" />
           NCERT {CURRENT_ACADEMIC_YEAR}
         </div>
@@ -311,8 +311,8 @@ function MCQTab({ cls, subject, chapter }: { cls: ClassData; subject: SubjectDat
     return (
       <div className="animate-fade-in">
         <div className="text-center mb-8">
-          <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 ${score >= 7 ? 'bg-emerald-50 dark:bg-emerald-900/30' : score >= 5 ? 'bg-amber-50 dark:bg-amber-900/30' : 'bg-red-50 dark:bg-red-900/30'}`}>
-            {score >= 7 ? <Check className="h-8 w-8 text-emerald-500" /> : <X className="h-8 w-8 text-red-500" />}
+          <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4 ${score >= 7 ? 'bg-blue-50 dark:bg-blue-900/30' : score >= 5 ? 'bg-amber-50 dark:bg-amber-900/30' : 'bg-red-50 dark:bg-red-900/30'}`}>
+            {score >= 7 ? <Check className="h-8 w-8 text-blue-500" /> : <X className="h-8 w-8 text-red-500" />}
           </div>
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Your Score: {score}/{mcqs.length}</h3>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
@@ -328,13 +328,13 @@ function MCQTab({ cls, subject, chapter }: { cls: ClassData; subject: SubjectDat
             const userAns = answers[q.id];
             const isCorrect = userAns === q.correctAnswer;
             return (
-              <div key={q.id} className={`p-4 rounded-xl border ${isCorrect ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-900/10' : 'border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-900/10'}`}>
+              <div key={q.id} className={`p-4 rounded-xl border ${isCorrect ? 'border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10' : 'border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-900/10'}`}>
                 <p className="font-medium text-gray-900 dark:text-white mb-2">Q{q.id}. {q.question}</p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Your answer: <span className={isCorrect ? 'text-emerald-600 font-medium' : 'text-red-600 font-medium'}>{userAns || 'Not answered'}</span>
+                  Your answer: <span className={isCorrect ? 'text-blue-600 font-medium' : 'text-red-600 font-medium'}>{userAns || 'Not answered'}</span>
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Correct answer: <span className="text-emerald-600 font-medium">{q.correctAnswer}</span>
+                  Correct answer: <span className="text-blue-600 font-medium">{q.correctAnswer}</span>
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">{q.explanation}</p>
               </div>
@@ -462,7 +462,7 @@ function WorksheetTab({ chapter }: { chapter: ChapterData }) {
               </div>
             ))}
           </div>
-          <button onClick={() => setShowResults(true)} className="px-6 py-2.5 bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-xl hover:from-orange-700 hover:to-amber-700 transition-all font-medium shadow-lg">
+          <button onClick={() => setShowResults(true)} className="px-6 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all font-medium shadow-lg">
             Check Answers
           </button>
         </>

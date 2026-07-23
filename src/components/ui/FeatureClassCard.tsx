@@ -38,14 +38,14 @@ const gradientMap: Record<string, { gradient: string; hover: string; iconBg: str
     iconBg: 'bg-purple-500/10',
   },
   teal: {
-    gradient: 'from-teal-500 to-cyan-600',
-    hover: 'group-hover:from-teal-600 group-hover:to-cyan-700',
+    gradient: 'from-teal-500 to-emerald-600',
+    hover: 'group-hover:from-teal-600 group-hover:to-emerald-700',
     iconBg: 'bg-teal-500/10',
   },
-  amber: {
-    gradient: 'from-amber-500 to-orange-600',
-    hover: 'group-hover:from-amber-600 group-hover:to-orange-700',
-    iconBg: 'bg-amber-500/10',
+  coral: {
+    gradient: 'from-orange-500 to-rose-600',
+    hover: 'group-hover:from-orange-600 group-hover:to-rose-700',
+    iconBg: 'bg-orange-500/10',
   },
   rose: {
     gradient: 'from-rose-500 to-pink-600',

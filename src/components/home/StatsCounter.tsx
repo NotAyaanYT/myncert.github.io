@@ -10,16 +10,15 @@ interface StatItem {
   suffix: string;
   label: string;
   prefix?: string;
-  gradient: string;
 }
 
 const stats: StatItem[] = [
-  { icon: <BookOpen className="h-5 w-5" />, value: 1500, suffix: '+', label: 'NCERT Solutions', gradient: 'from-blue-500 to-cyan-500' },
-  { icon: <Users className="h-5 w-5" />, value: 100, suffix: 'K+', label: 'Active Students', gradient: 'from-purple-500 to-pink-500' },
-  { icon: <GraduationCap className="h-5 w-5" />, value: 7, suffix: '', label: 'Classes (6-12)', gradient: 'from-orange-500 to-red-500' },
-  { icon: <Star className="h-5 w-5" />, value: 14, suffix: '', label: 'Subjects', gradient: 'from-green-500 to-emerald-500' },
-  { icon: <Globe className="h-5 w-5" />, value: 50, suffix: '+', label: 'Countries', gradient: 'from-indigo-500 to-violet-500' },
-  { icon: <Award className="h-5 w-5" />, value: 99, suffix: '%', label: 'Satisfaction', gradient: 'from-amber-500 to-yellow-500' },
+  { icon: <BookOpen className="h-5 w-5" />, value: 1500, suffix: '+', label: 'NCERT Solutions' },
+  { icon: <Users className="h-5 w-5" />, value: 100, suffix: 'K+', label: 'Active Students' },
+  { icon: <GraduationCap className="h-5 w-5" />, value: 7, suffix: '', label: 'Classes (6-12)' },
+  { icon: <Star className="h-5 w-5" />, value: 14, suffix: '', label: 'Subjects' },
+  { icon: <Globe className="h-5 w-5" />, value: 50, suffix: '+', label: 'Countries' },
+  { icon: <Award className="h-5 w-5" />, value: 99, suffix: '%', label: 'Satisfaction' },
 ];
 
 function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
@@ -64,20 +63,20 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
 export function StatsCounter() {
   return (
     <section className="relative py-20 sm:py-28 overflow-hidden">
-      {/* Dark gradient background - different from hero */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-950 to-slate-900" />
+      {/* Dark gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-indigo-950 to-gray-950" />
       
-      {/* Animated gradient orbs */}
-      <div className="absolute top-0 -left-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-float-slow" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
+      {/* Subtle orbs */}
+      <div className="absolute top-0 -left-20 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl" />
       
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+      {/* Grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium rounded-full border border-white/10 mb-4">
-            <TrendingUp className="h-4 w-4" />
+            <TrendingUp className="h-4 w-4 text-indigo-300" />
             Our Impact
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
@@ -86,7 +85,7 @@ export function StatsCounter() {
               Across India
             </span>
           </h2>
-          <p className="text-lg text-blue-100/60 max-w-2xl mx-auto">
+          <p className="text-lg text-white/60 max-w-2xl mx-auto">
             Our platform is helping thousands of students excel in their studies every day
           </p>
         </div>
@@ -108,10 +107,7 @@ export function StatsCounter() {
               )} />
 
               {/* Icon with gradient background */}
-              <div className={cn(
-                'inline-flex p-3 rounded-xl bg-gradient-to-br shadow-lg mb-3 transition-transform duration-300 group-hover:scale-110',
-                stat.gradient
-              )}>
+              <div className="inline-flex p-3 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg mb-3 transition-transform duration-300 group-hover:scale-110">
                 <div className="text-white">
                   {stat.icon}
                 </div>
@@ -123,7 +119,7 @@ export function StatsCounter() {
               </div>
 
               {/* Label */}
-              <div className="text-sm text-blue-200/70 group-hover:text-blue-200 transition-colors">
+              <div className="text-sm text-indigo-200/70 group-hover:text-indigo-200 transition-colors">
                 {stat.label}
               </div>
 

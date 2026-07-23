@@ -5,12 +5,12 @@ import { whyChooseUs } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 const iconMap: Record<string, { icon: React.ReactNode; gradient: string }> = {
-  'graduation-cap': { icon: <GraduationCap className="h-6 w-6" />, gradient: 'from-blue-500 to-cyan-500' },
-  'star': { icon: <Star className="h-6 w-6" />, gradient: 'from-amber-500 to-yellow-500' },
-  'refresh-cw': { icon: <RefreshCw className="h-6 w-6" />, gradient: 'from-green-500 to-emerald-500' },
+  'graduation-cap': { icon: <GraduationCap className="h-6 w-6" />, gradient: 'from-blue-500 to-indigo-500' },
+  'star': { icon: <Star className="h-6 w-6" />, gradient: 'from-indigo-500 to-purple-500' },
+  'refresh-cw': { icon: <RefreshCw className="h-6 w-6" />, gradient: 'from-emerald-500 to-teal-500' },
   'compass': { icon: <Compass className="h-6 w-6" />, gradient: 'from-purple-500 to-pink-500' },
-  'list-ordered': { icon: <ListOrdered className="h-6 w-6" />, gradient: 'from-orange-500 to-red-500' },
-  'smartphone': { icon: <Smartphone className="h-6 w-6" />, gradient: 'from-indigo-500 to-violet-500' },
+  'list-ordered': { icon: <ListOrdered className="h-6 w-6" />, gradient: 'from-pink-500 to-rose-500' },
+  'smartphone': { icon: <Smartphone className="h-6 w-6" />, gradient: 'from-violet-500 to-fuchsia-500' },
 };
 
 export function WhyChooseUs() {
@@ -29,11 +29,11 @@ export function WhyChooseUs() {
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
             Why Choose{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
+            <span className="text-blue-600 dark:text-blue-400">
               NCERT Solutions Hub
             </span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
             We provide the best learning experience for students across India
           </p>
         </div>
@@ -47,14 +47,14 @@ export function WhyChooseUs() {
               <div
                 key={item.title}
                 className={cn(
-                  'group relative p-7 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-500 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-gray-900/50 hover:-translate-y-1',
+                  'group relative p-7 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:shadow-lg hover:-translate-y-1',
                   `animate-fade-in`
                 )}
                 style={{ animationDelay: `${index * 0.08}s` }}
               >
                 {/* Gradient bar on left */}
                 <div className={cn(
-                  'absolute left-0 top-4 bottom-4 w-1 rounded-full bg-gradient-to-b opacity-60 group-hover:opacity-100 transition-opacity duration-500',
+                  'absolute left-0 top-4 bottom-4 w-1 rounded-full bg-gradient-to-b opacity-60 group-hover:opacity-100 transition-opacity duration-300',
                   mapped.gradient
                 )} />
 
@@ -70,21 +70,15 @@ export function WhyChooseUs() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 transition-colors">
                     {item.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
-
-                {/* Hover gradient overlay */}
-                <div className={cn(
-                  'absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none',
-                  'bg-gradient-to-br from-transparent via-blue-50/30 to-transparent dark:via-blue-900/10'
-                )} />
               </div>
             );
           })}

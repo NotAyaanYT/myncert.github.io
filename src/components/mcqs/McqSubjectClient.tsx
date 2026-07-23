@@ -90,7 +90,7 @@ export default function McqSubjectClient({
               id="version-select"
               value={version}
               onChange={(e) => handleVersionChange(e.target.value as SyllabusVersion)}
-              className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {subject.versions.map(v => (
                 <option key={v.version} value={v.version}>
@@ -116,22 +116,22 @@ export default function McqSubjectClient({
             <a
               key={chapter.id}
               href={`/${cls.slug}/${subject.slug}/${chapter.slug}?tab=mcqs`}
-              className="group p-5 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-teal-300 dark:hover:border-teal-600 transition-all hover:shadow-md animate-slide-up"
+              className="group p-5 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all hover:shadow-md animate-slide-up"
               style={{ animationDelay: index * 0.05 + 's' }}
             >
               <div className="flex items-start gap-3">
-                <div className="p-2 bg-teal-50 dark:bg-teal-900/30 rounded-lg flex-shrink-0">
-                  <svg className="h-5 w-5 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+                <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex-shrink-0">
+                  <svg className="h-5 w-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-teal-600 transition-colors">
+                  <h2 className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
                     Chapter {chapter.chapterNumber}: {chapter.title}
                   </h2>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{chapter.description}</p>
                 </div>
-                <div className="flex items-center text-sm text-teal-600 dark:text-teal-400 font-medium mt-3 ml-10">
+                <div className="flex items-center text-sm text-blue-600 dark:text-blue-400 font-medium mt-3 ml-10">
                   <span>Practice MCQs</span>
                   <svg className="h-3 w-3 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" strokeWidth="1.5" />

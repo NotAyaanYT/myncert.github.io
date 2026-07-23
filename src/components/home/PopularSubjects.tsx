@@ -6,12 +6,12 @@ import { popularSubjects } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 const subjectColors: Record<string, string> = {
-  'mathematics': 'from-blue-500 to-cyan-500',
-  'science': 'from-green-500 to-emerald-500',
-  'social-science': 'from-orange-500 to-amber-500',
-  'english': 'from-purple-500 to-pink-500',
-  'hindi': 'from-red-500 to-rose-500',
-  'sanskrit': 'from-indigo-500 to-violet-500',
+  'mathematics': 'from-blue-500 to-indigo-500',
+  'science': 'from-indigo-500 to-purple-500',
+  'social-science': 'from-purple-500 to-pink-500',
+  'english': 'from-pink-500 to-rose-500',
+  'hindi': 'from-rose-500 to-fuchsia-500',
+  'sanskrit': 'from-fuchsia-500 to-violet-500',
 };
 
 const subjectIcons: Record<string, React.ReactNode> = {
@@ -25,22 +25,22 @@ const subjectIcons: Record<string, React.ReactNode> = {
 
 export function PopularSubjects() {
   return (
-    <section id="subjects" className="relative py-20 sm:py-28 bg-gray-50 dark:bg-gray-800/30 overflow-hidden">
+    <section id="subjects" className="relative py-20 sm:py-28 bg-gray-50 dark:bg-gray-900 overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-72 h-72 bg-blue-400/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-purple-400/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-indigo-400/5 rounded-full blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-14 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm font-medium rounded-full border border-indigo-100 dark:border-indigo-800 mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm font-medium rounded-full border border-blue-100 dark:border-blue-800 mb-4">
             <Sparkles className="h-4 w-4" />
             Most Accessed
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
-            Popular <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">Subjects</span>
+            Popular <span className="text-blue-600 dark:text-blue-400">Subjects</span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
             Most accessed subjects with comprehensive NCERT solutions
           </p>
         </div>
@@ -56,14 +56,14 @@ export function PopularSubjects() {
                 key={subject.slug}
                 href={`/class-${subject.classes.includes('-') ? subject.classes.split('-')[0] : subject.classes}/${subject.slug}`}
                 className={cn(
-                  'group relative p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-gray-900/50 hover:-translate-y-1',
+                  'group relative p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1',
                   `animate-slide-up`
                 )}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Top gradient accent bar */}
                 <div className={cn(
-                  'absolute top-0 left-0 right-0 h-1 bg-gradient-to-r opacity-60 group-hover:opacity-100 transition-opacity duration-500',
+                  'absolute top-0 left-0 right-0 h-1 bg-gradient-to-r opacity-60 group-hover:opacity-100 transition-opacity duration-300',
                   gradient
                 )} />
 
@@ -98,13 +98,8 @@ export function PopularSubjects() {
                     )}>
                       Browse Solutions
                     </span>
-                    <ArrowRight className="h-4 w-4 ml-1.5 transition-all duration-300 group-hover:translate-x-1.5 text-blue-500" />
+                    <ArrowRight className="h-4 w-4 ml-1.5 transition-all duration-300 group-hover:translate-x-1 text-blue-500" />
                   </div>
-                </div>
-
-                {/* Hover shine */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                  <div className="absolute top-0 -inset-full h-full w-1/2 transform -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-shimmer" />
                 </div>
               </Link>
             );

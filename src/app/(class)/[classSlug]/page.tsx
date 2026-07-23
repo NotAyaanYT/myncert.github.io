@@ -36,29 +36,28 @@ export default async function ClassPage({ params }: Props) {
       <JsonLd data={courseSchema({ name: cls.name, description: cls.description, url: `/${cls.slug}` })} />
       <div className="min-h-screen bg-white dark:bg-gray-900">
         {/* Gradient header section */}
-        <div className="relative bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-900 overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-[0.06]" />
-          <div className="absolute top-0 -right-20 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-10 left-1/3 w-80 h-80 bg-purple-400/15 rounded-full blur-3xl" />
+        <div className="relative bg-gradient-to-br from-indigo-950 via-blue-950 to-slate-950 overflow-hidden">
+          <div className="absolute top-0 -right-20 w-72 h-72 bg-blue-500/15 rounded-full blur-3xl" />
+          <div className="absolute -bottom-10 left-1/3 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-28 pb-16">
             <Breadcrumb
               items={[{ label: cls.name, href: `/${cls.slug}` }]}
-              className="mb-6 [&_a]:text-blue-200 [&_a:hover]:text-white [&_span]:text-white/80 [&_svg]:text-blue-300"
+              className="mb-6 [&_a]:text-blue-300 [&_a:hover]:text-white [&_span]:text-white/80 [&_svg]:text-blue-400"
             />
             <div className="animate-fade-in">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/15 backdrop-blur-sm text-white/90 text-xs font-medium rounded-full border border-white/10 mb-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 backdrop-blur-sm text-blue-200 text-xs font-medium rounded-full border border-blue-500/20 mb-4">
                 <BadgeCheck className="h-3.5 w-3.5" />
                 Updated for NCERT {CURRENT_ACADEMIC_YEAR}
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
                 NCERT Solutions for{' '}
-                <span className="bg-gradient-to-r from-blue-200 via-indigo-200 to-purple-200 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-blue-300 via-indigo-300 to-purple-300 bg-clip-text text-transparent">
                   {cls.name}
                 </span>
               </h1>
-              <p className="text-lg text-blue-100/80 max-w-3xl leading-relaxed">
+              <p className="text-lg text-blue-200/70 max-w-3xl leading-relaxed">
                 Access comprehensive, step-by-step NCERT solutions for {cls.name} across all subjects based on the latest NCERT {CURRENT_ACADEMIC_YEAR} syllabus and textbooks.
               </p>
             </div>

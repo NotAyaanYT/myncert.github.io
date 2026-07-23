@@ -1,13 +1,66 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, GraduationCap, TrendingUp, BookOpen, Star, ArrowDown, Sparkles } from 'lucide-react';
+import { Search, GraduationCap, BookOpen, ArrowDown, Sparkles, Compass, Star, TrendingUp, Users } from 'lucide-react';
 import { classes } from '@/lib/constants';
 
 export function HeroSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationId: number;
+    const particles: Array<{ x: number; y: number; size: number; speedX: number; speedY: number; opacity: number }> = [];
+    
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Create particles
+    for (let i = 0; i < 60; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 3 + 1,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.5 + 0.1,
+      });
+    }
+
+    const animate = () => {
+      ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+      particles.forEach((p) => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        if (p.x < 0) p.x = canvas!.width;
+        if (p.x > canvas!.width) p.x = 0;
+        if (p.y < 0) p.y = canvas!.height;
+        if (p.y > canvas!.height) p.y = 0;
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+        ctx!.fill();
+      });
+      animationId = requestAnimationFrame(animate);
+    };
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,68 +71,58 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-[700px] flex items-center overflow-hidden">
-      {/* Animated mesh gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-900 animate-mesh" />
+      {/* Rich gradient background - deep indigo/purple with warm coral accent */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-950 via-blue-950 to-slate-950" />
       
-      {/* Animated gradient orbs */}
-      <div className="absolute top-1/4 -left-20 w-72 h-72 bg-blue-400/30 rounded-full blur-3xl animate-float-slow" />
-      <div className="absolute top-1/3 right-0 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
-      <div className="absolute -bottom-20 left-1/3 w-80 h-80 bg-indigo-400/20 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: '-5s' }} />
+      {/* Abstract gradient orbs */}
+      <div className="absolute top-[-10%] left-[20%] w-[60%] h-[60%] bg-gradient-to-br from-blue-600/20 via-indigo-600/15 to-transparent rounded-full blur-[120px] animate-pulse-soft" />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-gradient-to-br from-indigo-500/20 via-fuchsia-500/10 to-transparent rounded-full blur-[100px]" />
+      <div className="absolute top-[30%] right-[5%] w-[30%] h-[30%] bg-gradient-to-bl from-blue-500/10 to-transparent rounded-full blur-[80px]" />
 
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-[0.08]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
+      {/* Floating particles canvas */}
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
 
-      {/* Floating decorative elements */}
-      <div className="absolute top-20 left-[10%] text-white/10 animate-float-slow hidden md:block">
-        <BookOpen className="h-16 w-16" />
-      </div>
-      <div className="absolute bottom-40 right-[8%] text-white/10 animate-float hidden md:block" style={{ animationDelay: '-4s' }}>
-        <Star className="h-12 w-12" />
-      </div>
-      <div className="absolute top-1/2 right-[15%] text-white/5 animate-float-slow hidden lg:block" style={{ animationDelay: '-2s' }}>
-        <GraduationCap className="h-20 w-20" />
-      </div>
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#fafafa] dark:from-[#0f0f11] to-transparent" />
 
       {/* Main content */}
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-28 text-center">
-        <div className="animate-fade-in">
-          {/* Animated badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/15 backdrop-blur-md rounded-full text-white/90 text-sm mb-6 border border-white/10 shadow-lg">
-            <Sparkles className="h-4 w-4 text-yellow-300" />
-            <span>Based on the Latest NCERT 2026&ndash;27 Syllabus</span>
-          </div>
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-28">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="animate-fade-in">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-white/80 text-sm mb-8 border border-white/10">
+              <Sparkles className="h-3.5 w-3.5 text-indigo-300" />
+              <span>Latest NCERT 2026&ndash;27 Syllabus</span>
+            </div>
 
-          {/* Main heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
-            Free NCERT Solutions
-            <br />
-            <span className="bg-gradient-to-r from-blue-200 via-indigo-200 to-purple-200 bg-clip-text text-transparent">
-              for Classes 6&ndash;12
-            </span>
-          </h1>
+            {/* Main heading */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 tracking-tight">
+              Master NCERT with
+              <br />
+              <span className="bg-gradient-to-r from-indigo-200 via-blue-200 to-indigo-100 bg-clip-text text-transparent">
+                Free Step-by-Step Solutions
+              </span>
+            </h1>
 
-          <p className="text-lg sm:text-xl text-blue-100/80 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Get step-by-step solutions for all NCERT textbooks. Expert-crafted, 
-            easy to understand, and <span className="text-white font-semibold">completely free</span>.
-          </p>
+            <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
+              Comprehensive NCERT solutions for Classes 6&ndash;12. Expert-verified, 
+              easy to understand, and <span className="text-indigo-300 font-semibold">completely free</span> for every student.
+            </p>
 
-          {/* Search form with glassmorphism */}
-          <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-12">
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 rounded-2xl opacity-0 group-focus-within:opacity-100 blur-xl transition-opacity duration-500" />
-              <div className="relative flex items-center bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl shadow-black/10 ring-1 ring-white/20 overflow-hidden transition-all duration-300 group-focus-within:ring-blue-400/50">
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+            {/* Search form */}
+            <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-12">
+              <div className="relative flex items-center bg-white/95 backdrop-blur-sm rounded-full shadow-2xl ring-1 ring-white/20 overflow-hidden transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500/50">
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for a class, subject, chapter, or question..."
-                  className="w-full pl-14 pr-36 py-4.5 text-base bg-transparent outline-none text-gray-900 placeholder-gray-400"
+                  placeholder="Search for a class, subject, or chapter..."
+                  className="w-full pl-14 pr-36 py-4 text-base bg-transparent outline-none text-gray-900 placeholder-gray-400"
                 />
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium rounded-xl transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105 active:scale-95"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-full transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105 active:scale-95"
                 >
                   <span className="flex items-center gap-2">
                     <Search className="h-4 w-4" />
@@ -87,37 +130,52 @@ export function HeroSection() {
                   </span>
                 </button>
               </div>
-            </div>
-          </form>
+            </form>
 
-          {/* Class chips */}
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <span className="text-blue-200/70 text-sm font-medium flex items-center gap-1.5">
-              <TrendingUp className="h-4 w-4" />
-              Browse by Class:
-            </span>
-            {classes.map((cls, index) => (
-              <a
-                key={cls.slug}
-                href={`/${cls.slug}`}
-                className="group relative px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white/90 rounded-xl text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/10 border border-white/10 hover:border-white/20"
-                style={{ animationDelay: `${0.3 + index * 0.08}s` }}
-              >
-                <span className="relative z-10">{cls.name}</span>
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </a>
-            ))}
+            {/* Class chips */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <span className="text-white/40 text-sm font-medium flex items-center gap-1.5">
+                <Compass className="h-4 w-4" />
+                Browse by Class:
+              </span>
+              {classes.map((cls) => (
+                <a
+                  key={cls.slug}
+                  href={`/${cls.slug}`}
+                  className="group relative px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white/80 hover:text-white rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 border border-white/10 hover:border-white/20"
+                >
+                  {cls.name}
+                </a>
+              ))}
+            </div>
+
+            {/* Trust indicators */}
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-12 pt-8 border-t border-white/10">
+              <div className="flex items-center gap-2 text-white/40 text-xs">
+                <BookOpen className="h-3.5 w-3.5 text-indigo-300" />
+                <span>1500+ Solutions</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/40 text-xs">
+                <Users className="h-3.5 w-3.5 text-indigo-300" />
+                <span>100K+ Students</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/40 text-xs">
+                <Star className="h-3.5 w-3.5 text-indigo-300" />
+                <span>Expert Verified</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/40 text-xs">
+                <TrendingUp className="h-3.5 w-3.5 text-indigo-300" />
+                <span>100% Free</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <ArrowDown className="h-5 w-5 text-white/40" />
+      <div className="absolute bottom-14 left-1/2 -translate-x-1/2 animate-bounce">
+        <ArrowDown className="h-4 w-4 text-white/20" />
       </div>
-
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white dark:from-gray-900 to-transparent" />
     </section>
   );
 }
