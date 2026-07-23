@@ -6,11 +6,12 @@ import { usePathname } from 'next/navigation';
 import {
   Menu, X, BookOpen, ChevronDown, GraduationCap,
   FileQuestion, ClipboardCheck, Bookmark,
-  Home, Search, Sparkles, Info, Mail, LogIn
+  Home, Search, Sparkles, Info, Mail, LogIn, LogOut, User, Shield
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { SearchBar } from '@/components/ui/SearchBar';
+import { useAuth } from '@/lib/useAuth';
 
 const studyHubLinks = [
   { label: 'NCERT Notes', href: '/notes', icon: Bookmark, desc: 'Chapter-wise notes & revision' },
@@ -67,6 +68,21 @@ export function Header() {
       document.body.style.overflow = '';
     };
   }, [isMobileMenuOpen]);
+
+  const { user, isLoading: authLoading, logout } = useAuth();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close user menu on click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const isAdmin = pathname.startsWith('/admin');
   if (isAdmin) return null;
@@ -176,13 +192,53 @@ export function Header() {
           <div className="flex items-center gap-2">
             <SearchBar />
             <ThemeToggle />
-            <Link
-              href="/admin/login"
-              className="hidden lg:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-blue-900/20 rounded-full transition-all duration-200"
-            >
-              <LogIn className="h-4 w-4" />
-              Sign In
-            </Link>
+            {!authLoading && user ? (
+              <div ref={userMenuRef} className="relative hidden lg:block">
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-blue-900/20 rounded-full transition-all duration-200 border border-gray-200 dark:border-gray-700"
+                >
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
+                    <User className="h-3.5 w-3.5 text-white" />
+                  </div>
+                  <span className="max-w-[100px] truncate">{user.name}</span>
+                  <ChevronDown className={cn('h-3 w-3 transition-transform', isUserMenuOpen && 'rotate-180')} />
+                </button>
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-gray-950 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-gray-200 dark:border-gray-800 p-2 animate-slide-down z-50">
+                    <div className="px-3 py-2 border-b border-gray-100 dark:border-gray-800 mb-1">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{user.name}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user.email}</p>
+                    </div>
+                    {user.role === 'admin' && (
+                      <Link
+                        href="/admin/dashboard"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
+                      >
+                        <Shield className="h-4 w-4" />
+                        Admin Dashboard
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => { setIsUserMenuOpen(false); logout(); }}
+                      className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl w-full transition-colors"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                href="/admin/login"
+                className="hidden lg:inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-blue-900/20 rounded-full transition-all duration-200"
+              >
+                <LogIn className="h-4 w-4" />
+                Sign In
+              </Link>
+            )}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden relative p-2.5 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
@@ -327,22 +383,40 @@ export function Header() {
               <Mail className="h-5 w-5" />
               Contact
             </Link>
-            <Link
-              href="/admin/login"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-xl transition-all duration-200"
-            >
-              <LogIn className="h-5 w-5" />
-              Sign In
-            </Link>
-          </div>
-
-          {/* Footer in mobile menu */}
-          <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
-            <div className="px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl">
-              <p className="text-sm font-medium text-gray-700 dark:text-gray-200">NCERT Solutions Hub</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Free NCERT solutions for Classes 6-12</p>
-            </div>
+            {!authLoading && user ? (
+              <>
+                <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-800 -mx-4 mt-2 mb-1">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">{user.name}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+                </div>
+                {user.role === 'admin' && (
+                  <Link
+                    href="/admin/dashboard"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-xl transition-all duration-200"
+                  >
+                    <Shield className="h-5 w-5" />
+                    Admin Dashboard
+                  </Link>
+                )}
+                <button
+                  onClick={() => { setIsMobileMenuOpen(false); logout(); }}
+                  className="flex items-center gap-3 px-4 py-3 text-base font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl w-full transition-all duration-200"
+                >
+                  <LogOut className="h-5 w-5" />
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/admin/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-xl transition-all duration-200"
+              >
+                <LogIn className="h-5 w-5" />
+                Sign In
+              </Link>
+            )}
           </div>
         </nav>
       </div>

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/db/prisma';
 import { verifyPassword, generateToken, setAuthCookie } from '@/lib/auth';
 
+const ADMIN_EMAIL = 'am7641991@gmail.com';
+
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
@@ -10,16 +12,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'Email and password are required' },
         { status: 400 }
-      );
-    }
-
-    // Only allow the authorized admin email
-    const ADMIN_EMAIL = 'am7641991@gmail.com';
-
-    if (email !== ADMIN_EMAIL) {
-      return NextResponse.json(
-        { error: 'Access denied. Unauthorized email.' },
-        { status: 403 }
       );
     }
 
@@ -45,21 +37,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if user has admin role
-    const isAdmin = user.roles.some(ur => ur.role.name === 'admin');
-    if (!isAdmin) {
-      return NextResponse.json(
-        { error: 'Access denied. Admin role required.' },
-        { status: 403 }
-      );
-    }
+    // Determine role: admin only for the authorized email with admin role
+    const isAdmin = email === ADMIN_EMAIL && user.roles.some(ur => ur.role.name === 'admin');
+    const role = isAdmin ? 'admin' : 'user';
 
     // Generate token
     const token = await generateToken({
       id: user.id,
       name: user.name,
       email: user.email,
-      role: 'admin',
+      role,
     });
 
     // Set auth cookie
@@ -73,7 +60,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      user: { id: user.id, name: user.name, email: user.email, role: 'admin' },
+      user: { id: user.id, name: user.name, email: user.email, role },
     });
   } catch (error) {
     console.error('Login error:', error);

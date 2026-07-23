@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { BookOpen, Eye, EyeOff, Shield, Sparkles } from 'lucide-react';
 
 export default function AdminLoginPage() {
@@ -97,6 +98,13 @@ export default function AdminLoginPage() {
           >
             Sign In
           </button>
+
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+            Don&apos;t have an account?{' '}
+            <Link href="/register" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors">
+              Create one
+            </Link>
+          </p>
         </form>
       </div>
     </div>
