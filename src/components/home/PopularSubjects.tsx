@@ -37,8 +37,8 @@ export function PopularSubjects() {
             <Sparkles className="h-4 w-4" />
             Most Accessed
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
-            Popular <span className="text-blue-600 dark:text-blue-400">Subjects</span>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 tracking-tight">
+            Popular <span className="brand-gradient-text">Subjects</span>
           </h2>
           <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
             Most accessed subjects with comprehensive NCERT solutions
@@ -56,7 +56,7 @@ export function PopularSubjects() {
                 key={subject.slug}
                 href={`/class-${subject.classes.includes('-') ? subject.classes.split('-')[0] : subject.classes}/${subject.slug}`}
                 className={cn(
-                  'group relative p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1',
+                  'group relative p-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5',
                   `animate-slide-up`
                 )}
                 style={{ animationDelay: `${index * 0.1}s` }}
@@ -71,7 +71,7 @@ export function PopularSubjects() {
                 <div className="relative">
                   <div className="flex items-start justify-between mb-4">
                     <div className={cn(
-                      'p-3 rounded-xl bg-gradient-to-br shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:shadow-md',
+                      'p-3 rounded-xl bg-gradient-to-br shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-md',
                       gradient
                     )}>
                       <div className="text-white">
@@ -84,14 +84,14 @@ export function PopularSubjects() {
                     </div>
                   </div>
 
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1.5 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  <h3 className="font-display text-lg font-bold text-gray-900 dark:text-white mb-1.5 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {subject.name}
                   </h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                     Classes {subject.classes}
                   </p>
 
-                  <div className="flex items-center text-sm font-medium transition-colors">
+                  <div className="flex items-center text-sm font-semibold transition-colors">
                     <span className={cn(
                       'bg-gradient-to-r bg-clip-text text-transparent',
                       gradient

@@ -22,35 +22,36 @@ interface PageHeaderProps {
   children?: ReactNode;
 }
 
-const gradientMap: Record<string, { bg: string; orbs: string[] }> = {
+const gradientMap: Record<string, { bg: string; orbs: string[]; accent: string }> = {
   blue: {
-    bg: 'from-indigo-950 via-blue-950 to-slate-950',
-    orbs: [
-      'bg-blue-500/15',
-      'bg-indigo-500/15',
-      'bg-purple-500/15',
-      'bg-blue-300/10',
-    ],
+    bg: 'from-blue-950 via-[#0d1a16] to-[#0a0f0d]',
+    orbs: ['bg-blue-500/20', 'bg-indigo-500/20', 'bg-amber-500/15', 'bg-blue-300/10'],
+    accent: 'from-blue-300 via-indigo-300 to-amber-200',
   },
   indigo: {
-    bg: 'from-violet-950 via-indigo-950 to-blue-950',
-    orbs: ['bg-violet-500/15', 'bg-indigo-500/15', 'bg-blue-500/15', 'bg-purple-400/10'],
+    bg: 'from-indigo-950 via-[#14101f] to-blue-950',
+    orbs: ['bg-indigo-500/20', 'bg-blue-500/20', 'bg-purple-500/15', 'bg-amber-400/10'],
+    accent: 'from-indigo-300 via-blue-300 to-amber-200',
   },
   purple: {
-    bg: 'from-fuchsia-950 via-purple-950 to-pink-950',
-    orbs: ['bg-fuchsia-500/15', 'bg-purple-500/15', 'bg-pink-500/15', 'bg-violet-400/10'],
+    bg: 'from-purple-950 via-[#1a1020] to-indigo-950',
+    orbs: ['bg-purple-500/20', 'bg-indigo-500/20', 'bg-pink-500/15', 'bg-blue-400/10'],
+    accent: 'from-purple-300 via-indigo-300 to-blue-200',
   },
   rose: {
-    bg: 'from-rose-950 via-pink-950 to-purple-950',
-    orbs: ['bg-rose-500/15', 'bg-pink-500/15', 'bg-purple-500/15', 'bg-fuchsia-400/10'],
+    bg: 'from-rose-950 via-[#1c1016] to-purple-950',
+    orbs: ['bg-rose-500/20', 'bg-pink-500/20', 'bg-purple-500/15', 'bg-amber-400/10'],
+    accent: 'from-rose-300 via-pink-300 to-amber-200',
   },
   green: {
-    bg: 'from-emerald-950 via-green-950 to-teal-950',
-    orbs: ['bg-emerald-500/15', 'bg-green-500/15', 'bg-teal-500/15', 'bg-lime-400/10'],
+    bg: 'from-emerald-950 via-[#0d1a16] to-teal-950',
+    orbs: ['bg-emerald-500/20', 'bg-teal-500/20', 'bg-lime-500/15', 'bg-amber-400/10'],
+    accent: 'from-emerald-300 via-teal-300 to-amber-200',
   },
   orange: {
-    bg: 'from-orange-950 via-amber-950 to-yellow-950',
-    orbs: ['bg-orange-500/15', 'bg-amber-500/15', 'bg-yellow-500/15', 'bg-red-400/10'],
+    bg: 'from-orange-950 via-[#1c1410] to-amber-950',
+    orbs: ['bg-orange-500/20', 'bg-amber-500/20', 'bg-yellow-500/15', 'bg-rose-400/10'],
+    accent: 'from-orange-300 via-amber-300 to-yellow-200',
   },
 };
 
@@ -67,37 +68,32 @@ export function PageHeader({
   const colors = gradientMap[gradient] || gradientMap.blue;
 
   return (
-    <div className={`relative overflow-hidden bg-gradient-to-br ${colors.bg} animate-mesh`}>
-      {/* Background pattern overlay */}
-      <div
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      />
+    <div className={`relative overflow-hidden bg-gradient-to-br ${colors.bg}`}>
+      {/* Dot pattern overlay */}
+      <div className="absolute inset-0 dot-grid opacity-40" />
 
       {/* Animated gradient orbs */}
-      <div className="absolute top-[-20%] left-[-10%] w-[40%] h-[60%] rounded-full opacity-30 blur-3xl animate-float-slow" style={{ animationDelay: '0s' }}>
+      <div className="absolute top-[-20%] left-[-10%] w-[40%] h-[60%] rounded-full opacity-40 blur-3xl animate-float-slow" style={{ animationDelay: '0s' }}>
         <div className={`w-full h-full ${colors.orbs[0]}`} />
       </div>
-      <div className="absolute top-[10%] right-[-15%] w-[50%] h-[50%] rounded-full opacity-25 blur-3xl animate-float" style={{ animationDelay: '1s' }}>
+      <div className="absolute top-[10%] right-[-15%] w-[50%] h-[50%] rounded-full opacity-35 blur-3xl animate-float" style={{ animationDelay: '1s' }}>
         <div className={`w-full h-full ${colors.orbs[1]}`} />
       </div>
-      <div className="absolute bottom-[-10%] left-[20%] w-[35%] h-[45%] rounded-full opacity-20 blur-3xl animate-float-slow" style={{ animationDelay: '2s' }}>
+      <div className="absolute bottom-[-10%] left-[20%] w-[35%] h-[45%] rounded-full opacity-30 blur-3xl animate-float-slow" style={{ animationDelay: '2s' }}>
         <div className={`w-full h-full ${colors.orbs[2]}`} />
       </div>
-      <div className="absolute top-[40%] left-[50%] w-[30%] h-[30%] rounded-full opacity-15 blur-3xl animate-float" style={{ animationDelay: '3s' }}>
+      <div className="absolute top-[40%] left-[50%] w-[30%] h-[30%] rounded-full opacity-25 blur-3xl animate-float" style={{ animationDelay: '3s' }}>
         <div className={`w-full h-full ${colors.orbs[3]}`} />
       </div>
 
       {/* Floating decorative icons */}
-      <div className="absolute top-[15%] right-[8%] text-white/5 animate-float hidden lg:block" style={{ animationDelay: '0.5s' }}>
+      <div className="absolute top-[15%] right-[8%] text-white/10 animate-float hidden lg:block" style={{ animationDelay: '0.5s' }}>
         <BookOpen className="h-16 w-16" />
       </div>
-      <div className="absolute bottom-[20%] left-[5%] text-white/5 animate-float-slow hidden lg:block" style={{ animationDelay: '1.5s' }}>
+      <div className="absolute bottom-[20%] left-[5%] text-white/10 animate-float-slow hidden lg:block" style={{ animationDelay: '1.5s' }}>
         <GraduationCap className="h-12 w-12" />
       </div>
-      <div className="absolute top-[50%] right-[15%] text-white/5 animate-float hidden lg:block" style={{ animationDelay: '2.5s' }}>
+      <div className="absolute top-[50%] right-[15%] text-white/10 animate-float hidden lg:block" style={{ animationDelay: '2.5s' }}>
         <Star className="h-10 w-10" />
       </div>
 
@@ -115,10 +111,10 @@ export function PageHeader({
             </div>
           )}
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight animate-slide-up">
+          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight animate-slide-up">
             {title}{' '}
             {titleAccent && (
-              <span className="bg-gradient-to-r from-yellow-200 to-orange-200 bg-clip-text text-transparent">
+              <span className={`bg-gradient-to-r ${colors.accent} bg-clip-text text-transparent`}>
                 {titleAccent}
               </span>
             )}

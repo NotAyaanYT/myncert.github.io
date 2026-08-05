@@ -63,12 +63,13 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
 export function StatsCounter() {
   return (
     <section className="relative py-20 sm:py-28 overflow-hidden">
-      {/* Dark gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-indigo-950 to-gray-950" />
+      {/* Dark ink background with green tint */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0a0f0d] via-[#0d1a16] to-[#0a0f0d]" />
       
       {/* Subtle orbs */}
-      <div className="absolute top-0 -left-20 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl" />
+      <div className="absolute top-0 -left-20 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl" />
+      <div className="absolute top-1/3 left-1/2 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl" />
       
       {/* Grid pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
@@ -76,12 +77,12 @@ export function StatsCounter() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium rounded-full border border-white/10 mb-4">
-            <TrendingUp className="h-4 w-4 text-indigo-300" />
+            <TrendingUp className="h-4 w-4 text-amber-300" />
             Our Impact
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight">
             Trusted by Students{' '}
-            <span className="bg-gradient-to-r from-blue-300 via-indigo-300 to-purple-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-300 via-indigo-300 to-amber-300 bg-clip-text text-transparent">
               Across India
             </span>
           </h2>
@@ -114,7 +115,7 @@ export function StatsCounter() {
               </div>
 
               {/* Counter value */}
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-1 tracking-tight">
+              <div className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-1 tracking-tight">
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />
               </div>
 
@@ -124,7 +125,7 @@ export function StatsCounter() {
               </div>
 
               {/* Decorative dot */}
-              <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-white/40 transition-colors" />
+              <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-amber-300/60 transition-colors" />
             </div>
           ))}
         </div>

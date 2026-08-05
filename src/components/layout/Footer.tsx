@@ -13,19 +13,19 @@ export function Footer() {
   return (
     <footer className="relative bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 overflow-hidden">
       {/* Top gradient line */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Brand - spans 3 cols */}
           <div className="lg:col-span-3">
             <Link href="/" className="flex items-center gap-2.5 mb-4 group">
-              <div className="flex items-center justify-center w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-md shadow-blue-500/25 transition-transform duration-300 group-hover:scale-110">
+              <div className="flex items-center justify-center w-9 h-9 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-xl shadow-md shadow-blue-600/25 transition-transform duration-300 group-hover:scale-110">
                 <BookOpen className="h-5 w-5 text-white" />
               </div>
-              <span className="text-lg font-bold tracking-tight">
+              <span className="font-display text-lg font-bold tracking-tight">
                 <span className="text-gray-900 dark:text-white">NCERT</span>
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">Hub</span>
+                <span className="brand-gradient-text">Hub</span>
               </span>
             </Link>
             <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-5">
@@ -121,7 +121,7 @@ export function Footer() {
             </ul>
 
             {/* Newsletter Signup */}
-            <div className="relative p-5 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-100 dark:border-blue-800/50">
+            <div className="relative p-5 rounded-2xl bg-gradient-to-br from-blue-50 via-indigo-50 to-amber-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-amber-900/10 border border-blue-100 dark:border-blue-800/50">
               <div className="absolute top-3 right-3 text-blue-200 dark:text-blue-700">
                 <Sparkles className="h-5 w-5" />
               </div>
@@ -139,7 +139,7 @@ export function Footer() {
                 />
                 <button
                   type="submit"
-                  className="px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-xl transition-all duration-200 shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 active:scale-95"
+                  className="px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded-xl transition-all duration-200 shadow-md shadow-blue-600/25 hover:shadow-blue-500/40 active:scale-95"
                   aria-label="Subscribe to newsletter"
                 >
                   <Send className="h-3.5 w-3.5" />

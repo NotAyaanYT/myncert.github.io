@@ -43,9 +43,9 @@ const gradientMap: Record<string, { gradient: string; hover: string; iconBg: str
     iconBg: 'bg-teal-500/10',
   },
   coral: {
-    gradient: 'from-orange-500 to-rose-600',
-    hover: 'group-hover:from-orange-600 group-hover:to-rose-700',
-    iconBg: 'bg-orange-500/10',
+    gradient: 'from-amber-500 to-orange-600',
+    hover: 'group-hover:from-amber-600 group-hover:to-orange-700',
+    iconBg: 'bg-amber-500/10',
   },
   rose: {
     gradient: 'from-rose-500 to-pink-600',
@@ -115,7 +115,7 @@ export function FeatureClassCard({
             {icon || <BookOpen className="h-6 w-6 text-gray-700 dark:text-gray-300" />}
           </div>
 
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1.5">
+          <h3 className="font-display text-lg font-bold text-gray-900 dark:text-white mb-1.5">
             {name}
           </h3>
 
@@ -123,7 +123,7 @@ export function FeatureClassCard({
             {description}
           </p>
 
-          <div className="flex items-center gap-1.5 text-sm font-medium">
+          <div className="flex items-center gap-1.5 text-sm font-semibold">
             <span className={`bg-gradient-to-r ${colors.gradient} bg-clip-text text-transparent`}>
               Browse Now
             </span>

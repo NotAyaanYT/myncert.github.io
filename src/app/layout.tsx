@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Sora } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -12,7 +12,8 @@ import { CookieConsent } from '@/components/ui/CookieConsent';
 import { ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { siteConfig, CURRENT_ACADEMIC_YEAR } from '@/lib/constants';
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' });
+const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
+const sora = Sora({ subsets: ['latin'], display: 'swap', variable: '--font-sora' });
 
 export const metadata: Metadata = {
   title: {
@@ -123,11 +124,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
-        <link rel="preload" as="image" href="/images/hero-pattern.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.variable} ${sora.variable} font-sans antialiased`}>
         <ThemeProvider>
           <SkipToContent />
           <ProgressBar />

@@ -27,9 +27,9 @@ export function WhyChooseUs() {
             <Sparkles className="h-4 w-4" />
             Why Us
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 tracking-tight">
             Why Choose{' '}
-            <span className="text-blue-600 dark:text-blue-400">
+            <span className="brand-gradient-text">
               NCERT Solutions Hub
             </span>
           </h2>
@@ -47,7 +47,7 @@ export function WhyChooseUs() {
               <div
                 key={item.title}
                 className={cn(
-                  'group relative p-7 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:shadow-lg hover:-translate-y-1',
+                  'group relative p-7 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5',
                   `animate-fade-in`
                 )}
                 style={{ animationDelay: `${index * 0.08}s` }}
@@ -59,18 +59,23 @@ export function WhyChooseUs() {
                 )} />
 
                 <div className="relative pl-4">
-                  {/* Icon with gradient */}
-                  <div className={cn(
-                    'inline-flex p-3 rounded-xl bg-gradient-to-br shadow-md mb-4 transition-transform duration-300 group-hover:scale-110',
-                    mapped.gradient
-                  )}>
-                    <div className="text-white">
-                      {mapped.icon}
+                  {/* Number + icon row */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={cn(
+                      'inline-flex p-3 rounded-xl bg-gradient-to-br shadow-md transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3',
+                      mapped.gradient
+                    )}>
+                      <div className="text-white">
+                        {mapped.icon}
+                      </div>
                     </div>
+                    <span className="font-display text-4xl font-extrabold text-gray-100 dark:text-gray-800/70 select-none">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 transition-colors">
+                  <h3 className="font-display text-lg font-bold text-gray-900 dark:text-white mb-2 transition-colors group-hover:text-blue-700 dark:group-hover:text-blue-300">
                     {item.title}
                   </h3>
 

@@ -1,66 +1,23 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, GraduationCap, BookOpen, ArrowDown, Sparkles, Compass, Star, TrendingUp, Users } from 'lucide-react';
+import {
+  Search, GraduationCap, BookOpen, ArrowRight, Sparkles,
+  Calculator, FlaskConical, BookText, Globe, CheckCircle2, TrendingUp, Star
+} from 'lucide-react';
 import { classes } from '@/lib/constants';
+
+const subjectCards = [
+  { icon: Calculator, label: 'Mathematics', sub: 'Ganita Prakash · 14 chapters', color: 'from-blue-500 to-blue-600', chip: '1500+ solutions' },
+  { icon: FlaskConical, label: 'Science', sub: 'Curiosity', color: 'from-indigo-500 to-purple-600', chip: 'Step-by-step' },
+  { icon: BookText, label: 'English', sub: 'Poorvi', color: 'from-amber-500 to-orange-500', chip: 'Free forever' },
+  { icon: Globe, label: 'Social Science', sub: 'Exploring Society', color: 'from-purple-500 to-pink-500', chip: 'Expert verified' },
+];
 
 export function HeroSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationId: number;
-    const particles: Array<{ x: number; y: number; size: number; speedX: number; speedY: number; opacity: number }> = [];
-    
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    // Create particles
-    for (let i = 0; i < 60; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 3 + 1,
-        speedX: (Math.random() - 0.5) * 0.3,
-        speedY: (Math.random() - 0.5) * 0.3,
-        opacity: Math.random() * 0.5 + 0.1,
-      });
-    }
-
-    const animate = () => {
-      ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
-      particles.forEach((p) => {
-        p.x += p.speedX;
-        p.y += p.speedY;
-        if (p.x < 0) p.x = canvas!.width;
-        if (p.x > canvas!.width) p.x = 0;
-        if (p.y < 0) p.y = canvas!.height;
-        if (p.y > canvas!.height) p.y = 0;
-        ctx!.beginPath();
-        ctx!.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
-        ctx!.fill();
-      });
-      animationId = requestAnimationFrame(animate);
-    };
-    animate();
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,59 +27,55 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-[700px] flex items-center overflow-hidden">
-      {/* Rich gradient background - deep indigo/purple with warm coral accent */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-950 via-blue-950 to-slate-950" />
-      
-      {/* Abstract gradient orbs */}
-      <div className="absolute top-[-10%] left-[20%] w-[60%] h-[60%] bg-gradient-to-br from-blue-600/20 via-indigo-600/15 to-transparent rounded-full blur-[120px] animate-pulse-soft" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-gradient-to-br from-indigo-500/20 via-fuchsia-500/10 to-transparent rounded-full blur-[100px]" />
-      <div className="absolute top-[30%] right-[5%] w-[30%] h-[30%] bg-gradient-to-bl from-blue-500/10 to-transparent rounded-full blur-[80px]" />
+    <section className="relative overflow-hidden bg-background">
+      {/* Mesh gradient background */}
+      <div className="absolute inset-0 mesh-bg" />
+      {/* Dot texture */}
+      <div className="absolute inset-0 dot-grid opacity-60" />
+      {/* Soft orbs */}
+      <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl" />
+      <div className="absolute top-1/3 -right-24 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-amber-300/20 rounded-full blur-3xl" />
 
-      {/* Floating particles canvas */}
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
-
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#fafafa] dark:from-[#0f0f11] to-transparent" />
-
-      {/* Main content */}
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-28">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="animate-fade-in">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-28 lg:pt-36 pb-16 lg:pb-24">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          {/* ── Left: Copy ── */}
+          <div className="lg:col-span-7 animate-fade-in">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full text-white/80 text-sm mb-8 border border-white/10">
-              <Sparkles className="h-3.5 w-3.5 text-indigo-300" />
-              <span>Latest NCERT 2026&ndash;27 Syllabus</span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 dark:bg-white/10 backdrop-blur-sm rounded-full text-blue-700 dark:text-blue-300 text-sm font-medium border border-blue-200/60 dark:border-white/10 shadow-sm mb-7">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
+              </span>
+              Latest NCERT 2026&ndash;27 Syllabus
             </div>
 
-            {/* Main heading */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 tracking-tight">
-              Master NCERT with
-              <br />
-              <span className="bg-gradient-to-r from-indigo-200 via-blue-200 to-indigo-100 bg-clip-text text-transparent">
-                Free Step-by-Step Solutions
-              </span>
+            {/* Headline */}
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-extrabold text-gray-900 dark:text-white leading-[1.05] tracking-tight mb-6">
+              Learn Smarter with{' '}
+              <span className="brand-gradient-text">Free NCERT</span>
+              <br className="hidden sm:block" /> Solutions
             </h1>
 
-            <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Comprehensive NCERT solutions for Classes 6&ndash;12. Expert-verified, 
-              easy to understand, and <span className="text-indigo-300 font-semibold">completely free</span> for every student.
+            <p className="text-lg sm:text-xl text-gray-500 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 mb-9 leading-relaxed">
+              Step-by-step solutions for Classes 6&ndash;12, aligned to the latest syllabus.
+              Clear, expert-verified, and <span className="text-blue-600 dark:text-blue-400 font-semibold">100% free</span> for every student.
             </p>
 
-            {/* Search form */}
-            <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-12">
-              <div className="relative flex items-center bg-white/95 backdrop-blur-sm rounded-full shadow-2xl ring-1 ring-white/20 overflow-hidden transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500/50">
+            {/* Search */}
+            <form onSubmit={handleSearch} className="max-w-xl mx-auto lg:mx-0 mb-8">
+              <div className="relative flex items-center bg-white dark:bg-gray-900 rounded-2xl shadow-xl shadow-blue-900/5 ring-1 ring-gray-200 dark:ring-gray-800 overflow-hidden transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500/60">
                 <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for a class, subject, or chapter..."
-                  className="w-full pl-14 pr-36 py-4 text-base bg-transparent outline-none text-gray-900 placeholder-gray-400"
+                  placeholder="Search class, subject or chapter..."
+                  className="w-full pl-14 pr-36 py-4 text-base bg-transparent outline-none text-gray-900 dark:text-white placeholder-gray-400"
                 />
                 <button
                   type="submit"
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-full transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105 active:scale-95"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:scale-[1.03] active:scale-95"
                 >
                   <span className="flex items-center gap-2">
                     <Search className="h-4 w-4" />
@@ -133,16 +86,16 @@ export function HeroSection() {
             </form>
 
             {/* Class chips */}
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <span className="text-white/40 text-sm font-medium flex items-center gap-1.5">
-                <Compass className="h-4 w-4" />
-                Browse by Class:
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 mb-9">
+              <span className="text-gray-400 dark:text-gray-500 text-sm font-medium flex items-center gap-1.5 mr-1">
+                <GraduationCap className="h-4 w-4" />
+                Browse:
               </span>
               {classes.map((cls) => (
                 <a
                   key={cls.slug}
                   href={`/${cls.slug}`}
-                  className="group relative px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white/80 hover:text-white rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 border border-white/10 hover:border-white/20"
+                  className="px-3.5 py-1.5 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-300 rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 hover:ring-blue-300 dark:hover:ring-blue-700"
                 >
                   {cls.name}
                 </a>
@@ -150,31 +103,93 @@ export function HeroSection() {
             </div>
 
             {/* Trust indicators */}
-            <div className="flex flex-wrap items-center justify-center gap-6 mt-12 pt-8 border-t border-white/10">
-              <div className="flex items-center gap-2 text-white/40 text-xs">
-                <BookOpen className="h-3.5 w-3.5 text-indigo-300" />
-                <span>1500+ Solutions</span>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-3 pt-7 border-t border-gray-200/70 dark:border-gray-800">
+              {[
+                { icon: BookOpen, label: '1500+ Solutions' },
+                { icon: TrendingUp, label: '100K+ Students' },
+                { icon: CheckCircle2, label: 'Expert Verified' },
+                { icon: Star, label: '100% Free' },
+              ].map(({ icon: Icon, label }) => (
+                <div key={label} className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                  <Icon className="h-4 w-4 text-blue-500 dark:text-blue-400" />
+                  <span className="font-medium">{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Right: Floating study cards ── */}
+          <div className="lg:col-span-5 hidden lg:block relative">
+            <div className="relative h-[520px]">
+              {/* Main card */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] rounded-3xl bg-white dark:bg-gray-900 shadow-2xl shadow-blue-900/10 ring-1 ring-gray-200/70 dark:ring-gray-800 p-6 animate-float">
+                <div className="flex items-center justify-between mb-5">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                      <BookOpen className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-display font-bold text-gray-900 dark:text-white text-sm">NCERT Hub</p>
+                      <p className="text-xs text-gray-400">Today&apos;s Study Plan</p>
+                    </div>
+                  </div>
+                  <span className="px-2.5 py-1 text-[11px] font-semibold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30 rounded-full">2026-27</span>
+                </div>
+
+                <div className="space-y-3">
+                  {subjectCards.map(({ icon: Icon, label, sub, color, chip }) => (
+                    <div key={label} className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/60 ring-1 ring-gray-100 dark:ring-gray-800">
+                      <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center flex-shrink-0`}>
+                        <Icon className="h-5 w-5 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">{label}</p>
+                        <p className="text-xs text-gray-400 truncate">{sub}</p>
+                      </div>
+                      <span className="text-[10px] font-medium text-blue-600 dark:text-blue-400 bg-white dark:bg-gray-900 px-2 py-1 rounded-full ring-1 ring-blue-100 dark:ring-blue-900 whitespace-nowrap">
+                        {chip}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <button className="mt-5 w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-blue-600/25">
+                  Start Learning
+                  <ArrowRight className="h-4 w-4" />
+                </button>
               </div>
-              <div className="flex items-center gap-2 text-white/40 text-xs">
-                <Users className="h-3.5 w-3.5 text-indigo-300" />
-                <span>100K+ Students</span>
+
+              {/* Floating badge - top right */}
+              <div className="absolute top-2 right-0 w-40 rounded-2xl bg-white dark:bg-gray-900 shadow-xl ring-1 ring-gray-200/70 dark:ring-gray-800 p-4 animate-float" style={{ animationDelay: '1.2s' }}>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                    <Star className="h-4 w-4 text-amber-500" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900 dark:text-white">4.9/5</p>
+                    <p className="text-[10px] text-gray-400">Student rating</p>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-white/40 text-xs">
-                <Star className="h-3.5 w-3.5 text-indigo-300" />
-                <span>Expert Verified</span>
+
+              {/* Floating mini - bottom left */}
+              <div className="absolute bottom-0 left-0 w-44 rounded-2xl bg-white dark:bg-gray-900 shadow-xl ring-1 ring-gray-200/70 dark:ring-gray-800 p-4 animate-float" style={{ animationDelay: '0.6s' }}>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                    <GraduationCap className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900 dark:text-white">7 Classes</p>
+                    <p className="text-[10px] text-gray-400">6th &ndash; 12th</p>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-white/40 text-xs">
-                <TrendingUp className="h-3.5 w-3.5 text-indigo-300" />
-                <span>100% Free</span>
-              </div>
+
+              {/* Decorative ring */}
+              <div className="absolute inset-0 -z-10 rounded-full border-2 border-dashed border-blue-200/60 dark:border-blue-900/40 animate-spin-slow" />
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-14 left-1/2 -translate-x-1/2 animate-bounce">
-        <ArrowDown className="h-4 w-4 text-white/20" />
       </div>
     </section>
   );

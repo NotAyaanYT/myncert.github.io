@@ -91,8 +91,8 @@ export function Header() {
     cn(
       'relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-200',
       isActive
-        ? 'text-white bg-blue-600 shadow-sm'
-        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
+        ? 'text-white bg-blue-600 shadow-sm shadow-blue-600/25'
+        : 'text-gray-600 hover:text-blue-700 hover:bg-blue-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
     );
 
   return (
@@ -100,7 +100,7 @@ export function Header() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         isScrolled
-          ? 'bg-white/90 dark:bg-gray-950/90 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2)] border-b border-gray-200/50 dark:border-gray-800/50'
+          ? 'bg-white/85 dark:bg-gray-950/85 backdrop-blur-xl shadow-[0_1px_3px_rgba(16,24,20,0.06)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.3)] border-b border-gray-200/60 dark:border-gray-800/60'
           : 'bg-transparent'
       )}
     >
@@ -108,12 +108,13 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group" aria-label="NCERT Solutions Hub Home">
-            <div className="relative flex items-center justify-center w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:shadow-md">
+            <div className="relative flex items-center justify-center w-9 h-9 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-xl shadow-sm shadow-blue-600/20 transition-transform duration-300 group-hover:scale-110 group-hover:shadow-md group-hover:shadow-blue-600/30">
               <BookOpen className="h-5 w-5 text-white" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-400 ring-2 ring-white dark:ring-gray-950" />
             </div>
-            <span className="text-lg font-bold tracking-tight">
+            <span className="font-display text-lg font-bold tracking-tight">
               <span className="text-gray-900 dark:text-white">NCERT</span>
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">Hub</span>
+              <span className="brand-gradient-text">Hub</span>
             </span>
           </Link>
 
@@ -142,8 +143,8 @@ export function Header() {
                 className={cn(
                   'flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full transition-all duration-200',
                   isResourcesOpen
-                    ? 'text-white bg-blue-600 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
+                    ? 'text-white bg-blue-600 shadow-sm shadow-blue-600/25'
+                    : 'text-gray-600 hover:text-blue-700 hover:bg-blue-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
                 )}
                 aria-expanded={isResourcesOpen}
                 aria-haspopup="true"
@@ -156,7 +157,7 @@ export function Header() {
 
               {isResourcesOpen && (
                 <div
-                  className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-72 bg-white dark:bg-gray-950 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-gray-200 dark:border-gray-800 p-2 animate-slide-down"
+                  className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-72 bg-white dark:bg-gray-950 rounded-2xl shadow-[0_12px_32px_rgba(16,24,20,0.12)] dark:shadow-[0_12px_32px_rgba(0,0,0,0.4)] border border-gray-200 dark:border-gray-800 p-2 animate-slide-down"
                   role="menu"
                   aria-label="Resources"
                   style={{ transformOrigin: 'top center' }}
@@ -170,7 +171,7 @@ export function Header() {
                         className="flex items-center gap-3 px-3 py-2.5 text-sm rounded-xl text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 group"
                         role="menuitem"
                       >
-                        <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 group-hover:text-blue-600 transition-colors">
+                        <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-gray-400 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 group-hover:text-blue-600 transition-colors">
                           <link.icon className="h-4 w-4" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -198,7 +199,7 @@ export function Header() {
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-blue-900/20 rounded-full transition-all duration-200 border border-gray-200 dark:border-gray-700"
                 >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
                     <User className="h-3.5 w-3.5 text-white" />
                   </div>
                   <span className="max-w-[100px] truncate">{user.name}</span>
@@ -287,10 +288,10 @@ export function Header() {
         {/* Mobile menu header */}
         <div className="flex items-center justify-between px-4 h-16 border-b border-gray-100 dark:border-gray-800">
           <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
-            <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg">
+            <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg">
               <BookOpen className="h-4 w-4 text-white" />
             </div>
-            <span className="text-lg font-bold text-gray-900 dark:text-white">NCERT<span className="text-blue-600">Hub</span></span>
+            <span className="font-display text-lg font-bold text-gray-900 dark:text-white">NCERT<span className="brand-gradient-text">Hub</span></span>
           </Link>
           <button
             onClick={() => setIsMobileMenuOpen(false)}
